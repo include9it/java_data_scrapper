@@ -71,12 +71,12 @@ public class CreditInfo extends Scrapper {
             SaltLogger.e(TAG, "Procurator data doesn't exist! Writing empty space");
 
             listOfProcurator = new ArrayList<>();
-            listOfProcurator.add(new Procurator("No Procurator data for:", ssnValue));
+            listOfProcurator.add(new Procurator("Null", "Null"));
         } catch (TimeoutException e) {
             SaltLogger.e(TAG, "Can't find Procurator data! Writing empty space");
 
             listOfProcurator = new ArrayList<>();
-            listOfProcurator.add(new Procurator("No Procurator data for:", ssnValue));
+            listOfProcurator.add(new Procurator("Null", "Null"));
         }
 
         return new SsnData(ssnValue, listOfProcurator);
