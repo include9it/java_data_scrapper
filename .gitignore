@@ -35,6 +35,7 @@ build/
 bin/
 gen/
 out/
+src/main/resources/*.xlsx
 
 # Local configuration file (sdk path, etc)
 local.properties
