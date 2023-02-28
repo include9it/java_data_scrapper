@@ -29,11 +29,14 @@ public class Main {
         CreditInfo creditInfoScrapper = new CreditInfo(listOfSsn, stepsManager, ciSaveManager); // 15 requests per 1 min // Approximately 4 hours, 59 minutes
         creditInfoScrapper.start();
 
-        creditInfoSsnManager.prepareExcelWithSsnData(creditInfoScrapper.getListOfSsnData());
+        creditInfoSsnManager.prepareExcelWithSsnData(ciSaveManager.readSavedSsnData());
 
 
 //        JaPhoneNumber jaPhoneNumber = new JaPhoneNumber(stepsManager);
 //        jaPhoneNumber.start();
+
+
+
 
         // Start multi thread collecting info process
 //        List<Task> listOfTask = new ArrayList<>();
