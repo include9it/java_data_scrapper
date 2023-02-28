@@ -35,11 +35,11 @@ public class Main {
 //        JaPhoneNumber jaPhoneNumber = new JaPhoneNumber(stepsManager);
 //        jaPhoneNumber.start();
 
-        // Start multi threading info scrap process
-        List<Task> listOfTask = new ArrayList<>();
-        listOfTask.add(new ScrapperTask(creditInfoScrapper));
-        ThreadManager.start(10, listOfTask);
-
-        creditInfoSsnManager.prepareExcelWithSsnData(creditInfoScrapper.getListOfSsnData());
+        // Start multi thread collecting info process
+//        List<Task> listOfTask = new ArrayList<>();
+//        listOfTask.add(new ScrapperTask(creditInfoScrapper));
+//        ThreadManager.start(10, listOfTask);
+//
+//        creditInfoSsnManager.prepareExcelWithSsnData(creditInfoScrapper.getListOfSsnData());
     }
 }
