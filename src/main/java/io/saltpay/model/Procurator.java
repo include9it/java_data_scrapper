@@ -1,15 +1,19 @@
 package io.saltpay.model;
 
-public class Procurator extends Person {
+import java.io.Serializable;
 
+public class Procurator implements Serializable {
+    private final String fullName;
     private final String personalCode;
 
     public Procurator(String fullName, String personalCode) {
-        super(fullName);
-
+        this.fullName = fullName;
         this.personalCode = personalCode;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
     public String getPersonalCode() {
         return personalCode;
     }
