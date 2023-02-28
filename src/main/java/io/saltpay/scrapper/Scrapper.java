@@ -11,7 +11,7 @@ public abstract class Scrapper {
         this.stepsManager = stepsManager;
     }
 
-    public abstract void start() throws IOException;
+    public abstract void start();
 
     StepsManager getStepsManager() {
         return stepsManager;

@@ -1,15 +1,12 @@
 package io.saltpay;
 
 import io.saltpay.scrapper.CreditInfo;
-import io.saltpay.scrapper.JaPhoneNumber;
 import io.saltpay.steps.StepsManager;
 import io.saltpay.support.Driver;
 import io.saltpay.threads.ScrapperTask;
 import io.saltpay.threads.Task;
 import io.saltpay.threads.ThreadManager;
-import io.saltpay.utils.CreditInfoSaveManager;
-import io.saltpay.utils.FileManager;
-import org.openqa.selenium.chrome.ChromeDriver;
+import io.saltpay.utils.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,8 +22,15 @@ public class Main {
         StepsManager stepsManager = new StepsManager(driver.getDriver());
         CreditInfoSaveManager ciSaveManager = new CreditInfoSaveManager();
 
-        CreditInfo creditInfoScrapper = new CreditInfo(stepsManager, ciSaveManager); // 15 requests per 1 min // Approximately 4 hours, 59 minutes
+        CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
+
+        List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
+
+        CreditInfo creditInfoScrapper = new CreditInfo(listOfSsn, stepsManager, ciSaveManager); // 15 requests per 1 min // Approximately 4 hours, 59 minutes
         creditInfoScrapper.start();
+
+        creditInfoSsnManager.prepareExcelWithSsnData(creditInfoScrapper.getListOfSsnData());
+
 
 //        JaPhoneNumber jaPhoneNumber = new JaPhoneNumber(stepsManager);
 //        jaPhoneNumber.start();
@@ -35,5 +39,7 @@ public class Main {
         List<Task> listOfTask = new ArrayList<>();
         listOfTask.add(new ScrapperTask(creditInfoScrapper));
         ThreadManager.start(10, listOfTask);
+
+        creditInfoSsnManager.prepareExcelWithSsnData(creditInfoScrapper.getListOfSsnData());
     }
 }

@@ -2,18 +2,14 @@ package io.saltpay.scrapper;
 
 import io.saltpay.model.Procurator;
 import io.saltpay.model.SsnData;
-import io.saltpay.model.excel.ExcelData;
-import io.saltpay.model.excel.SheetData;
 import io.saltpay.steps.StepsManager;
 import io.saltpay.utils.CreditInfoSaveManager;
 import io.saltpay.utils.DataCollectUtil;
-import io.saltpay.utils.ExcelManager;
 import io.saltpay.utils.SaltLogger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,38 +17,23 @@ import static io.saltpay.utils.Constants.*;
 
 public class CreditInfo extends Scrapper {
     private static final String TAG = CreditInfo.class.getName();
+    private final List<String> listOfSsn;
     private final CreditInfoSaveManager ciSaveManager;
+    private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfo(StepsManager stepsManager, CreditInfoSaveManager ciSaveManager) {
+    public CreditInfo(List<String> listOfSsn, StepsManager stepsManager, CreditInfoSaveManager ciSaveManager) {
         super(stepsManager);
 
+        this.listOfSsn = listOfSsn;
         this.ciSaveManager = ciSaveManager;
     }
 
     @Override
-    public void start() throws IOException {
-        ExcelManager excelManager = new ExcelManager();
-        // Get list of SSN values
-        List<String> listOfSsn = excelManager.getFirstColumnData();
-
-        List<SsnData> savedSsnList = ciSaveManager.readSavedSsnData();
-
-        if (savedSsnList != null) {
-            int lastEntryIndex = savedSsnList.size() - 1;
-
-            SsnData lastSsnEntry = savedSsnList.get(lastEntryIndex);
-
-            int sizeOfSsnList = listOfSsn.size();
-            int cutIndex = listOfSsn.indexOf(lastSsnEntry.getSsnValue());
-
-            listOfSsn = listOfSsn.subList(cutIndex, sizeOfSsnList);
-        }
-
+    public void start() {
         enterAndLogin();
         changeLocale();
 
         // Get Procurators data by SSN number
-        List<SsnData> listOfSsnData = new ArrayList<>();
         listOfSsn.forEach(ssn -> {
             SsnData ssnData = findAndCollectDataBySsn(ssn);
 
@@ -60,15 +41,10 @@ public class CreditInfo extends Scrapper {
 
             listOfSsnData.add(ssnData);
         });
+    }
 
-        SheetData ssnSheet = DataCollectUtil.collectSheetData(listOfSsnData);
-
-        List<SheetData> dataSheets = new ArrayList<>();
-        dataSheets.add(ssnSheet);
-
-        // Create new doc with target info
-        ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + CREDIT_INFO_WRITE_FILE, dataSheets);
-        excelManager.writeExcel(excelData);
+    public List<SsnData> getListOfSsnData() {
+        return listOfSsnData;
     }
 
     private void enterAndLogin() {
