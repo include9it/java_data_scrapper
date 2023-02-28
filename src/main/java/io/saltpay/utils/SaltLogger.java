@@ -1,9 +1,11 @@
 package io.saltpay.utils;
 
 
+import io.saltpay.model.SsnData;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,5 +29,14 @@ public final class SaltLogger {
 
     public static void basic(@Nullable String message) {
         System.out.println(message);
+    }
+
+    public static void displaySsnData(List<SsnData> ssnDataList) {
+        ssnDataList.forEach(ssnData -> {
+            SaltLogger.basic("SSN data: " + ssnData.getSsnValue());
+            ssnData.getListOfProcurator().forEach(procurator ->
+                    SaltLogger.basic("Procurator Name: " + procurator.getFullName() + "|" + procurator.getPersonalCode())
+            );
+        });
     }
 }
