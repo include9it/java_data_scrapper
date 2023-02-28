@@ -36,6 +36,7 @@ bin/
 gen/
 out/
 src/main/resources/*.xlsx
+src/main/resources/*.dat
 
 # Local configuration file (sdk path, etc)
 local.properties
