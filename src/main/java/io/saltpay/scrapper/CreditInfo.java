@@ -17,6 +17,7 @@ import static io.saltpay.utils.Constants.*;
 
 public class CreditInfo extends Scrapper {
     private static final String TAG = CreditInfo.class.getName();
+
     private final List<String> listOfSsn;
     private final CreditInfoSaveManager ciSaveManager;
     private final List<SsnData> listOfSsnData = new ArrayList<>();

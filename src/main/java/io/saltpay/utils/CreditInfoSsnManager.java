@@ -12,6 +12,8 @@ import static io.saltpay.utils.Constants.CREDIT_INFO_WRITE_FILE;
 import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
 
 public class CreditInfoSsnManager {
+    private static final String TAG = CreditInfoSsnManager.class.getName();
+
     private final ExcelManager excelManager = new ExcelManager();
 
     public List<String> prepareSsnStartData(CreditInfoSaveManager ciSaveManager) throws IOException {
@@ -35,6 +37,8 @@ public class CreditInfoSsnManager {
     }
 
     public void prepareExcelWithSsnData(List<SsnData> listOfSsnData) {
+        SaltLogger.i(TAG, "Preparing Excel file...");
+
         SheetData ssnSheet = DataCollectUtil.collectSheetData(listOfSsnData);
 
         List<SheetData> dataSheets = new ArrayList<>();
