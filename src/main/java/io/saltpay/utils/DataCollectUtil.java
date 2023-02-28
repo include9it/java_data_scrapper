@@ -14,32 +14,23 @@ public class DataCollectUtil {
     public static SheetData collectSheetData(List<SsnData> listOfSsnData) {
         List<String> listOfFullName = new ArrayList<>();
         List<String> listOfPersonalCodes = new ArrayList<>();
-        List<String> emptyList = new ArrayList<>();
+        List<String> ssnList = new ArrayList<>();
 
         List<ColumnData> columnData = new ArrayList<>();
 
-        boolean hasToWriteHeaders = true;
-
-        String headerName = "Full Name", headerCode = "Personal code";
+        String headerName = "Full Name", headerCode = "Personal code", headerSsn = "SSN";
 
         for (SsnData ssnData : listOfSsnData) {
             ssnData.getListOfProcurator().forEach(data -> {
                 listOfFullName.add(data.getFullName());
                 listOfPersonalCodes.add(data.getPersonalCode());
-                emptyList.add("");
+                ssnList.add(ssnData.getSsnValue());
             });
-
-            columnData.add(new ColumnData("SSN: " + ssnData.getSsnValue(), emptyList));
-            columnData.add(new ColumnData(headerName, listOfFullName));
-            columnData.add(new ColumnData(headerCode, listOfPersonalCodes));
-
-            if (hasToWriteHeaders) {
-                headerName = "";
-                headerCode = "";
-
-                hasToWriteHeaders = false;
-            }
         }
+
+        columnData.add(new ColumnData(headerSsn, ssnList));
+        columnData.add(new ColumnData(headerName, listOfFullName));
+        columnData.add(new ColumnData(headerCode, listOfPersonalCodes));
 
         return new SheetData("Procurator list", columnData);
     }
