@@ -116,7 +116,7 @@ public class ExcelManager {
 
         // Print the data from the column
         for (String value : columnData) {
-            System.out.println(value);
+            SaltLogger.basic(value);
         }
 
         return columnData;

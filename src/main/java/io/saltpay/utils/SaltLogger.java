@@ -24,4 +24,8 @@ public final class SaltLogger {
     public static void d(@NonNull String tag, @Nullable String message) {
         Logger.getLogger(tag).log(Level.FINE, message);
     }
+
+    public static void basic(@Nullable String message) {
+        System.out.println(message);
+    }
 }

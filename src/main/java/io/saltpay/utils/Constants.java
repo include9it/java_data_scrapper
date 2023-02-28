@@ -10,6 +10,8 @@ public class Constants {
     public static String CREDIT_INFO_WRITE_FILE = "ProcuratorList.xlsx";
     public static String CREDIT_INFO_LINK = "https://fyrirtaeki.creditinfo.is";
     public static String CREDIT_INFO_COMPANY_REGISTRY = "/financeInfo/subjectOverview/%s/companyRegistration";
+    public static String CREDIT_INFO_DATA_FILE = "saved_ssn_list";
+    public static String DATA_MODEL_FILE_EXTENSION = ".dat";
 
     public static String JA_PHONE_REGISTRY_LINK = "https://ja.is";
 }

@@ -1,8 +1,9 @@
 package io.saltpay.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SsnData {
+public class SsnData implements Serializable {
     private final String ssnValue;
     private final List<Procurator> listOfProcurator;
 

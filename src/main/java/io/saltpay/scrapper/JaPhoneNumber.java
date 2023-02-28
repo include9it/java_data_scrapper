@@ -4,14 +4,13 @@ import io.saltpay.steps.StepsManager;
 
 import static io.saltpay.utils.Constants.JA_PHONE_REGISTRY_LINK;
 
-public class JaPhoneNumber {
-
-    private final StepsManager stepsManager;
+public class JaPhoneNumber extends Scrapper {
 
     public JaPhoneNumber(StepsManager stepsManager) {
-        this.stepsManager = stepsManager;
+        super(stepsManager);
     }
 
+    @Override
     public void start() {
         // Read generated .xlsx file to get list of Full Name`s
 
@@ -24,6 +23,6 @@ public class JaPhoneNumber {
     }
 
     private void enterWebsite() {
-        stepsManager.getLoginSteps().startPage(JA_PHONE_REGISTRY_LINK);
+        getStepsManager().getLoginSteps().startPage(JA_PHONE_REGISTRY_LINK);
     }
 }

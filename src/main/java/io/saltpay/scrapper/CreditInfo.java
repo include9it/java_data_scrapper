@@ -5,6 +5,7 @@ import io.saltpay.model.SsnData;
 import io.saltpay.model.excel.ExcelData;
 import io.saltpay.model.excel.SheetData;
 import io.saltpay.steps.StepsManager;
+import io.saltpay.utils.CreditInfoSaveManager;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.ExcelManager;
 import io.saltpay.utils.SaltLogger;
@@ -18,26 +19,47 @@ import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
 
-public class CreditInfo {
+public class CreditInfo extends Scrapper {
     private static final String TAG = CreditInfo.class.getName();
+    private final CreditInfoSaveManager ciSaveManager;
 
-    private final StepsManager stepsManager;
+    public CreditInfo(StepsManager stepsManager, CreditInfoSaveManager ciSaveManager) {
+        super(stepsManager);
 
-    public CreditInfo(StepsManager stepsManager) {
-        this.stepsManager = stepsManager;
+        this.ciSaveManager = ciSaveManager;
     }
 
+    @Override
     public void start() throws IOException {
         ExcelManager excelManager = new ExcelManager();
         // Get list of SSN values
         List<String> listOfSsn = excelManager.getFirstColumnData();
+
+        List<SsnData> savedSsnList = ciSaveManager.readSavedSsnData();
+
+        if (savedSsnList != null) {
+            int lastEntryIndex = savedSsnList.size() - 1;
+
+            SsnData lastSsnEntry = savedSsnList.get(lastEntryIndex);
+
+            int sizeOfSsnList = listOfSsn.size();
+            int cutIndex = listOfSsn.indexOf(lastSsnEntry.getSsnValue());
+
+            listOfSsn = listOfSsn.subList(cutIndex, sizeOfSsnList);
+        }
 
         enterAndLogin();
         changeLocale();
 
         // Get Procurators data by SSN number
         List<SsnData> listOfSsnData = new ArrayList<>();
-        listOfSsn.forEach(ssn -> listOfSsnData.add(findAndCollectDataBySsn(ssn)));
+        listOfSsn.forEach(ssn -> {
+            SsnData ssnData = findAndCollectDataBySsn(ssn);
+
+            ciSaveManager.saveSsnData(ssnData);
+
+            listOfSsnData.add(ssnData);
+        });
 
         SheetData ssnSheet = DataCollectUtil.collectSheetData(listOfSsnData);
 
@@ -50,18 +72,18 @@ public class CreditInfo {
     }
 
     private void enterAndLogin() {
-        stepsManager.getLoginSteps().startPage(CREDIT_INFO_LINK);
-        stepsManager.getLoginSteps().enterCredentials(
+        getStepsManager().getLoginSteps().startPage(CREDIT_INFO_LINK);
+        getStepsManager().getLoginSteps().enterCredentials(
                 "usernameInput",
                 "Password",
                 "Salt.Elisabet",
                 "Elisabet_69"
         );
-        stepsManager.getLoginSteps().login("audkenni-button");
+        getStepsManager().getLoginSteps().login("audkenni-button");
     }
 
     private void changeLocale() {
-        stepsManager.getActionSteps().changeLanguage();
+        getStepsManager().getActionSteps().changeLanguage();
     }
 
     private SsnData findAndCollectDataBySsn(String ssnValue) {
@@ -85,7 +107,7 @@ public class CreditInfo {
     }
 
     private List<Procurator> findAndCollectProcuratorBySsn(String ssnValue) throws NoSuchElementException, TimeoutException {
-        stepsManager.getNavigationSteps().enterRegistryOfCompanies(ssnValue);
+        getStepsManager().getNavigationSteps().enterRegistryOfCompanies(ssnValue);
 
         return findAndCollectProcuratorData();
     }
@@ -97,8 +119,8 @@ public class CreditInfo {
     }
 
     private List<List<WebElement>> extractProcuratorData() throws NoSuchElementException, TimeoutException {
-        List<WebElement> procuratorRows = stepsManager.getPageSearchSteps().findProcuratorRows();
+        List<WebElement> procuratorRows = getStepsManager().getPageSearchSteps().findProcuratorRows();
 
-        return stepsManager.getDataSearchSteps().findProcuratorFirstCellData(procuratorRows);
+        return getStepsManager().getDataSearchSteps().findProcuratorFirstCellData(procuratorRows);
     }
 }
