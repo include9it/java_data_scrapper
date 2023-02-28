@@ -61,7 +61,15 @@ public class ExcelManager {
             colNum = 0;
             for (ColumnData column : listOfColumnData) {
                 Cell cell = row.createCell(colNum++);
-                cell.setCellValue(column.getValues().get(i));
+
+                try {
+                    cell.setCellValue(column.getValues().get(i));
+                } catch (IndexOutOfBoundsException e) {
+                    // temp solution, need to refactor
+                    // issue related to 3rd column which contain only one entry
+                    // but loop get not empty column
+                    break;
+                }
             }
         }
     }

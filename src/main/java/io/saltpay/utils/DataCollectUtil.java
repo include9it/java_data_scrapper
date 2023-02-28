@@ -22,15 +22,15 @@ public class DataCollectUtil {
         String headerName = "Full Name", headerCode = "Personal code";
 
         for (SsnData ssnData : listOfSsnData) {
-            columnData.add(new ColumnData(ssnData.getSsnValue(), new ArrayList<>()));
+            columnData.add(new ColumnData(headerName, listOfFullName));
+            columnData.add(new ColumnData(headerCode, listOfPersonalCodes));
 
             ssnData.getListOfProcurator().forEach(data -> {
                 listOfFullName.add(data.getFullName());
                 listOfPersonalCodes.add(data.getPersonalCode());
             });
 
-            columnData.add(new ColumnData(headerName, listOfFullName));
-            columnData.add(new ColumnData(headerCode, listOfPersonalCodes));
+            columnData.add(new ColumnData(ssnData.getSsnValue(), new ArrayList<>()));
 
             if (hasToWriteHeaders) {
                 headerName = "";
