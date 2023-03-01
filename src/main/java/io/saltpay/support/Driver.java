@@ -3,21 +3,9 @@ package io.saltpay.support;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-
 public class Driver {
 
     private ChromeDriver driver;
-
-    private static final Driver INSTANCE = new Driver();
-
-    private Driver() {
-    }
-
-    public static Driver getInstance() {
-        return INSTANCE;
-    }
 
     public void setDriver() {
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");

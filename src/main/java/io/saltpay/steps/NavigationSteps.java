@@ -23,8 +23,8 @@ public class NavigationSteps {
 
         chromeDriver.get(registryUrl);
 
-        WaitUtil.wait(ExpectedConditions.urlContains(registryUrl));
-        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+        WaitUtil.wait(ExpectedConditions.urlContains(registryUrl),chromeDriver);
+        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")),chromeDriver);
 
         SaltLogger.i(TAG, "Entered: Registry of companies by SSN: " + ssnValue);
     }

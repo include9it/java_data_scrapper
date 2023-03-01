@@ -43,7 +43,7 @@ public class PageSearchSteps {
     private WebElement findTable(String rowName) throws NoSuchElementException, TimeoutException {
         String targetXpath = "//*[contains(text(),'" + rowName + "')]";
 
-        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.xpath(targetXpath)));
+        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.xpath(targetXpath)), chromeDriver);
 
         WebElement targetTitle = chromeDriver.findElement(By.xpath(targetXpath));
 

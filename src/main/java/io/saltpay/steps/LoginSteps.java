@@ -19,13 +19,13 @@ public class LoginSteps {
     public void startPage(String webUrl) {
         chromeDriver.get(webUrl);
 
-        WaitUtil.wait(ExpectedConditions.urlContains(webUrl));
+        WaitUtil.wait(ExpectedConditions.urlContains(webUrl), chromeDriver);
 
         SaltLogger.i(TAG, "Redirected to the correct page.");
     }
 
     public void enterCredentials(String loginId, String passwordId, String login, String password) {
-        WaitUtil.wait(ExpectedConditions.visibilityOfElementLocated(By.id(loginId)));
+        WaitUtil.wait(ExpectedConditions.visibilityOfElementLocated(By.id(loginId)), chromeDriver);
 
         WebElement usernameField = chromeDriver.findElement(By.id(loginId));
         WebElement passwordField = chromeDriver.findElement(By.id(passwordId));
@@ -37,7 +37,7 @@ public class LoginSteps {
     }
 
     public void login(String loginButtonId) {
-        WaitUtil.wait(ExpectedConditions.visibilityOfElementLocated(By.id(loginButtonId)));
+        WaitUtil.wait(ExpectedConditions.visibilityOfElementLocated(By.id(loginButtonId)), chromeDriver);
 
         WebElement loginButton = chromeDriver.findElement(By.id(loginButtonId));
         loginButton.click();
