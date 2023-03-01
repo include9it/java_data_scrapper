@@ -15,7 +15,7 @@ public class DataCollectorCallable implements Callable<SsnData> {
 
     @Override
     public SsnData call() throws Exception {
-        creditInfoScrapper.start();
+//        creditInfoScrapper.start();
 
         return null;
     }

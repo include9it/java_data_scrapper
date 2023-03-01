@@ -2,6 +2,7 @@ package io.saltpay;
 
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.CreditInfo;
+import io.saltpay.scrapper.CreditInfoDataCollector;
 import io.saltpay.steps.StepController;
 import io.saltpay.support.DriverManager;
 import io.saltpay.utils.*;
@@ -21,8 +22,14 @@ public class Main {
 
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
-        CreditInfo creditInfoScrapper = new CreditInfo(listOfSsn, stepController, ciSaveManager); // 15 requests per 1 min // Approximately 4 hours, 59 minutes
-        creditInfoScrapper.start();
+        CreditInfo creditInfoScrapper = new CreditInfo(stepController);
+
+        CreditInfoDataCollector creditInfoDataCollector = new CreditInfoDataCollector(
+                creditInfoScrapper,
+                listOfSsn,
+                ciSaveManager
+        );  // 15 requests per 1 min // Approximately 4 hours, 59 minutes
+        creditInfoDataCollector.start();
 
         List<SsnData> savedSsnData = ciSaveManager.readSavedSsnData();
 

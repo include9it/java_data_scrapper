@@ -3,7 +3,6 @@ package io.saltpay.scrapper;
 import io.saltpay.model.Procurator;
 import io.saltpay.model.SsnData;
 import io.saltpay.steps.StepController;
-import io.saltpay.utils.CreditInfoSaveManager;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.SaltLogger;
 import org.openqa.selenium.NoSuchElementException;
@@ -15,55 +14,31 @@ import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
 
-public class CreditInfo extends Scrapper {
+public class CreditInfo {
     private static final String TAG = CreditInfo.class.getName();
 
-    private final List<String> listOfSsn;
-    private final CreditInfoSaveManager ciSaveManager;
-    private final List<SsnData> listOfSsnData = new ArrayList<>();
+    private final StepController stepController;
 
-    public CreditInfo(List<String> listOfSsn, StepController stepController, CreditInfoSaveManager ciSaveManager) {
-        super(stepController);
-
-        this.listOfSsn = listOfSsn;
-        this.ciSaveManager = ciSaveManager;
+    public CreditInfo(StepController stepController) {
+        this.stepController = stepController;
     }
 
-    @Override
-    public void start() {
-        enterAndLogin();
-        changeLocale();
-
-        // Get Procurators data by SSN number
-        listOfSsn.forEach(ssn -> {
-            SsnData ssnData = findAndCollectDataBySsn(ssn);
-
-            ciSaveManager.saveSsnData(ssnData);
-
-            listOfSsnData.add(ssnData);
-        });
-    }
-
-    public List<SsnData> getListOfSsnData() {
-        return listOfSsnData;
-    }
-
-    private void enterAndLogin() {
-        getStepsManager().getLoginSteps().startPage(CREDIT_INFO_LINK);
-        getStepsManager().getLoginSteps().enterCredentials(
+    public void enterAndLogin() {
+        stepController.getLoginSteps().startPage(CREDIT_INFO_LINK);
+        stepController.getLoginSteps().enterCredentials(
                 "usernameInput",
                 "Password",
                 "Salt.Elisabet",
                 "Elisabet_69"
         );
-        getStepsManager().getLoginSteps().login("audkenni-button");
+        stepController.getLoginSteps().login("audkenni-button");
     }
 
-    private void changeLocale() {
-        getStepsManager().getActionSteps().changeLanguage();
+    public void changeLocale() {
+        stepController.getActionSteps().changeLanguage();
     }
 
-    private SsnData findAndCollectDataBySsn(String ssnValue) {
+    public SsnData findAndCollectDataBySsn(String ssnValue) {
         List<Procurator> listOfProcurator;
 
         try {
@@ -84,7 +59,7 @@ public class CreditInfo extends Scrapper {
     }
 
     private List<Procurator> findAndCollectProcuratorBySsn(String ssnValue) throws NoSuchElementException, TimeoutException {
-        getStepsManager().getNavigationSteps().enterRegistryOfCompanies(ssnValue);
+        stepController.getNavigationSteps().enterRegistryOfCompanies(ssnValue);
 
         return findAndCollectProcuratorData();
     }
@@ -96,8 +71,8 @@ public class CreditInfo extends Scrapper {
     }
 
     private List<List<WebElement>> extractProcuratorData() throws NoSuchElementException, TimeoutException {
-        List<WebElement> procuratorRows = getStepsManager().getPageSearchSteps().findProcuratorRows();
+        List<WebElement> procuratorRows = stepController.getPageSearchSteps().findProcuratorRows();
 
-        return getStepsManager().getDataSearchSteps().findProcuratorFirstCellData(procuratorRows);
+        return stepController.getDataSearchSteps().findProcuratorFirstCellData(procuratorRows);
     }
 }
