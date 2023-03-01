@@ -20,13 +20,13 @@ public class ActionSteps {
     }
 
     public void changeLanguage() {
-        WaitUtil.wait(ExpectedConditions.visibilityOfElementLocated(By.className("icon-language")));
+        WaitUtil.waitLong(ExpectedConditions.visibilityOfElementLocated(By.className("icon-language")));
 
         List<WebElement> menuButtons = chromeDriver.findElements(By.className("menu-button"));
 
         WebElement languageButton = menuButtons.get(0);
 
-        WaitUtil.wait(ExpectedConditions.elementToBeClickable(languageButton));
+        WaitUtil.waitLong(ExpectedConditions.elementToBeClickable(languageButton));
         languageButton.click();
 
         SaltLogger.i(TAG, "Language changed.");
