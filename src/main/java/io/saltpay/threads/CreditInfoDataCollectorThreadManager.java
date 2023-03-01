@@ -21,7 +21,7 @@ public class CreditInfoDataCollectorThreadManager {
 
         // Submit tasks to the executor
         listOfChunks.forEach(chunk -> {
-            Callable<List<SsnData>> callable = new CreditInfoScrapperCallable(creditInfoScrapper, chunk);
+            Callable<List<SsnData>> callable = new CreditInfoScrapperCallable(chunk.hashCode(), creditInfoScrapper, chunk);
 
             Future<List<SsnData>> future = executor.submit(callable);
 
