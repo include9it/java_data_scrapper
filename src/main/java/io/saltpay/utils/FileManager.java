@@ -13,7 +13,24 @@ public class FileManager {
 
     public static void appendModelToFile(String fileName, SsnData model) {
         List<SsnData> lisOfSsnData = readModelsFromFile(fileName);
-        lisOfSsnData.add(model);
+
+        if (lisOfSsnData == null) {
+            lisOfSsnData = new ArrayList<>();
+        } else {
+            lisOfSsnData.add(model);
+        }
+
+        writeModelsToFile(fileName, lisOfSsnData);
+    }
+
+    public static void appendModelToFile(String fileName, List<SsnData> ssnDataList) {
+        List<SsnData> lisOfSsnData = readModelsFromFile(fileName);
+
+        if (lisOfSsnData == null) {
+            lisOfSsnData = new ArrayList<>();
+        } else {
+            lisOfSsnData.addAll(ssnDataList);
+        }
 
         writeModelsToFile(fileName, lisOfSsnData);
     }
@@ -22,6 +39,10 @@ public class FileManager {
         List<SsnData> lisOfSsnData = new ArrayList<>();
         lisOfSsnData.add(model);
 
+        writeModelsToFile(fileName, lisOfSsnData);
+    }
+
+    public static void writeModelToFile(String fileName, List<SsnData> lisOfSsnData) {
         writeModelsToFile(fileName, lisOfSsnData);
     }
 
