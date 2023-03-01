@@ -18,12 +18,12 @@ public class DataCollectUtil {
 
         List<ColumnData> columnData = new ArrayList<>();
 
-        String headerName = "Full Name", headerCode = "Personal code", headerSsn = "SSN";
+        String headerName = "Full Name", headerCode = "Personal code", headerSsn = "Company SSN";
 
         for (SsnData ssnData : listOfSsnData) {
             ssnData.getListOfProcurator().forEach(data -> {
                 listOfFullName.add(data.getFullName());
-                listOfPersonalCodes.add(data.getPersonalCode());
+                listOfPersonalCodes.add(StringUtil.removeDash(data.getPersonalCode()));
                 ssnList.add(ssnData.getSsnValue());
             });
         }
