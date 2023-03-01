@@ -22,6 +22,8 @@ public class CreditInfoSaveManager {
         }
 
         FileManager.writeModelToFile(fileName, ssnData);
+
+        hasSavedData = true;
     }
 
     public List<SsnData> readSavedSsnData() {
@@ -57,6 +59,8 @@ public class CreditInfoSaveManager {
         }
 
         FileManager.writeModelToFile(fileName, ssnDataList);
+
+        hasSavedThreadData = true;
     }
 
     public List<SsnData> readSavedThreadSsnData() {
