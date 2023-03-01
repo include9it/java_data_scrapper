@@ -7,24 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreditInfoDataCollector {
-    private final CreditInfo creditInfo;
+    private final CreditInfoScrapper creditInfoScrapper;
     private final List<String> listOfSsn;
     private final CreditInfoSaveManager ciSaveManager;
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoDataCollector(CreditInfo creditInfo, List<String> listOfSsn, CreditInfoSaveManager ciSaveManager) {
-        this.creditInfo = creditInfo;
+    public CreditInfoDataCollector(CreditInfoScrapper creditInfoScrapper, List<String> listOfSsn, CreditInfoSaveManager ciSaveManager) {
+        this.creditInfoScrapper = creditInfoScrapper;
         this.listOfSsn = listOfSsn;
         this.ciSaveManager = ciSaveManager;
     }
 
     public void start() {
-        creditInfo.enterAndLogin();
-        creditInfo.changeLocale();
+        creditInfoScrapper.enterAndLogin();
+        creditInfoScrapper.changeLocale();
 
         // Get Procurators data by SSN number
         listOfSsn.forEach(ssn -> {
-            SsnData ssnData = creditInfo.findAndCollectDataBySsn(ssn);
+            SsnData ssnData = creditInfoScrapper.findAndCollectDataBySsn(ssn);
 
             ciSaveManager.saveSsnData(ssnData);
 

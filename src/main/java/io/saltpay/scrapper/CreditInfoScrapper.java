@@ -14,12 +14,12 @@ import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
 
-public class CreditInfo {
-    private static final String TAG = CreditInfo.class.getName();
+public class CreditInfoScrapper {
+    private static final String TAG = CreditInfoScrapper.class.getName();
 
     private final StepController stepController;
 
-    public CreditInfo(StepController stepController) {
+    public CreditInfoScrapper(StepController stepController) {
         this.stepController = stepController;
     }
 
