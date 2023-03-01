@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.CREDIT_INFO_WRITE_FILE;
-import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
+import static io.saltpay.utils.Constants.*;
 
 public class CreditInfoSsnManager {
     private static final String TAG = CreditInfoSsnManager.class.getName();
@@ -20,7 +19,7 @@ public class CreditInfoSsnManager {
         // Get list of SSN values
         List<String> listOfSsn = excelManager.getFirstColumnData();
 
-        List<SsnData> savedSsnList = ciSaveManager.readSavedSsnData();
+        List<SsnData> savedSsnList = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
 
         if (savedSsnList != null) {
             int lastEntryIndex = savedSsnList.size() - 1;

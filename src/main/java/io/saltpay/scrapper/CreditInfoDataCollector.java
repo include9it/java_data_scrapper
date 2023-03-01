@@ -6,6 +6,8 @@ import io.saltpay.utils.CreditInfoSaveManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.saltpay.utils.Constants.CREDIT_INFO_BACKUP_FILE;
+
 public class CreditInfoDataCollector {
     private final CreditInfoScrapper creditInfoScrapper;
     private final List<String> listOfSsn;
@@ -26,7 +28,7 @@ public class CreditInfoDataCollector {
         listOfSsn.forEach(ssn -> {
             SsnData ssnData = creditInfoScrapper.findAndCollectDataBySsn(ssn);
 
-            ciSaveManager.saveSsnData(ssnData);
+            ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnData);
 
             listOfSsnData.add(ssnData);
         });
