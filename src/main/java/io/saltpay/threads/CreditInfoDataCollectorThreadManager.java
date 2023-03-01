@@ -2,7 +2,7 @@ package io.saltpay.threads;
 
 import io.saltpay.model.SsnChunk;
 import io.saltpay.model.SsnData;
-import io.saltpay.scrapper.CreditInfoScrapper;
+import io.saltpay.support.DriverManager;
 import io.saltpay.utils.ChunkUtil;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class CreditInfoDataCollectorThreadManager {
-    public static List<SsnData> start(int numberOfThreads, List<String> listOfSsn, CreditInfoScrapper creditInfoScrapper) {
+    public static List<SsnData> start(int numberOfThreads, List<String> listOfSsn, DriverManager driverManager) {
         // Create a thread pool with numberOfThreads
         ExecutorService executor = Executors.newFixedThreadPool(numberOfThreads);
 
@@ -21,7 +21,7 @@ public class CreditInfoDataCollectorThreadManager {
 
         // Submit tasks to the executor
         listOfChunks.forEach(chunk -> {
-            Callable<List<SsnData>> callable = new CreditInfoScrapperCallable(chunk.hashCode(), creditInfoScrapper, chunk);
+            Callable<List<SsnData>> callable = new CreditInfoScrapperCallable(chunk.hashCode(), driverManager, chunk);
 
             Future<List<SsnData>> future = executor.submit(callable);
 
