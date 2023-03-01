@@ -1,7 +1,10 @@
 package io.saltpay.utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
 
 public class ListUtil {
 
@@ -25,4 +28,54 @@ public class ListUtil {
 
         return result;
     }
+
+    public static <T> boolean hasDuplicateIdentifiers(List<T> list, Function<T, String> identifierGetter) {
+        Set<String> seenIdentifiers = new HashSet<>();
+
+        for (T item : list) {
+            String identifier = identifierGetter.apply(item);
+            if (seenIdentifiers.contains(identifier)) {
+                return true;
+            } else {
+                seenIdentifiers.add(identifier);
+            }
+        }
+
+        return false;
+    }
+
+    public static <T> List<T> removeDuplicates(List<T> list, Function<T, String> identifierGetter) {
+        Set<String> seenIdentifiers = new HashSet<>();
+
+        List<T> result = new ArrayList<>();
+
+        for (T item : list) {
+            String identifier = identifierGetter.apply(item);
+            if (!seenIdentifiers.contains(identifier)) {
+                seenIdentifiers.add(identifier);
+                result.add(item);
+            }
+        }
+
+        return result;
+    }
+
+    public static <T> List<String> findMissingIdentifiers(List<T> list, Function<T, String> identifierGetter, List<String> targetIdentifiers) {
+        Set<String> existingIdentifiers = new HashSet<>();
+
+        for (T item : list) {
+            existingIdentifiers.add(identifierGetter.apply(item));
+        }
+
+        List<String> missingIdentifiers = new ArrayList<>();
+
+        for (String targetIdentifier : targetIdentifiers) {
+            if (!existingIdentifiers.contains(targetIdentifier)) {
+                missingIdentifiers.add(targetIdentifier);
+            }
+        }
+
+        return missingIdentifiers;
+    }
+
 }
