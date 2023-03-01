@@ -10,22 +10,32 @@ import io.saltpay.utils.*;
 import java.io.IOException;
 import java.util.List;
 
+import static io.saltpay.utils.Constants.*;
+
 public class Main {
 
     public static void main(String[] args) throws IOException {
         DriverManager driverManager = new DriverManager();
 
-//        basicCollectCreditInfo(driverManager);
-
-//        basicCollectPhoneNumbers();
-
-        multiThreadCollectCreditInfo(driverManager);
-    }
-
-    private static void basicCollectCreditInfo(DriverManager driverManager) throws IOException {
-        // Prepare list of input SSN numbers for data collection
         CreditInfoSaveManager ciSaveManager = new CreditInfoSaveManager();
         CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
+
+
+        // CreditInfo Island company registry
+//        basicCollectCreditInfo(ciSaveManager, creditInfoSsnManager, driverManager);
+//        multiThreadCollectCreditInfo(ciSaveManager, creditInfoSsnManager, driverManager);
+
+
+        // Phone number registry
+//        basicCollectPhoneNumbers();
+    }
+
+    private static void basicCollectCreditInfo(
+            CreditInfoSaveManager ciSaveManager,
+            CreditInfoSsnManager creditInfoSsnManager,
+            DriverManager driverManager
+    ) throws IOException {
+        // Prepare list of input SSN numbers for data collection
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
         // Start data collection process
@@ -39,27 +49,26 @@ public class Main {
         creditInfoDataCollector.start();
 
         // Prepare Excel file
-        List<SsnData> savedSsnData = ciSaveManager.readSavedSsnData();
-//        List<SsnData> savedSsnChunk = savedSsnData.subList(1743, 3071);
+        List<SsnData> savedSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
         SaltLogger.basic("savedSsnData size: " + savedSsnData.size());
         creditInfoSsnManager.prepareExcelWithSsnData(savedSsnData);
     }
 
-    private static void multiThreadCollectCreditInfo(DriverManager driverManager) throws IOException {
+    private static void multiThreadCollectCreditInfo(
+            CreditInfoSaveManager ciSaveManager,
+            CreditInfoSsnManager creditInfoSsnManager,
+            DriverManager driverManager
+    ) throws IOException {
         // Prepare list of input SSN numbers for data collection
-        CreditInfoSaveManager ciSaveManager = new CreditInfoSaveManager();
-        CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
         // Start multi thread collecting info process
         List<SsnData> multiThreadSsnDataList = CreditInfoDataCollectorThreadManager.start(10, listOfSsn, driverManager);
+        ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, multiThreadSsnDataList);
 
-        ciSaveManager.saveSsnThreadData(multiThreadSsnDataList);
-
-        List<SsnData> savedThreadSsnData = ciSaveManager.readSavedThreadSsnData();
-
+        // Prepare Excel file
+        List<SsnData> savedThreadSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
         SaltLogger.basic("savedSsnThreadData size: " + savedThreadSsnData.size());
-
         creditInfoSsnManager.prepareExcelWithSsnData(savedThreadSsnData);
     }
 
