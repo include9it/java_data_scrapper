@@ -2,14 +2,14 @@ package io.saltpay.steps;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class StepsManager {
+public class StepController {
     private final LoginSteps loginSteps;
     private final ActionSteps actionSteps;
     private final NavigationSteps navigationSteps;
     private final PageSearchSteps pageSearchSteps;
     private final DataSearchSteps dataSearchSteps;
 
-    public StepsManager(ChromeDriver chromeDriver) {
+    public StepController(ChromeDriver chromeDriver) {
         loginSteps = new LoginSteps(chromeDriver);
         actionSteps = new ActionSteps(chromeDriver);
         navigationSteps = new NavigationSteps(chromeDriver);

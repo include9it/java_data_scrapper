@@ -1,19 +1,17 @@
 package io.saltpay.scrapper;
 
-import io.saltpay.steps.StepsManager;
-
-import java.io.IOException;
+import io.saltpay.steps.StepController;
 
 public abstract class Scrapper {
-    private final StepsManager stepsManager;
+    private final StepController stepController;
 
-    Scrapper(StepsManager stepsManager) {
-        this.stepsManager = stepsManager;
+    Scrapper(StepController stepController) {
+        this.stepController = stepController;
     }
 
     public abstract void start();
 
-    StepsManager getStepsManager() {
-        return stepsManager;
+    StepController getStepsManager() {
+        return stepController;
     }
 }

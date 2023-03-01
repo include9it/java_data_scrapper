@@ -2,7 +2,7 @@ package io.saltpay.scrapper;
 
 import io.saltpay.model.Procurator;
 import io.saltpay.model.SsnData;
-import io.saltpay.steps.StepsManager;
+import io.saltpay.steps.StepController;
 import io.saltpay.utils.CreditInfoSaveManager;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.SaltLogger;
@@ -22,8 +22,8 @@ public class CreditInfo extends Scrapper {
     private final CreditInfoSaveManager ciSaveManager;
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfo(List<String> listOfSsn, StepsManager stepsManager, CreditInfoSaveManager ciSaveManager) {
-        super(stepsManager);
+    public CreditInfo(List<String> listOfSsn, StepController stepController, CreditInfoSaveManager ciSaveManager) {
+        super(stepController);
 
         this.listOfSsn = listOfSsn;
         this.ciSaveManager = ciSaveManager;

@@ -1,13 +1,13 @@
 package io.saltpay.scrapper;
 
-import io.saltpay.steps.StepsManager;
+import io.saltpay.steps.StepController;
 
 import static io.saltpay.utils.Constants.JA_PHONE_REGISTRY_LINK;
 
 public class JaPhoneNumber extends Scrapper {
 
-    public JaPhoneNumber(StepsManager stepsManager) {
-        super(stepsManager);
+    public JaPhoneNumber(StepController stepController) {
+        super(stepController);
     }
 
     @Override
