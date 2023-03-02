@@ -18,7 +18,7 @@ public class CreditInfoSsnManager {
 
     public List<String> prepareSsnStartData(CreditInfoStorage ciSaveManager) throws IOException {
         // Get list of SSN values
-        List<String> listOfSsn = excelManager.getFirstColumnData();
+        List<String> listOfSsn = excelManager.getColumnData(CREDIT_INFO_READ_FILE, 0);
 
         List<SsnData> savedSsnList = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
 

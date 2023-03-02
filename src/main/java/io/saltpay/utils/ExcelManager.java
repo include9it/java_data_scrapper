@@ -16,15 +16,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.CREDIT_INFO_READ_FILE;
 import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
 
 public class ExcelManager {
 
-    public List<String> getFirstColumnData() throws IOException {
-        XSSFSheet sheet = readExcel(RESOURCE_FILE_PATH + CREDIT_INFO_READ_FILE);
+    public List<String> getColumnData(String fileName, int column) throws IOException {
+        XSSFSheet sheet = readExcel(RESOURCE_FILE_PATH + fileName);
 
-        return readColumnData(sheet, 0).stream()
+        return readColumnData(sheet, column).stream()
                 .skip(1)
                 .toList();
     }
