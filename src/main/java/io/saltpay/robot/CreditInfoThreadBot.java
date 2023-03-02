@@ -1,15 +1,16 @@
-package io.saltpay.threads;
+package io.saltpay.robot;
 
 import io.saltpay.model.SsnChunk;
 import io.saltpay.model.SsnData;
 import io.saltpay.support.DriverManager;
+import io.saltpay.tasks.CreditInfoScrapperCallable;
 import io.saltpay.utils.ChunkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class CreditInfoDataCollectorThreadManager {
+public class CreditInfoThreadBot {
     public static List<SsnData> start(int numberOfThreads, List<String> listOfSsn, DriverManager driverManager) {
         // Create a thread pool with numberOfThreads
         ExecutorService executor = Executors.newFixedThreadPool(numberOfThreads);

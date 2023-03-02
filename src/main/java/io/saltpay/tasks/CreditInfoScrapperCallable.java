@@ -1,4 +1,4 @@
-package io.saltpay.threads;
+package io.saltpay.tasks;
 
 import io.saltpay.model.SsnChunk;
 import io.saltpay.model.SsnData;

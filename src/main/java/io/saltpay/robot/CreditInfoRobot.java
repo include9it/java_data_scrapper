@@ -3,7 +3,6 @@ package io.saltpay.robot;
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
 import io.saltpay.support.DriverManager;
-import io.saltpay.threads.CreditInfoDataCollectorThreadManager;
 import io.saltpay.utils.CreditInfoSaveManager;
 import io.saltpay.utils.CreditInfoSsnManager;
 import io.saltpay.utils.SaltLogger;
@@ -47,7 +46,7 @@ public class CreditInfoRobot {
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
         // Start multi thread collecting info process
-        List<SsnData> multiThreadSsnDataList = CreditInfoDataCollectorThreadManager.start(10, listOfSsn, driverManager);
+        List<SsnData> multiThreadSsnDataList = CreditInfoThreadBot.start(10, listOfSsn, driverManager);
         ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, multiThreadSsnDataList);
 
         // Prepare Excel file
