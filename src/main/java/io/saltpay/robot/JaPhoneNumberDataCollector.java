@@ -4,6 +4,7 @@ import io.saltpay.model.ProcuratorPhones;
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
 import io.saltpay.utils.JaPhoneSaveManager;
+import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 import static io.saltpay.utils.Constants.JA_PHONE_BACKUP_FILE;
 
 public class JaPhoneNumberDataCollector {
+    private static final String TAG = JaPhoneNumberDataCollector.class.getName();
     private final JaPhoneNumberScrapper jaPhoneNumberScrapper;
     private final List<SsnData> ssnDataList;
     private final JaPhoneSaveManager jaPhoneSaveManager;
@@ -23,6 +25,8 @@ public class JaPhoneNumberDataCollector {
     }
 
     public void start() {
+        SaltLogger.i(TAG, "Ja Phone Bot started!");
+
         jaPhoneNumberScrapper.enterWebsite();
 
         // Get phone numbers by Procurator

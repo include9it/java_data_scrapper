@@ -44,5 +44,7 @@ public class NavigationSteps {
         WebElement suggestionElement = suggestionContainer.findElement(By.className("autocomplete-suggestion"));
 
         suggestionElement.click();
+
+        SaltLogger.i(TAG, "Entered: Phone info page of " + fullName);
     }
 }
