@@ -21,7 +21,7 @@ public class CreditInfoRobot {
         this.driverManager = driverManager;
     }
 
-    public void basicCollectCreditInfo() throws IOException {
+    public void basicCollect() throws IOException {
         // Prepare list of input SSN numbers for data collection
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
@@ -41,7 +41,7 @@ public class CreditInfoRobot {
         creditInfoSsnManager.prepareExcelWithSsnData(savedSsnData);
     }
 
-    public void multiThreadCollectCreditInfo() throws IOException {
+    public void multiThreadCollect() throws IOException {
         // Prepare list of input SSN numbers for data collection
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 

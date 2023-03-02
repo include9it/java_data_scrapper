@@ -1,6 +1,5 @@
 package io.saltpay;
 
-import io.saltpay.robot.CreditInfoRobot;
 import io.saltpay.robot.JaPhoneRobot;
 import io.saltpay.support.DriverManager;
 
@@ -13,11 +12,12 @@ public class Main {
 
         // CreditInfo Island company registry
 //        CreditInfoRobot creditInfoRobot = new CreditInfoRobot(driverManager);
-//        creditInfoRobot.basicCollectCreditInfo();
-//        creditInfoRobot.multiThreadCollectCreditInfo();
+//        creditInfoRobot.basicCollect();
+//        creditInfoRobot.multiThreadCollect();
 
         // Phone number registry
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driverManager);
-        jaPhoneRobot.basicCollectPhoneNumbers();
+//        jaPhoneRobot.basicCollect();
+        jaPhoneRobot.multiThreadCollect();
     }
 }

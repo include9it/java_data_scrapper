@@ -24,7 +24,7 @@ public class JaPhoneRobot {
         this.driverManager = driverManager;
     }
 
-    public void basicCollectPhoneNumbers() throws IOException {
+    public void basicCollect() throws IOException {
         // Prepare list of input Procurator names for data collection
         List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, jaPhoneSaveManager);
 
@@ -47,5 +47,19 @@ public class JaPhoneRobot {
         List<ProcuratorPhones> savedProcuratorPhones = jaPhoneSaveManager.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
         SaltLogger.basic("savedProcuratorPhones size: " + savedProcuratorPhones.size());
         jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedProcuratorPhones);
+    }
+
+    public void multiThreadCollect() throws IOException {
+        // Prepare list of input SSN numbers for data collection
+        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, jaPhoneSaveManager);
+
+        // Start multi thread collecting info process
+        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(10, listOfSsnData, driverManager);
+        jaPhoneSaveManager.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, multiThreadSsnDataList);
+
+        // Prepare Excel file
+        List<ProcuratorPhones> savedThreadPhonesData = jaPhoneSaveManager.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
+        SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
+        jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedThreadPhonesData);
     }
 }
