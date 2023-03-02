@@ -1,7 +1,5 @@
 package io.saltpay.utils;
 
-import io.saltpay.model.SsnData;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,42 +9,42 @@ import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
 
 public class FileManager {
 
-    public static void appendModelToFile(String fileName, SsnData model) {
-        List<SsnData> lisOfSsnData = readModelsFromFile(fileName);
+    public static void appendModelToFile(String fileName, Object model) {
+        List<Object> lisOfObjects = readModelsFromFile(fileName);
 
-        if (lisOfSsnData == null) {
-            lisOfSsnData = new ArrayList<>();
+        if (lisOfObjects == null) {
+            lisOfObjects = new ArrayList<>();
         } else {
-            lisOfSsnData.add(model);
+            lisOfObjects.add(model);
         }
 
-        writeModelsToFile(fileName, lisOfSsnData);
+        writeModelsToFile(fileName, lisOfObjects);
     }
 
-    public static void appendModelToFile(String fileName, List<SsnData> ssnDataList) {
-        List<SsnData> lisOfSsnData = readModelsFromFile(fileName);
+    public static void appendModelToFile(String fileName, List<Object> objectList) {
+        List<Object> lisOfObjects = readModelsFromFile(fileName);
 
-        if (lisOfSsnData == null) {
-            lisOfSsnData = new ArrayList<>();
+        if (lisOfObjects == null) {
+            lisOfObjects = new ArrayList<>();
         } else {
-            lisOfSsnData.addAll(ssnDataList);
+            lisOfObjects.addAll(objectList);
         }
 
-        writeModelsToFile(fileName, lisOfSsnData);
+        writeModelsToFile(fileName, lisOfObjects);
     }
 
-    public static void writeModelToFile(String fileName, SsnData model) {
-        List<SsnData> lisOfSsnData = new ArrayList<>();
-        lisOfSsnData.add(model);
+    public static void writeModelToFile(String fileName, Object model) {
+        List<Object> lisOfObjects = new ArrayList<>();
+        lisOfObjects.add(model);
 
-        writeModelsToFile(fileName, lisOfSsnData);
+        writeModelsToFile(fileName, lisOfObjects);
     }
 
-    public static void writeModelToFile(String fileName, List<SsnData> lisOfSsnData) {
-        writeModelsToFile(fileName, lisOfSsnData);
+    public static void writeModelToFile(String fileName, List<Object> lisOfObjects) {
+        writeModelsToFile(fileName, lisOfObjects);
     }
 
-    public static void writeModelsToFile(String fileName, List<SsnData> models) {
+    public static void writeModelsToFile(String fileName, List<Object> models) {
         try {
             FileOutputStream fileOut = new FileOutputStream(RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION);
             ObjectOutputStream objOut;
@@ -63,15 +61,15 @@ public class FileManager {
         }
     }
 
-    public static List<SsnData> readModelsFromFile(String fileName) {
-        List<SsnData> models;
+    public static List<Object> readModelsFromFile(String fileName) {
+        List<Object> models;
 
         try {
             ObjectInputStream objIn = new ObjectInputStream(
                     new FileInputStream(RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION)
             );
 
-            models = (List<SsnData>) objIn.readObject();
+            models = (List) objIn.readObject();
 
             objIn.close();
 

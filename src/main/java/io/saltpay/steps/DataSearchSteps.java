@@ -22,6 +22,10 @@ public class DataSearchSteps {
         return extractProcuratorCellData(procuratorCells);
     }
 
+    public List<WebElement> findProcuratorPhonesData(List<WebElement> procuratorPhones) {
+        return extractProcuratorPhonesData(procuratorPhones);
+    }
+
     private List<List<WebElement>> extractProcuratorCellData(List<WebElement> procuratorCells) {
         List<List<WebElement>> listOfProcuratorCellData = new ArrayList<>();
 
@@ -30,5 +34,15 @@ public class DataSearchSteps {
         ));
 
         return listOfProcuratorCellData;
+    }
+
+    private List<WebElement> extractProcuratorPhonesData(List<WebElement> procuratorPhones) {
+        List<WebElement> listOfProcuratorPhones = new ArrayList<>();
+
+        procuratorPhones.forEach(cell -> listOfProcuratorPhones.add(
+                DataRowUtil.getChildLinkElement(cell)
+        ));
+
+        return listOfProcuratorPhones;
     }
 }

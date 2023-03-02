@@ -2,6 +2,7 @@ package io.saltpay.utils;
 
 import io.saltpay.model.SsnData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreditInfoSaveManager {
@@ -34,7 +35,7 @@ public class CreditInfoSaveManager {
 
     public List<SsnData> readSavedSsnData(String fileName) {
         if (checkHasSavedData(fileName)) {
-            return FileManager.readModelsFromFile(fileName);
+            return readAndMapSavedData(fileName);
         }
 
         return null;
@@ -46,5 +47,15 @@ public class CreditInfoSaveManager {
         }
 
         return hasSavedData;
+    }
+
+    private List<SsnData> readAndMapSavedData(String fileName) {
+        List<Object> listOfObjects = FileManager.readModelsFromFile(fileName);
+
+        List<SsnData> listOfSsnData = new ArrayList<>();
+
+        listOfObjects.forEach(object -> listOfSsnData.add((SsnData) object));
+
+        return listOfSsnData;
     }
 }

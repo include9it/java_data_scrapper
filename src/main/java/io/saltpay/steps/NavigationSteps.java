@@ -3,6 +3,7 @@ package io.saltpay.steps;
 import io.saltpay.utils.SaltLogger;
 import io.saltpay.utils.WaitUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -27,5 +28,13 @@ public class NavigationSteps {
         WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")),chromeDriver);
 
         SaltLogger.i(TAG, "Entered: Registry of companies by SSN: " + ssnValue);
+    }
+
+    public void enterPhoneInfoByProcurator(String fullName) {
+        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")),chromeDriver);
+
+        WebElement searchBar = chromeDriver.findElement(By.className("search-bar"));
+
+        searchBar.sendKeys(fullName);
     }
 }

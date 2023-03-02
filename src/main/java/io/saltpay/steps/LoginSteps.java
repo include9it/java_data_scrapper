@@ -21,7 +21,7 @@ public class LoginSteps {
 
         WaitUtil.wait(ExpectedConditions.urlContains(webUrl), chromeDriver);
 
-        SaltLogger.i(TAG, "Redirected to the correct page.");
+        SaltLogger.i(TAG, "Redirected to the correct page: " + webUrl);
     }
 
     public void enterCredentials(String loginId, String passwordId, String login, String password) {

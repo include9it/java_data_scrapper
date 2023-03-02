@@ -27,4 +27,8 @@ public class DataRowUtil {
     public static List<WebElement> getChildDivBlocks(WebElement webElement) {
         return webElement.findElements(By.xpath(".//div"));
     }
+
+    public static WebElement getChildLinkElement(WebElement webElement) {
+        return webElement.findElement(By.tagName("a"));
+    }
 }

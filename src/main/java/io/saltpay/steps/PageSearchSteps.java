@@ -23,6 +23,10 @@ public class PageSearchSteps {
         return findSpecificRows("Managing director, procuration, auditors and founders", "Procurator");
     }
 
+    public List<WebElement> findProcuratorPhones() {
+        return chromeDriver.findElements(By.className("large-phone-font"));
+    }
+
     public List<WebElement> findUboRows() {
         return findRows("Ultimate beneficial owners");
     }

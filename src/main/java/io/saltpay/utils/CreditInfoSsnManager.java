@@ -38,7 +38,7 @@ public class CreditInfoSsnManager {
     public void prepareExcelWithSsnData(List<SsnData> listOfSsnData) {
         SaltLogger.i(TAG, "Preparing Excel file...");
 
-        SheetData ssnSheet = DataCollectUtil.collectSheetData(listOfSsnData);
+        SheetData ssnSheet = DataCollectUtil.collectSsnSheetData(listOfSsnData);
 
         List<SheetData> dataSheets = new ArrayList<>();
         dataSheets.add(ssnSheet);

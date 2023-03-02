@@ -1,8 +1,12 @@
 package io.saltpay;
 
+import io.saltpay.model.Procurator;
+import io.saltpay.model.ProcuratorPhones;
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.CreditInfoDataCollector;
 import io.saltpay.scrapper.CreditInfoScrapper;
+import io.saltpay.scrapper.JaPhoneNumberDataCollector;
+import io.saltpay.scrapper.JaPhoneNumberScrapper;
 import io.saltpay.support.DriverManager;
 import io.saltpay.threads.CreditInfoDataCollectorThreadManager;
 import io.saltpay.utils.*;
@@ -17,17 +21,21 @@ public class Main {
     public static void main(String[] args) throws IOException {
         DriverManager driverManager = new DriverManager();
 
+        // CreditInfo
         CreditInfoSaveManager ciSaveManager = new CreditInfoSaveManager();
-        CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
-
+//        CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
 
         // CreditInfo Island company registry
 //        basicCollectCreditInfo(ciSaveManager, creditInfoSsnManager, driverManager);
 //        multiThreadCollectCreditInfo(ciSaveManager, creditInfoSsnManager, driverManager);
 
 
+        // Ja Phone
+        JaPhoneSaveManager jaPhoneSaveManager = new JaPhoneSaveManager();
+        JaPhoneProcuratorPhoneManager jaPhoneProcuratorPhoneManager = new JaPhoneProcuratorPhoneManager();
+
         // Phone number registry
-//        basicCollectPhoneNumbers();
+        basicCollectPhoneNumbers(ciSaveManager, jaPhoneSaveManager, jaPhoneProcuratorPhoneManager, driverManager);
     }
 
     private static void basicCollectCreditInfo(
@@ -72,8 +80,33 @@ public class Main {
         creditInfoSsnManager.prepareExcelWithSsnData(savedThreadSsnData);
     }
 
-    private static void basicCollectPhoneNumbers() {
-//        JaPhoneNumber jaPhoneNumber = new JaPhoneNumber(stepsManager);
-//        jaPhoneNumber.start();
+    private static void basicCollectPhoneNumbers(
+            CreditInfoSaveManager ciSaveManager,
+            JaPhoneSaveManager jaPhoneSaveManager,
+            JaPhoneProcuratorPhoneManager jaPhoneProcuratorPhoneManager,
+            DriverManager driverManager
+    ) throws IOException {
+        // Prepare list of input Procurator names for data collection
+        List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, jaPhoneSaveManager);
+
+        if (ssnDataList == null) {
+            SaltLogger.basic("SSN model doesn't exist! -> Exit");
+
+            return;
+        }
+
+        // Start data collection process
+        JaPhoneNumberScrapper jaPhoneNumberScrapper = new JaPhoneNumberScrapper(driverManager);
+        JaPhoneNumberDataCollector jaPhoneNumberDataCollector = new JaPhoneNumberDataCollector(
+                jaPhoneNumberScrapper,
+                ssnDataList,
+                jaPhoneSaveManager
+        );
+        jaPhoneNumberDataCollector.start();
+
+        // Prepare Excel file
+        List<ProcuratorPhones> savedProcuratorPhones = jaPhoneSaveManager.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
+        SaltLogger.basic("savedProcuratorPhones size: " + savedProcuratorPhones.size());
+        jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedProcuratorPhones);
     }
 }
