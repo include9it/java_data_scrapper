@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class CreditInfoScrapperCallable implements Callable<List<SsnData>> {
+public class CreditInfoCallableTask implements Callable<List<SsnData>> {
 
     private final int threadId;
     private final CreditInfoScrapper creditInfoScrapper;
@@ -19,7 +19,7 @@ public class CreditInfoScrapperCallable implements Callable<List<SsnData>> {
 
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoScrapperCallable(int threadId, DriverManager driverManager, SsnChunk ssnChunk) {
+    public CreditInfoCallableTask(int threadId, DriverManager driverManager, SsnChunk ssnChunk) {
         this.threadId = threadId;
         this.creditInfoScrapper = new CreditInfoScrapper(driverManager);
         this.ssnChunk = ssnChunk;

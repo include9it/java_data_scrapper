@@ -3,7 +3,7 @@ package io.saltpay.robot;
 import io.saltpay.model.SsnChunk;
 import io.saltpay.model.SsnData;
 import io.saltpay.support.DriverManager;
-import io.saltpay.tasks.CreditInfoScrapperCallable;
+import io.saltpay.tasks.CreditInfoCallableTask;
 import io.saltpay.utils.ChunkUtil;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class CreditInfoThreadBot {
 
         // Submit tasks to the executor
         listOfChunks.forEach(chunk -> {
-            Callable<List<SsnData>> callable = new CreditInfoScrapperCallable(chunk.hashCode(), driverManager, chunk);
+            Callable<List<SsnData>> callable = new CreditInfoCallableTask(chunk.hashCode(), driverManager, chunk);
 
             Future<List<SsnData>> future = executor.submit(callable);
 
