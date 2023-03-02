@@ -19,6 +19,7 @@ public class JaPhoneThreadBot {
         List<ProcuratorPhones> procuratorPhonesList = new ArrayList<>();
         List<Future<List<ProcuratorPhones>>> futuresOfProcuratorPhones = new ArrayList<>();
 
+//        List<List<SsnData>> listOfSplitSsnData = ChunkUtil.splitToChunks(40, listOfSsn);
         List<SsnDataChunk> listOfSsnDataChunks = ChunkUtil.prepareSsnDataChunks(numberOfThreads, listOfSsn);
 
         // Submit tasks to the executor
@@ -30,7 +31,7 @@ public class JaPhoneThreadBot {
             futuresOfProcuratorPhones.add(future);
         });
 
-        // Get ssn data from futures
+        // Get phones data from futures
         futuresOfProcuratorPhones.forEach(phonesListFuture -> {
             try {
                 procuratorPhonesList.addAll(phonesListFuture.get());
