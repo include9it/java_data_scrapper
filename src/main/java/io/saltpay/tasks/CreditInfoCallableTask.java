@@ -28,9 +28,8 @@ public class CreditInfoCallableTask implements Callable<List<SsnData>> {
     @Override
     public List<SsnData> call() throws Exception {
         SaltLogger.basic("Thread -> " + threadId);
-        creditInfoScrapper.enterAndLogin();
 
-        SaltLogger.basic("Thread -> " + threadId);
+        creditInfoScrapper.enterAndLogin();
         creditInfoScrapper.changeLocale();
 
         // Get Procurators data by SSN number
