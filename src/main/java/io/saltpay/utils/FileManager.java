@@ -69,7 +69,7 @@ public class FileManager {
                     new FileInputStream(RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION)
             );
 
-            models = (List) objIn.readObject();
+            models = (List<Object>) objIn.readObject();
 
             objIn.close();
 
