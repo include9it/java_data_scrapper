@@ -4,31 +4,35 @@ import io.saltpay.models.ProcuratorPhones;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JaPhoneSaveManager {
 
     private Boolean hasSavedData = null;
 
     public void saveProcuratorPhoneData(String fileName, ProcuratorPhones phones) {
+        List<ProcuratorPhones> phonesList = new ArrayList<>();
+        phonesList.add(phones);
+
         if (checkHasSavedData(fileName)) {
-            FileManager.appendModelToFile(fileName, phones);
+            FileManager.appendObjectsToFile(fileName, phonesList);
 
             return;
         }
 
-        FileManager.writeModelToFile(fileName, phones);
+        FileManager.writeObjectsToFile(fileName, phonesList);
 
         hasSavedData = true;
     }
 
     public void saveProcuratorPhoneData(String fileName, List<ProcuratorPhones> phonesList) {
         if (checkHasSavedData(fileName)) {
-            FileManager.appendModelToFile(fileName, phonesList);
+            FileManager.appendObjectsToFile(fileName, phonesList);
 
             return;
         }
 
-        FileManager.writeModelToFile(fileName, phonesList);
+        FileManager.writeObjectsToFile(fileName, phonesList);
 
         hasSavedData = true;
     }
@@ -43,19 +47,17 @@ public class JaPhoneSaveManager {
 
     private boolean checkHasSavedData(String fileName) {
         if (hasSavedData == null) {
-            hasSavedData = FileManager.readModelsFromFile(fileName) != null;
+            hasSavedData = FileManager.readObjectsFromFile(fileName) != null;
         }
 
         return hasSavedData;
     }
 
     private List<ProcuratorPhones> readAndMapSavedData(String fileName) {
-        List<Object> listOfObjects = FileManager.readModelsFromFile(fileName);
+        List<Object> objectList = FileManager.readObjectsFromFile(fileName);
 
-        List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
-
-        listOfObjects.forEach(object -> listOfProcuratorPhones.add((ProcuratorPhones) object));
-
-        return listOfProcuratorPhones;
+        return objectList.stream()
+                .map(object -> (ProcuratorPhones) object)
+                .collect(Collectors.toList());
     }
 }

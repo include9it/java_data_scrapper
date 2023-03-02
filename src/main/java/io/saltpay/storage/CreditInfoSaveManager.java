@@ -4,31 +4,35 @@ import io.saltpay.models.SsnData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CreditInfoSaveManager {
 
     private Boolean hasSavedData = null;
 
     public void saveSsnData(String fileName, SsnData ssnData) {
+        List<SsnData> dataList = new ArrayList<>();
+        dataList.add(ssnData);
+
         if (checkHasSavedData(fileName)) {
-            FileManager.appendModelToFile(fileName, ssnData);
+            FileManager.appendObjectsToFile(fileName, dataList);
 
             return;
         }
 
-        FileManager.writeModelToFile(fileName, ssnData);
+        FileManager.writeObjectsToFile(fileName, dataList);
 
         hasSavedData = true;
     }
 
     public void saveSsnData(String fileName, List<SsnData> ssnDataList) {
         if (checkHasSavedData(fileName)) {
-            FileManager.appendModelToFile(fileName, ssnDataList);
+            FileManager.appendObjectsToFile(fileName, ssnDataList);
 
             return;
         }
 
-        FileManager.writeModelToFile(fileName, ssnDataList);
+        FileManager.writeObjectsToFile(fileName, ssnDataList);
 
         hasSavedData = true;
     }
@@ -43,19 +47,17 @@ public class CreditInfoSaveManager {
 
     private boolean checkHasSavedData(String fileName) {
         if (hasSavedData == null) {
-            hasSavedData = FileManager.readModelsFromFile(fileName) != null;
+            hasSavedData = FileManager.readObjectsFromFile(fileName) != null;
         }
 
         return hasSavedData;
     }
 
     private List<SsnData> readAndMapSavedData(String fileName) {
-        List<Object> listOfObjects = FileManager.readModelsFromFile(fileName);
+        List<Object> objectList = FileManager.readObjectsFromFile(fileName);
 
-        List<SsnData> listOfSsnData = new ArrayList<>();
-
-        listOfObjects.forEach(object -> listOfSsnData.add((SsnData) object));
-
-        return listOfSsnData;
+        return objectList.stream()
+                .map(object -> (SsnData) object)
+                .collect(Collectors.toList());
     }
 }

@@ -11,77 +11,66 @@ import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
 
 public class FileManager {
 
-    public static void appendModelToFile(String fileName, Object model) {
-        List<Object> lisOfObjects = readModelsFromFile(fileName);
+    public static List<Object> readObjectsFromFile(String fileName) {
+        return (List<Object>) readObjectFromFile(fileName);
+    }
 
-        if (lisOfObjects == null) {
-            lisOfObjects = new ArrayList<>();
+    public static <T> void writeObjectsToFile(String fileName, List<T> objects) {
+        writeObjectToFile(fileName, objects);
+    }
+
+    public static <T> void appendObjectsToFile(String fileName, List<T> objects) {
+        List<Object> objectList = (List<Object>) readObjectFromFile(fileName);
+
+        if (objectList == null) {
+            objectList = new ArrayList<>();
         } else {
-            lisOfObjects.add(model);
+            objectList.addAll(objects);
         }
 
-        writeModelsToFile(fileName, lisOfObjects);
+        writeObjectToFile(fileName, objectList);
     }
 
-    public static void appendModelToFile(String fileName, List<Object> objectList) {
-        List<Object> lisOfObjects = readModelsFromFile(fileName);
-
-        if (lisOfObjects == null) {
-            lisOfObjects = new ArrayList<>();
-        } else {
-            lisOfObjects.addAll(objectList);
-        }
-
-        writeModelsToFile(fileName, lisOfObjects);
-    }
-
-    public static void writeModelToFile(String fileName, Object model) {
-        List<Object> lisOfObjects = new ArrayList<>();
-        lisOfObjects.add(model);
-
-        writeModelsToFile(fileName, lisOfObjects);
-    }
-
-    public static void writeModelToFile(String fileName, List<Object> lisOfObjects) {
-        writeModelsToFile(fileName, lisOfObjects);
-    }
-
-    public static void writeModelsToFile(String fileName, List<Object> models) {
+    private static void writeObjectToFile(String fileName, Object object) {
         try {
-            FileOutputStream fileOut = new FileOutputStream(RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION);
-            ObjectOutputStream objOut;
-            objOut = new ObjectOutputStream(fileOut);
+            FileOutputStream fileOut = new FileOutputStream(getFilePathWithExtension(fileName));
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 
-            objOut.writeObject(models);
+            objectOut.writeObject(object);
 
-            objOut.close();
+            objectOut.close();
             fileOut.close();
 
-            SaltLogger.basic("Model saved to " + fileName + DATA_MODEL_FILE_EXTENSION);
+            System.out.println("Objects written to file successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<Object> readModelsFromFile(String fileName) {
-        List<Object> models;
+    private static Object readObjectFromFile(String fileName) {
+        Object object;
 
         try {
-            ObjectInputStream objIn = new ObjectInputStream(
-                    new FileInputStream(RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION)
-            );
+            FileInputStream fileIn = new FileInputStream(getFilePathWithExtension(fileName));
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
-            models = (List<Object>) objIn.readObject();
+            object = objectIn.readObject();
 
-            objIn.close();
+            objectIn.close();
+            fileIn.close();
 
-            SaltLogger.basic("Model loaded from " + fileName + DATA_MODEL_FILE_EXTENSION);
+            System.out.println("Objects read from file successfully.");
         } catch (IOException | ClassNotFoundException e) {
-            SaltLogger.basic("Model not found -> " + fileName + DATA_MODEL_FILE_EXTENSION);
+            SaltLogger.basic("File not found -> " + fileName);
+            SaltLogger.basic("By path -> " + getFilePathWithExtension(fileName));
 
             return null;
         }
 
-        return models;
+        return object;
+    }
+
+    private static String getFilePathWithExtension(String fileName) {
+        return RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION;
     }
 }
