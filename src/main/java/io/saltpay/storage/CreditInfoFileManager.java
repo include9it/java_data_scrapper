@@ -1,26 +1,36 @@
 package io.saltpay.storage;
 
+import io.saltpay.models.SsnData;
 import io.saltpay.utils.SaltLogger;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.saltpay.utils.Constants.DATA_MODEL_FILE_EXTENSION;
 import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
 
-public class FileManager {
+public class CreditInfoFileManager {
 
-    public static List<Object> readObjectsFromFile(String fileName) {
-        return (List<Object>) readObjectFromFile(fileName);
+    public static List<SsnData> readObjectsFromFile(String fileName) {
+        List<Object> objectList = readObjectFromFile(fileName);
+
+        if (objectList == null) {
+            return null;
+        }
+
+        return objectList.stream()
+                .map(object -> (SsnData) object)
+                .collect(Collectors.toList());
     }
 
-    public static <T> void writeObjectsToFile(String fileName, List<T> objects) {
+    public static void writeObjectsToFile(String fileName, List<SsnData> objects) {
         writeObjectToFile(fileName, objects);
     }
 
-    public static <T> void appendObjectsToFile(String fileName, List<T> objects) {
-        List<Object> objectList = (List<Object>) readObjectFromFile(fileName);
+    public static void appendObjectsToFile(String fileName, List<SsnData> objects) {
+        List<SsnData> objectList = readObjectsFromFile(fileName);
 
         if (objectList == null) {
             objectList = new ArrayList<>();
@@ -31,7 +41,7 @@ public class FileManager {
         writeObjectToFile(fileName, objectList);
     }
 
-    private static void writeObjectToFile(String fileName, Object object) {
+    private static void writeObjectToFile(String fileName, List<SsnData> object) {
         try {
             FileOutputStream fileOut = new FileOutputStream(getFilePathWithExtension(fileName));
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
@@ -47,14 +57,14 @@ public class FileManager {
         }
     }
 
-    private static Object readObjectFromFile(String fileName) {
-        Object object;
+    private static List<Object> readObjectFromFile(String fileName) {
+        List<Object> objects;
 
         try {
             FileInputStream fileIn = new FileInputStream(getFilePathWithExtension(fileName));
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
-            object = objectIn.readObject();
+            objects = (List<Object>) objectIn.readObject();
 
             objectIn.close();
             fileIn.close();
@@ -67,7 +77,7 @@ public class FileManager {
             return null;
         }
 
-        return object;
+        return objects;
     }
 
     private static String getFilePathWithExtension(String fileName) {

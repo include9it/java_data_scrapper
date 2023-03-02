@@ -4,7 +4,6 @@ import io.saltpay.models.ProcuratorPhones;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class JaPhoneStorage {
 
@@ -15,31 +14,31 @@ public class JaPhoneStorage {
         phonesList.add(phones);
 
         if (checkHasSavedData(fileName)) {
-            FileManager.appendObjectsToFile(fileName, phonesList);
+            JaPhoneFileManager.appendObjectsToFile(fileName, phonesList);
 
             return;
         }
 
-        FileManager.writeObjectsToFile(fileName, phonesList);
+        JaPhoneFileManager.writeObjectsToFile(fileName, phonesList);
 
         hasSavedData = true;
     }
 
     public void saveProcuratorPhoneData(String fileName, List<ProcuratorPhones> phonesList) {
         if (checkHasSavedData(fileName)) {
-            FileManager.appendObjectsToFile(fileName, phonesList);
+            JaPhoneFileManager.appendObjectsToFile(fileName, phonesList);
 
             return;
         }
 
-        FileManager.writeObjectsToFile(fileName, phonesList);
+        JaPhoneFileManager.writeObjectsToFile(fileName, phonesList);
 
         hasSavedData = true;
     }
 
     public List<ProcuratorPhones> readSavedPhonesData(String fileName) {
         if (checkHasSavedData(fileName)) {
-            return readAndMapSavedData(fileName);
+            return JaPhoneFileManager.readObjectsFromFile(fileName);
         }
 
         return null;
@@ -47,17 +46,9 @@ public class JaPhoneStorage {
 
     private boolean checkHasSavedData(String fileName) {
         if (hasSavedData == null) {
-            hasSavedData = FileManager.readObjectsFromFile(fileName) != null;
+            hasSavedData = JaPhoneFileManager.readObjectsFromFile(fileName) != null;
         }
 
         return hasSavedData;
-    }
-
-    private List<ProcuratorPhones> readAndMapSavedData(String fileName) {
-        List<Object> objectList = FileManager.readObjectsFromFile(fileName);
-
-        return objectList.stream()
-                .map(object -> (ProcuratorPhones) object)
-                .collect(Collectors.toList());
     }
 }

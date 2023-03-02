@@ -30,12 +30,12 @@ public class Main {
 
         // Phone number registry
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driverManager);
-        jaPhoneRobot.basicCollect();
+//        jaPhoneRobot.basicCollect();
 //        jaPhoneRobot.multiThreadCollect();
 
 //        mergeFilterAndCollect();
 
-//        restoreModel();
+        restoreModel();
     }
 
     private static void mergeFilterAndCollect() {
@@ -99,5 +99,7 @@ public class Main {
 
         CreditInfoStorage ciSaveManager = new CreditInfoStorage();
         ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnDataList);
+
+        SaltLogger.displaySsnData(ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE));
     }
 }

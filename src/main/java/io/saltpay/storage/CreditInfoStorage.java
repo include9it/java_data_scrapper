@@ -4,7 +4,6 @@ import io.saltpay.models.SsnData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CreditInfoStorage {
 
@@ -15,31 +14,31 @@ public class CreditInfoStorage {
         dataList.add(ssnData);
 
         if (checkHasSavedData(fileName)) {
-            FileManager.appendObjectsToFile(fileName, dataList);
+            CreditInfoFileManager.appendObjectsToFile(fileName, dataList);
 
             return;
         }
 
-        FileManager.writeObjectsToFile(fileName, dataList);
+        CreditInfoFileManager.writeObjectsToFile(fileName, dataList);
 
         hasSavedData = true;
     }
 
     public void saveSsnData(String fileName, List<SsnData> ssnDataList) {
         if (checkHasSavedData(fileName)) {
-            FileManager.appendObjectsToFile(fileName, ssnDataList);
+            CreditInfoFileManager.appendObjectsToFile(fileName, ssnDataList);
 
             return;
         }
 
-        FileManager.writeObjectsToFile(fileName, ssnDataList);
+        CreditInfoFileManager.writeObjectsToFile(fileName, ssnDataList);
 
         hasSavedData = true;
     }
 
     public List<SsnData> readSavedSsnData(String fileName) {
         if (checkHasSavedData(fileName)) {
-            return readAndMapSavedData(fileName);
+            return CreditInfoFileManager.readObjectsFromFile(fileName);
         }
 
         return null;
@@ -47,17 +46,9 @@ public class CreditInfoStorage {
 
     private boolean checkHasSavedData(String fileName) {
         if (hasSavedData == null) {
-            hasSavedData = FileManager.readObjectsFromFile(fileName) != null;
+            hasSavedData = CreditInfoFileManager.readObjectsFromFile(fileName) != null;
         }
 
         return hasSavedData;
-    }
-
-    private List<SsnData> readAndMapSavedData(String fileName) {
-        List<Object> objectList = FileManager.readObjectsFromFile(fileName);
-
-        return objectList.stream()
-                .map(object -> (SsnData) object)
-                .collect(Collectors.toList());
     }
 }
