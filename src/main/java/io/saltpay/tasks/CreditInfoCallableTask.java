@@ -1,6 +1,6 @@
 package io.saltpay.tasks;
 
-import io.saltpay.model.SsnChunk;
+import io.saltpay.model.chunk.SsnChunk;
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
 import io.saltpay.support.DriverManager;
