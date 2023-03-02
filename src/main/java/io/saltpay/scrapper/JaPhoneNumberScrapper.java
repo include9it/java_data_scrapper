@@ -28,6 +28,8 @@ public class JaPhoneNumberScrapper {
     }
 
     public ProcuratorPhones findAndCollectDataByFullName(String fullName) {
+        SaltLogger.i(TAG, "Collecting phone number data for " + fullName);
+
         PhoneNumbers phoneNumbers;
 
         try {
