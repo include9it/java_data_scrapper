@@ -1,4 +1,4 @@
-package io.saltpay.model.chunk;
+package io.saltpay.models.chunk;
 
 import java.util.List;
 

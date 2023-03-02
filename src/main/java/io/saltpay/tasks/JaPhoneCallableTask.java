@@ -1,7 +1,7 @@
 package io.saltpay.tasks;
 
-import io.saltpay.model.ProcuratorPhones;
-import io.saltpay.model.chunk.SsnDataChunk;
+import io.saltpay.models.ProcuratorPhones;
+import io.saltpay.models.chunk.SsnDataChunk;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
 import io.saltpay.support.DriverManager;
 import io.saltpay.utils.SaltLogger;

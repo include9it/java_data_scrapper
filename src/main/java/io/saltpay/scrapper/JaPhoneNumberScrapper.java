@@ -1,7 +1,7 @@
 package io.saltpay.scrapper;
 
-import io.saltpay.model.PhoneNumbers;
-import io.saltpay.model.ProcuratorPhones;
+import io.saltpay.models.PhoneNumbers;
+import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.steps.StepController;
 import io.saltpay.support.DriverManager;
 import io.saltpay.utils.DataCollectUtil;

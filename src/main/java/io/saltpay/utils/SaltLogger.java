@@ -1,8 +1,8 @@
 package io.saltpay.utils;
 
 
-import io.saltpay.model.ProcuratorPhones;
-import io.saltpay.model.SsnData;
+import io.saltpay.models.ProcuratorPhones;
+import io.saltpay.models.SsnData;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.annotation.Nullable;

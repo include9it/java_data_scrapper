@@ -1,6 +1,6 @@
 package io.saltpay.storage;
 
-import io.saltpay.model.ProcuratorPhones;
+import io.saltpay.models.ProcuratorPhones;
 
 import java.util.ArrayList;
 import java.util.List;

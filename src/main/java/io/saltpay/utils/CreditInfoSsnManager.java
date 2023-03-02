@@ -1,8 +1,8 @@
 package io.saltpay.utils;
 
-import io.saltpay.model.SsnData;
-import io.saltpay.model.excel.ExcelData;
-import io.saltpay.model.excel.SheetData;
+import io.saltpay.models.SsnData;
+import io.saltpay.models.excel.ExcelData;
+import io.saltpay.models.excel.SheetData;
 import io.saltpay.storage.CreditInfoSaveManager;
 
 import java.io.IOException;

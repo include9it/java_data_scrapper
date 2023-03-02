@@ -1,4 +1,4 @@
-package io.saltpay.model.excel;
+package io.saltpay.models.excel;
 
 import java.util.List;
 

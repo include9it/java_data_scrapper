@@ -1,6 +1,6 @@
-package io.saltpay.model.chunk;
+package io.saltpay.models.chunk;
 
-import io.saltpay.model.SsnData;
+import io.saltpay.models.SsnData;
 
 import java.util.List;
 

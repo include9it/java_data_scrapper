@@ -1,7 +1,7 @@
 package io.saltpay.robot;
 
-import io.saltpay.model.ProcuratorPhones;
-import io.saltpay.model.SsnData;
+import io.saltpay.models.ProcuratorPhones;
+import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
 import io.saltpay.support.DriverManager;
 import io.saltpay.storage.CreditInfoSaveManager;

@@ -1,7 +1,7 @@
 package io.saltpay.scrapper;
 
-import io.saltpay.model.Procurator;
-import io.saltpay.model.SsnData;
+import io.saltpay.models.Procurator;
+import io.saltpay.models.SsnData;
 import io.saltpay.steps.StepController;
 import io.saltpay.support.DriverManager;
 import io.saltpay.utils.DataCollectUtil;

@@ -1,10 +1,10 @@
 package io.saltpay.utils;
 
-import io.saltpay.model.Procurator;
-import io.saltpay.model.ProcuratorPhones;
-import io.saltpay.model.SsnData;
-import io.saltpay.model.excel.ExcelData;
-import io.saltpay.model.excel.SheetData;
+import io.saltpay.models.Procurator;
+import io.saltpay.models.ProcuratorPhones;
+import io.saltpay.models.SsnData;
+import io.saltpay.models.excel.ExcelData;
+import io.saltpay.models.excel.SheetData;
 import io.saltpay.storage.CreditInfoSaveManager;
 import io.saltpay.storage.JaPhoneSaveManager;
 

@@ -1,7 +1,7 @@
 package io.saltpay.utils;
 
-import io.saltpay.model.excel.ColumnData;
-import io.saltpay.model.excel.ExcelData;
+import io.saltpay.models.excel.ColumnData;
+import io.saltpay.models.excel.ExcelData;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

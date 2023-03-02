@@ -1,8 +1,8 @@
 package io.saltpay.robot;
 
-import io.saltpay.model.ProcuratorPhones;
-import io.saltpay.model.SsnData;
-import io.saltpay.model.chunk.SsnDataChunk;
+import io.saltpay.models.ProcuratorPhones;
+import io.saltpay.models.SsnData;
+import io.saltpay.models.chunk.SsnDataChunk;
 import io.saltpay.support.DriverManager;
 import io.saltpay.tasks.JaPhoneCallableTask;
 import io.saltpay.utils.ChunkUtil;

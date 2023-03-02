@@ -1,4 +1,4 @@
-package io.saltpay.model;
+package io.saltpay.models;
 
 import java.io.Serializable;
 
