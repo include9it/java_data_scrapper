@@ -1,7 +1,6 @@
-package io.saltpay.utils;
+package io.saltpay.storage;
 
 import io.saltpay.model.ProcuratorPhones;
-import io.saltpay.model.SsnData;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package io.saltpay.utils;
+package io.saltpay.storage;
+
+import io.saltpay.utils.SaltLogger;
 
 import java.io.*;
 import java.util.ArrayList;

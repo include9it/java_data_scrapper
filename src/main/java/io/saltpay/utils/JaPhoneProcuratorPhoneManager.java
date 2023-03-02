@@ -5,8 +5,9 @@ import io.saltpay.model.ProcuratorPhones;
 import io.saltpay.model.SsnData;
 import io.saltpay.model.excel.ExcelData;
 import io.saltpay.model.excel.SheetData;
+import io.saltpay.storage.CreditInfoSaveManager;
+import io.saltpay.storage.JaPhoneSaveManager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

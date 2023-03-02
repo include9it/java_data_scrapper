@@ -3,7 +3,7 @@ package io.saltpay.robot;
 import io.saltpay.model.ProcuratorPhones;
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
-import io.saltpay.utils.JaPhoneSaveManager;
+import io.saltpay.storage.JaPhoneSaveManager;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;

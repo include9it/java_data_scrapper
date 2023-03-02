@@ -1,4 +1,4 @@
-package io.saltpay.utils;
+package io.saltpay.storage;
 
 import io.saltpay.model.SsnData;
 

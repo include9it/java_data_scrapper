@@ -2,7 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
-import io.saltpay.utils.CreditInfoSaveManager;
+import io.saltpay.storage.CreditInfoSaveManager;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
