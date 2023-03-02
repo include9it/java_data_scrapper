@@ -1,5 +1,6 @@
 package io.saltpay.robot;
 
+import io.saltpay.model.ProcuratorPhones;
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
 import io.saltpay.support.DriverManager;
@@ -10,6 +11,8 @@ import io.saltpay.utils.SaltLogger;
 
 import java.io.IOException;
 import java.util.List;
+
+import static io.saltpay.utils.Constants.JA_PHONE_BACKUP_FILE;
 
 public class JaPhoneRobot {
     private final DriverManager driverManager;
@@ -41,8 +44,8 @@ public class JaPhoneRobot {
         jaPhoneNumberDataCollector.start();
 
         // Prepare Excel file
-//        List<ProcuratorPhones> savedProcuratorPhones = jaPhoneSaveManager.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
-//        SaltLogger.basic("savedProcuratorPhones size: " + savedProcuratorPhones.size());
-//        jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedProcuratorPhones);
+        List<ProcuratorPhones> savedProcuratorPhones = jaPhoneSaveManager.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
+        SaltLogger.basic("savedProcuratorPhones size: " + savedProcuratorPhones.size());
+        jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedProcuratorPhones);
     }
 }

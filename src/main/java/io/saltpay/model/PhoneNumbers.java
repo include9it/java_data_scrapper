@@ -1,6 +1,8 @@
 package io.saltpay.model;
 
-public class PhoneNumbers {
+import java.io.Serializable;
+
+public class PhoneNumbers implements Serializable {
     private final String phone1;
     private final String phone2;
 

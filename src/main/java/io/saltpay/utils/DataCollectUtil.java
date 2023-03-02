@@ -72,6 +72,15 @@ public class DataCollectUtil {
 
         phoneNumbers.forEach(phone -> phones.add(collectPhoneNumbersData(phone)));
 
+        // TODO temp
+        if (phones.size() == 0) {
+            return new PhoneNumbers("", "");
+        }
+
+        if (phones.size() == 1) {
+            return new PhoneNumbers(phones.get(0), "");
+        }
+
         return new PhoneNumbers(phones.get(0), phones.get(1));
     }
 

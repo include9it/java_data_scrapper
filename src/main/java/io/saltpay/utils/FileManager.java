@@ -75,7 +75,7 @@ public class FileManager {
 
             SaltLogger.basic("Model loaded from " + fileName + DATA_MODEL_FILE_EXTENSION);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            SaltLogger.basic("Model not found -> " + fileName + DATA_MODEL_FILE_EXTENSION);
 
             return null;
         }

@@ -24,17 +24,25 @@ public class NavigationSteps {
 
         chromeDriver.get(registryUrl);
 
-        WaitUtil.wait(ExpectedConditions.urlContains(registryUrl),chromeDriver);
-        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")),chromeDriver);
+        WaitUtil.wait(ExpectedConditions.urlContains(registryUrl), chromeDriver);
+        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")), chromeDriver);
 
         SaltLogger.i(TAG, "Entered: Registry of companies by SSN: " + ssnValue);
     }
 
     public void enterPhoneInfoByProcurator(String fullName) {
-        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")),chromeDriver);
+        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")), chromeDriver);
 
         WebElement searchBar = chromeDriver.findElement(By.className("search-bar"));
 
-        searchBar.sendKeys(fullName);
+        WebElement input = searchBar.findElement(By.id("search-input"));
+        input.sendKeys(fullName);
+
+        WebElement suggestionContainer = chromeDriver.findElement(By.className("autocomplete-suggestion-list-container"));
+
+        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.className("autocomplete-suggestion")), chromeDriver);
+        WebElement suggestionElement = suggestionContainer.findElement(By.className("autocomplete-suggestion"));
+
+        suggestionElement.click();
     }
 }

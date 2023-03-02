@@ -24,6 +24,8 @@ public class PageSearchSteps {
     }
 
     public List<WebElement> findProcuratorPhones() {
+        WaitUtil.wait(ExpectedConditions.presenceOfElementLocated(By.className("large-phone-font")), chromeDriver);
+
         return chromeDriver.findElements(By.className("large-phone-font"));
     }
 

@@ -31,7 +31,7 @@ public class JaPhoneNumberScrapper {
         PhoneNumbers phoneNumbers;
 
         try {
-            phoneNumbers = findAndCollectProcuratorBySsn(fullName);
+            phoneNumbers = findAndCollectPhonesByProcurator(fullName);
         } catch (NoSuchElementException e) {
             SaltLogger.e(TAG, "Procurator phone numbers doesn't exist! Writing empty space");
 
@@ -45,7 +45,7 @@ public class JaPhoneNumberScrapper {
         return new ProcuratorPhones(fullName, phoneNumbers);
     }
 
-    private PhoneNumbers findAndCollectProcuratorBySsn(String fullName) throws NoSuchElementException, TimeoutException {
+    private PhoneNumbers findAndCollectPhonesByProcurator(String fullName) throws NoSuchElementException, TimeoutException {
         stepController.getNavigationSteps().enterPhoneInfoByProcurator(fullName);
 
         return findAndCollectProcuratorData();

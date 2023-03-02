@@ -12,9 +12,9 @@ public class Main {
         DriverManager driverManager = new DriverManager();
 
         // CreditInfo Island company registry
-        CreditInfoRobot creditInfoRobot = new CreditInfoRobot(driverManager);
-        creditInfoRobot.basicCollectCreditInfo();
-        creditInfoRobot.multiThreadCollectCreditInfo();
+//        CreditInfoRobot creditInfoRobot = new CreditInfoRobot(driverManager);
+//        creditInfoRobot.basicCollectCreditInfo();
+//        creditInfoRobot.multiThreadCollectCreditInfo();
 
         // Phone number registry
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driverManager);

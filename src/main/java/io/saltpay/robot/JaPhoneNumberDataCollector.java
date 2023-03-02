@@ -1,6 +1,5 @@
 package io.saltpay.robot;
 
-import io.saltpay.model.Procurator;
 import io.saltpay.model.ProcuratorPhones;
 import io.saltpay.model.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
@@ -27,23 +26,15 @@ public class JaPhoneNumberDataCollector {
         jaPhoneNumberScrapper.enterWebsite();
 
         // Get phone numbers by Procurator
-//        ssnDataList.forEach(ssnData ->
-//                ssnData.getListOfProcurator().forEach(procurator -> {
-//                    ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.getFullName());
-//
-//                    jaPhoneSaveManager.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, phoneNumbers);
-//
-//                    listOfProcuratorPhones.add(phoneNumbers);
-//                })
-//        );
+        ssnDataList.forEach(ssnData ->
+                ssnData.getListOfProcurator().forEach(procurator -> {
+                    ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.getFullName());
 
-        Procurator procurator = ssnDataList.get(0).getListOfProcurator().get(0);
+                    jaPhoneSaveManager.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, phoneNumbers);
 
-        ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.getFullName());
-
-        jaPhoneSaveManager.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, phoneNumbers);
-
-        listOfProcuratorPhones.add(phoneNumbers);
+                    listOfProcuratorPhones.add(phoneNumbers);
+                })
+        );
     }
 
     public List<ProcuratorPhones> getListOfProcuratorPhones() {

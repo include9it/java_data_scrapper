@@ -12,7 +12,7 @@ public class Driver {
         System.setProperty("webdriver.chrome.silentOutput", "true");
 
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless"); // This option allow to browse without opening browser
+        options.addArguments("--headless"); // This option allow to browse without opening browser
 
         this.driver = new ChromeDriver(options);
     }

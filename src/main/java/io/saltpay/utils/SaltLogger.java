@@ -1,6 +1,7 @@
 package io.saltpay.utils;
 
 
+import io.saltpay.model.ProcuratorPhones;
 import io.saltpay.model.SsnData;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -37,6 +38,14 @@ public final class SaltLogger {
             ssnData.getListOfProcurator().forEach(procurator ->
                     SaltLogger.basic("Procurator Name: " + procurator.getFullName() + "|" + procurator.getPersonalCode())
             );
+        });
+    }
+
+    public static void displayPhonesData(List<ProcuratorPhones> procuratorPhonesList) {
+        procuratorPhonesList.forEach(procuratorPhones -> {
+            SaltLogger.basic("Procurator name: " + procuratorPhones.getFullName());
+            SaltLogger.basic("Phones: " + procuratorPhones.getPhoneNumbers().getPhone1()
+                    + "|" + procuratorPhones.getPhoneNumbers().getPhone2());
         });
     }
 }
