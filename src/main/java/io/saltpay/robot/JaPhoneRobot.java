@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static io.saltpay.utils.Constants.JA_PHONE_BACKUP_FILE;
+import static io.saltpay.utils.Constants.THREADS;
 
 public class JaPhoneRobot {
     private final DriverManager driverManager;
@@ -54,7 +55,7 @@ public class JaPhoneRobot {
         List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, jaPhoneStorage);
 
         // Start multi thread collecting info process
-        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(10, listOfSsnData, driverManager);
+        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driverManager);
         jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, multiThreadSsnDataList);
 
         // Prepare Excel file

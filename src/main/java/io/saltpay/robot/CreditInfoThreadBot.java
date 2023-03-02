@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
+import static io.saltpay.utils.Constants.CHUNKS;
+
 public class CreditInfoThreadBot {
     public static List<SsnData> start(int numberOfThreads, List<String> listOfSsn, DriverManager driverManager) {
         // Create a thread pool with numberOfThreads
@@ -18,7 +20,7 @@ public class CreditInfoThreadBot {
         List<SsnData> listOfSsnData = new ArrayList<>();
         List<Future<List<SsnData>>> futuresOfSsnListData = new ArrayList<>();
 
-        List<SsnChunk> listOfChunks = ChunkUtil.prepareChunks(numberOfThreads, listOfSsn);
+        List<SsnChunk> listOfChunks = ChunkUtil.prepareChunks(CHUNKS, listOfSsn);
 
         // Submit tasks to the executor
         listOfChunks.forEach(chunk -> {

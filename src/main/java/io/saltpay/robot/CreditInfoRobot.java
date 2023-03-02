@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static io.saltpay.utils.Constants.CREDIT_INFO_BACKUP_FILE;
+import static io.saltpay.utils.Constants.THREADS;
 
 public class CreditInfoRobot {
     private final DriverManager driverManager;
@@ -46,7 +47,7 @@ public class CreditInfoRobot {
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
         // Start multi thread collecting info process
-        List<SsnData> multiThreadSsnDataList = CreditInfoThreadBot.start(10, listOfSsn, driverManager);
+        List<SsnData> multiThreadSsnDataList = CreditInfoThreadBot.start(THREADS, listOfSsn, driverManager);
         ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, multiThreadSsnDataList);
 
         // Prepare Excel file

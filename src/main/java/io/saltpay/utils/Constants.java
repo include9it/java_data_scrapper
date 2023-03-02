@@ -4,6 +4,9 @@ public class Constants {
     public static int BASE_WAIT_TIME = 5;
     public static int BASE_WAIT_TIME_LONG = 60;
 
+    public static int THREADS = 10;
+    public static int CHUNKS = 40;
+
     public static String RESOURCE_FILE_PATH = "src/main/resources/";
     public static String DATA_MODEL_FILE_EXTENSION = ".dat";
 

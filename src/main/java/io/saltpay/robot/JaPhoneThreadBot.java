@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
+import static io.saltpay.utils.Constants.CHUNKS;
+
 public class JaPhoneThreadBot {
     public static List<ProcuratorPhones> start(int numberOfThreads, List<SsnData> listOfSsn, DriverManager driverManager) {
         // Create a thread pool with numberOfThreads
@@ -19,8 +21,8 @@ public class JaPhoneThreadBot {
         List<ProcuratorPhones> procuratorPhonesList = new ArrayList<>();
         List<Future<List<ProcuratorPhones>>> futuresOfProcuratorPhones = new ArrayList<>();
 
-//        List<List<SsnData>> listOfSplitSsnData = ChunkUtil.splitToChunks(40, listOfSsn);
-        List<SsnDataChunk> listOfSsnDataChunks = ChunkUtil.prepareSsnDataChunks(numberOfThreads, listOfSsn);
+        List<List<SsnData>> listOfSplitSsnData = ChunkUtil.splitToChunks(CHUNKS, listOfSsn);
+        List<SsnDataChunk> listOfSsnDataChunks = ChunkUtil.prepareSsnDataChunks(numberOfThreads, listOfSplitSsnData.get(0));
 
         // Submit tasks to the executor
         listOfSsnDataChunks.forEach(chunk -> {
