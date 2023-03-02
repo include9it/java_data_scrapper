@@ -3,7 +3,7 @@ package io.saltpay.robot;
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
 import io.saltpay.support.DriverManager;
-import io.saltpay.storage.CreditInfoSaveManager;
+import io.saltpay.storage.CreditInfoStorage;
 import io.saltpay.utils.CreditInfoSsnManager;
 import io.saltpay.utils.SaltLogger;
 
@@ -14,7 +14,7 @@ import static io.saltpay.utils.Constants.CREDIT_INFO_BACKUP_FILE;
 
 public class CreditInfoRobot {
     private final DriverManager driverManager;
-    private final CreditInfoSaveManager ciSaveManager = new CreditInfoSaveManager();
+    private final CreditInfoStorage ciSaveManager = new CreditInfoStorage();
     private final CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
 
     public CreditInfoRobot(DriverManager driverManager) {
@@ -33,12 +33,12 @@ public class CreditInfoRobot {
                 ciSaveManager
         );
         // 15 requests per 1 min // For 4492 records will be approximately 4 hours, 59 minutes
-        creditInfoDataCollector.start();
+//        creditInfoDataCollector.start();
 
         // Prepare Excel file
         List<SsnData> savedSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
         SaltLogger.basic("savedSsnData size: " + savedSsnData.size());
-        creditInfoSsnManager.prepareExcelWithSsnData(savedSsnData);
+//        creditInfoSsnManager.prepareExcelWithSsnData(savedSsnData);
     }
 
     public void multiThreadCollect() throws IOException {

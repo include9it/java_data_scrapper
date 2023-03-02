@@ -3,7 +3,7 @@ package io.saltpay.robot;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
-import io.saltpay.storage.JaPhoneSaveManager;
+import io.saltpay.storage.JaPhoneStorage;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ public class JaPhoneNumberDataCollector {
     private static final String TAG = JaPhoneNumberDataCollector.class.getName();
     private final JaPhoneNumberScrapper jaPhoneNumberScrapper;
     private final List<SsnData> ssnDataList;
-    private final JaPhoneSaveManager jaPhoneSaveManager;
+    private final JaPhoneStorage jaPhoneStorage;
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
-    public JaPhoneNumberDataCollector(JaPhoneNumberScrapper jaPhoneNumberScrapper, List<SsnData> ssnDataList, JaPhoneSaveManager jaPhoneSaveManager) {
+    public JaPhoneNumberDataCollector(JaPhoneNumberScrapper jaPhoneNumberScrapper, List<SsnData> ssnDataList, JaPhoneStorage jaPhoneStorage) {
         this.jaPhoneNumberScrapper = jaPhoneNumberScrapper;
         this.ssnDataList = ssnDataList;
-        this.jaPhoneSaveManager = jaPhoneSaveManager;
+        this.jaPhoneStorage = jaPhoneStorage;
     }
 
     public void start() {
@@ -34,7 +34,7 @@ public class JaPhoneNumberDataCollector {
                 ssnData.getListOfProcurator().forEach(procurator -> {
                     ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.getFullName());
 
-                    jaPhoneSaveManager.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, phoneNumbers);
+                    jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, phoneNumbers);
 
                     listOfProcuratorPhones.add(phoneNumbers);
                 })

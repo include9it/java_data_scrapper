@@ -5,8 +5,8 @@ import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.models.excel.ExcelData;
 import io.saltpay.models.excel.SheetData;
-import io.saltpay.storage.CreditInfoSaveManager;
-import io.saltpay.storage.JaPhoneSaveManager;
+import io.saltpay.storage.CreditInfoStorage;
+import io.saltpay.storage.JaPhoneStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class JaPhoneProcuratorPhoneManager {
 
     private final ExcelManager excelManager = new ExcelManager();
 
-    public List<SsnData> preparePhonesStartData(CreditInfoSaveManager ciSaveManager, JaPhoneSaveManager jaPhoneSaveManager) {
+    public List<SsnData> preparePhonesStartData(CreditInfoStorage ciSaveManager, JaPhoneStorage jaPhoneStorage) {
         // Get list of SSN values
         List<SsnData> listOfSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
 
@@ -26,7 +26,7 @@ public class JaPhoneProcuratorPhoneManager {
             return null;
         }
 
-        List<ProcuratorPhones> procuratorPhonesList = jaPhoneSaveManager.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
+        List<ProcuratorPhones> procuratorPhonesList = jaPhoneStorage.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
 
         if (procuratorPhonesList != null) {
             int lastEntryIndex = procuratorPhonesList.size() - 1;
