@@ -2,10 +2,7 @@ package io.saltpay.steps;
 
 import io.saltpay.utils.SaltLogger;
 import io.saltpay.utils.WaitUtil;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -34,7 +31,7 @@ public class NavigationSteps {
         SaltLogger.i(TAG, "Entered: Registry of companies by SSN: " + ssnValue);
     }
 
-    public void enterPhoneInfoByProcurator(String fullName) throws NoSuchElementException {
+    public void enterPhoneInfoByProcurator(String fullName) throws NoSuchElementException, StaleElementReferenceException {
         WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")), chromeDriver);
 
         WebElement searchBar = chromeDriver.findElement(By.className("search-bar"));
@@ -70,7 +67,11 @@ public class NavigationSteps {
             throw new NoSuchElementException("Element not found!");
         }
 
-        searchResultItem.get(0).click();
+        try {
+            searchResultItem.get(0).click();
+        } catch (StaleElementReferenceException e) {
+            SaltLogger.e(TAG, "No element to click!");
+        }
 
         SaltLogger.i(TAG, "Entered: Phone info page of " + fullName);
     }

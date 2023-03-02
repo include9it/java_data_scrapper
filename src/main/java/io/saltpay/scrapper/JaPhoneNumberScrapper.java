@@ -7,6 +7,7 @@ import io.saltpay.support.DriverManager;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.SaltLogger;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
@@ -39,7 +40,7 @@ public class JaPhoneNumberScrapper {
             SaltLogger.e(TAG, "Procurator phone numbers doesn't exist! Writing empty space");
 
             phoneNumbers = new PhoneNumbers("", "");
-        } catch (TimeoutException e) {
+        } catch (TimeoutException | StaleElementReferenceException e) {
             SaltLogger.e(TAG, "Can't find Procurator phone numbers! Writing empty space");
 
             phoneNumbers = new PhoneNumbers("", "");
@@ -48,7 +49,7 @@ public class JaPhoneNumberScrapper {
         return new ProcuratorPhones(fullName, phoneNumbers);
     }
 
-    private PhoneNumbers findAndCollectPhonesByProcurator(String fullName) throws NoSuchElementException, TimeoutException {
+    private PhoneNumbers findAndCollectPhonesByProcurator(String fullName) throws NoSuchElementException, TimeoutException, StaleElementReferenceException {
         stepController.getNavigationSteps().enterPhoneInfoByProcurator(fullName);
 
         return findAndCollectProcuratorData();
