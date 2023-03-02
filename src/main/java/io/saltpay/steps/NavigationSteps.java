@@ -34,7 +34,7 @@ public class NavigationSteps {
         SaltLogger.i(TAG, "Entered: Registry of companies by SSN: " + ssnValue);
     }
 
-    public void enterPhoneInfoByProcurator(String fullName) {
+    public void enterPhoneInfoByProcurator(String fullName) throws NoSuchElementException {
         WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.tagName("body")), chromeDriver);
 
         WebElement searchBar = chromeDriver.findElement(By.className("search-bar"));
@@ -55,6 +55,8 @@ public class NavigationSteps {
         if (searchResultList.size() != 1) {
             throw new NoSuchElementException("Element not found!");
         }
+
+        WaitUtil.wait(ExpectedConditions.presenceOfElementLocated(By.className("spaced-list-item")), chromeDriver);
 
         List<WebElement> listElements = searchResultList.get(0).findElements(By.className("spaced-list-item"));
 

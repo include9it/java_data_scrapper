@@ -24,4 +24,8 @@ public class ChunkUtil {
 
         return listOfChunks;
     }
+
+    public static List<List<SsnData>> splitToChunks(int numberOfChunks, List<SsnData> listOfSsnData) {
+        return ListUtil.splitList(listOfSsnData, numberOfChunks);
+    }
 }
