@@ -31,11 +31,11 @@ public class Main {
         // Phone number registry
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driverManager);
 //        jaPhoneRobot.basicCollect();
-//        jaPhoneRobot.multiThreadCollect();
+        jaPhoneRobot.multiThreadCollect();
 
 //        mergeFilterAndCollect();
 
-        restoreModel();
+//        restoreModel();
     }
 
     private static void mergeFilterAndCollect() {
@@ -79,14 +79,14 @@ public class Main {
         List<Procurator> procuratorChunk = new ArrayList<>();
 
         int indexCurrent = 0, indexNext = 1;
-        String currentSsn = ssnList.get(indexCurrent), nextSsn = ssnList.get(indexNext);
+        String nextSsn = ssnList.get(indexNext);
         for (String ssn : ssnList) {
             procuratorChunk.add(procuratorList.get(indexCurrent));
 
-            if (!currentSsn.equals(nextSsn)) {
+            if (!ssn.equals(nextSsn)) {
                 ssnDataList.add(new SsnData(ssn, procuratorChunk));
 
-                procuratorChunk.clear();
+                procuratorChunk = new ArrayList<>();
             }
 
             if (ssnList.size() == indexNext) {
