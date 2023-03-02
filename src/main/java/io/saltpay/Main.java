@@ -1,18 +1,22 @@
 package io.saltpay;
 
+import io.saltpay.models.Procurator;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
+import io.saltpay.robot.CreditInfoRobot;
 import io.saltpay.robot.JaPhoneRobot;
 import io.saltpay.storage.CreditInfoStorage;
 import io.saltpay.storage.JaPhoneStorage;
 import io.saltpay.support.DriverManager;
+import io.saltpay.utils.ExcelManager;
 import io.saltpay.utils.ListUtil;
 import io.saltpay.utils.SaltLogger;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.CREDIT_INFO_BACKUP_FILE;
-import static io.saltpay.utils.Constants.JA_PHONE_BACKUP_FILE;
+import static io.saltpay.utils.Constants.*;
 
 public class Main {
 
@@ -20,7 +24,7 @@ public class Main {
         DriverManager driverManager = new DriverManager();
 
         // CreditInfo Island company registry
-//        CreditInfoRobot creditInfoRobot = new CreditInfoRobot(driverManager);
+        CreditInfoRobot creditInfoRobot = new CreditInfoRobot(driverManager);
 //        creditInfoRobot.basicCollect();
 //        creditInfoRobot.multiThreadCollect();
 
@@ -30,6 +34,8 @@ public class Main {
 //        jaPhoneRobot.multiThreadCollect();
 
 //        mergeFilterAndCollect();
+
+//        restoreModel();
     }
 
     private static void mergeFilterAndCollect() {
@@ -53,5 +59,45 @@ public class Main {
 
         ///
 
+    }
+
+    private static void restoreModel() throws IOException {
+        ExcelManager excelManager = new ExcelManager();
+        List<String> ssnList = excelManager.getColumnData(CREDIT_INFO_WRITE_FILE, 0);
+        List<String> nameList = excelManager.getColumnData(CREDIT_INFO_WRITE_FILE, 1);
+        List<String> codeList = excelManager.getColumnData(CREDIT_INFO_WRITE_FILE, 2);
+
+        List<Procurator> procuratorList = new ArrayList<>();
+
+        int index = 0;
+        for (String name : nameList) {
+            procuratorList.add(new Procurator(name, codeList.get(index)));
+        }
+
+        List<SsnData> ssnDataList = new ArrayList<>();
+
+        List<Procurator> procuratorChunk = new ArrayList<>();
+
+        int indexCurrent = 0, indexNext = 1;
+        String currentSsn = ssnList.get(indexCurrent), nextSsn = ssnList.get(indexNext);
+        for (String ssn : ssnList) {
+            procuratorChunk.add(procuratorList.get(indexCurrent));
+
+            if (!currentSsn.equals(nextSsn)) {
+                ssnDataList.add(new SsnData(ssn, procuratorChunk));
+
+                procuratorChunk.clear();
+            }
+
+            if (ssnList.size() == indexNext) {
+                break;
+            }
+
+            indexCurrent++;
+            indexNext++;
+        }
+
+        CreditInfoStorage ciSaveManager = new CreditInfoStorage();
+        ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnDataList);
     }
 }
