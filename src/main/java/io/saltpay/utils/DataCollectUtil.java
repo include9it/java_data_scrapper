@@ -70,12 +70,12 @@ public class DataCollectUtil {
     public static PhoneNumbers collectProcuratorPhones(List<WebElement> phoneNumbers) {
         List<String> phones = new ArrayList<>();
 
-        phoneNumbers.forEach(phone -> phones.add(collectPhoneNumbersData(phone)));
-
         // TODO temp
-        if (phones.size() == 0) {
+        if (phoneNumbers.size() == 0) {
             return new PhoneNumbers("", "");
         }
+
+        phoneNumbers.forEach(phone -> phones.add(collectPhoneNumbersData(phone)));
 
         if (phones.size() == 1) {
             return new PhoneNumbers(phones.get(0), "");

@@ -33,13 +33,14 @@ public class JaPhoneNumberScrapper {
         try {
             phoneNumbers = findAndCollectPhonesByProcurator(fullName);
         } catch (NoSuchElementException e) {
+            SaltLogger.e(TAG, "Info for person: " + fullName + " " + e.getMessage());
             SaltLogger.e(TAG, "Procurator phone numbers doesn't exist! Writing empty space");
 
-            phoneNumbers = new PhoneNumbers("Null", "Null");
+            phoneNumbers = new PhoneNumbers("", "");
         } catch (TimeoutException e) {
             SaltLogger.e(TAG, "Can't find Procurator phone numbers! Writing empty space");
 
-            phoneNumbers = new PhoneNumbers("Null", "Null");
+            phoneNumbers = new PhoneNumbers("", "");
         }
 
         return new ProcuratorPhones(fullName, phoneNumbers);

@@ -3,6 +3,8 @@ package io.saltpay.steps;
 import io.saltpay.utils.SaltLogger;
 import io.saltpay.utils.WaitUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -36,14 +38,24 @@ public class NavigationSteps {
         WebElement searchBar = chromeDriver.findElement(By.className("search-bar"));
 
         WebElement input = searchBar.findElement(By.id("search-input"));
+        input.clear();
         input.sendKeys(fullName);
+        input.sendKeys(Keys.ENTER);
 
-        WebElement suggestionContainer = chromeDriver.findElement(By.className("autocomplete-suggestion-list-container"));
+        WaitUtil.wait(ExpectedConditions.presenceOfElementLocated(By.className("results")), chromeDriver);
 
-        WaitUtil.waitLong(ExpectedConditions.presenceOfElementLocated(By.className("autocomplete-suggestion")), chromeDriver);
-        WebElement suggestionElement = suggestionContainer.findElement(By.className("autocomplete-suggestion"));
+        WebElement results = chromeDriver.findElement(By.className("results"));
 
-        suggestionElement.click();
+        WaitUtil.wait(ExpectedConditions.presenceOfElementLocated(By.className("search-result-list")), chromeDriver);
+
+        WebElement searchResultList = results.findElement(By.className("search-result-list"));
+        WebElement searchResultItem = searchResultList.findElement(By.className("search-result-list-item"));
+
+        if (searchResultItem == null) {
+            throw new NoSuchElementException("Element not found!");
+        }
+
+        searchResultItem.click();
 
         SaltLogger.i(TAG, "Entered: Phone info page of " + fullName);
     }
