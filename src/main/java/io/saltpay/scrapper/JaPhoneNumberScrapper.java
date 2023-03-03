@@ -36,7 +36,7 @@ public class JaPhoneNumberScrapper {
         try {
             phoneNumbers = findAndCollectPhonesByProcurator(fullName);
         } catch (NoSuchElementException e) {
-            SaltLogger.e(TAG, "Info for person: " + fullName + " " + e.getMessage());
+            SaltLogger.e(TAG, "Info for person: " + fullName);
             SaltLogger.e(TAG, "Procurator phone numbers doesn't exist! Writing empty space");
 
             phoneNumbers = new PhoneNumbers("", "");
