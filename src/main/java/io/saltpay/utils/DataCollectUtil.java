@@ -59,9 +59,42 @@ public class DataCollectUtil {
         return new SheetData("Procurator list", columnData);
     }
 
-//    public static SheetData collectMergedData(List<SsnData> listOfSsnData, List<ProcuratorPhones> listOfProcuratorPhones) {
-//
-//    }
+    public static SheetData collectMergedData(List<SsnData> listOfSsnData, List<ProcuratorPhones> listOfProcuratorPhones) {
+        List<String> listOfFullName = new ArrayList<>();
+        List<String> listOfPersonalCodes = new ArrayList<>();
+        List<String> ssnList = new ArrayList<>();
+        List<String> phone1List = new ArrayList<>();
+        List<String> phone2List = new ArrayList<>();
+
+        List<ColumnData> columnData = new ArrayList<>();
+
+        String headerName = "Full Name", headerCode = "Personal code", headerSsn = "Company SSN", headerPhone1 = "Phone1", headerPhone2 = "Phone2";
+
+        int procuratorIndex = 0;
+        for (SsnData ssnData : listOfSsnData) {
+            for (Procurator data : ssnData.getListOfProcurator()) {
+                listOfFullName.add(data.getFullName());
+                listOfPersonalCodes.add(StringUtil.removeDash(data.getPersonalCode()));
+                ssnList.add(ssnData.getSsnValue());
+
+                ProcuratorPhones procuratorPhones = listOfProcuratorPhones.get(procuratorIndex);
+                if (data.getFullName().equals(procuratorPhones.getFullName())) {
+                    phone1List.add(procuratorPhones.getPhoneNumbers().getPhone1());
+                    phone2List.add(procuratorPhones.getPhoneNumbers().getPhone2());
+                }
+
+                procuratorIndex++;
+            }
+        }
+
+        columnData.add(new ColumnData(headerSsn, ssnList));
+        columnData.add(new ColumnData(headerName, listOfFullName));
+        columnData.add(new ColumnData(headerCode, listOfPersonalCodes));
+        columnData.add(new ColumnData(headerPhone1, phone1List));
+        columnData.add(new ColumnData(headerPhone2, phone2List));
+
+        return new SheetData("Procurator list", columnData);
+    }
 
     public static List<Procurator> collectProcuratorsData(List<List<WebElement>> procurators) {
         List<Procurator> listOfProcurator = new ArrayList<>();
