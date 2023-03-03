@@ -70,20 +70,18 @@ public class DataCollectUtil {
 
         String headerName = "Full Name", headerCode = "Personal code", headerSsn = "Company SSN", headerPhone1 = "Phone1", headerPhone2 = "Phone2";
 
-        int procuratorIndex = 0;
         for (SsnData ssnData : listOfSsnData) {
-            for (Procurator data : ssnData.getListOfProcurator()) {
-                listOfFullName.add(data.getFullName());
-                listOfPersonalCodes.add(StringUtil.removeDash(data.getPersonalCode()));
+            for (Procurator currentProcurator : ssnData.getListOfProcurator()) {
+                listOfFullName.add(currentProcurator.getFullName());
+                listOfPersonalCodes.add(StringUtil.removeDash(currentProcurator.getPersonalCode()));
                 ssnList.add(ssnData.getSsnValue());
 
-                ProcuratorPhones procuratorPhones = listOfProcuratorPhones.get(procuratorIndex);
-                if (data.getFullName().equals(procuratorPhones.getFullName())) {
-                    phone1List.add(procuratorPhones.getPhoneNumbers().getPhone1());
-                    phone2List.add(procuratorPhones.getPhoneNumbers().getPhone2());
-                }
-
-                procuratorIndex++;
+                listOfProcuratorPhones.forEach(procuratorPhones -> {
+                    if (currentProcurator.getFullName().equals(procuratorPhones.getFullName())) {
+                        phone1List.add(procuratorPhones.getPhoneNumbers().getPhone1());
+                        phone2List.add(procuratorPhones.getPhoneNumbers().getPhone2());
+                    }
+                });
             }
         }
 

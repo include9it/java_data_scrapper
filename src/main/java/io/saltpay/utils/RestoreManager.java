@@ -23,6 +23,8 @@ public class RestoreManager {
         int index = 0;
         for (String name : nameList) {
             procuratorList.add(new Procurator(name, codeList.get(index)));
+
+            index++;
         }
 
         List<SsnData> ssnDataList = new ArrayList<>();

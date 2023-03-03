@@ -20,6 +20,8 @@ public class DataPreparation {
         List<SsnData> savedThreadSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
         SaltLogger.basic("savedSsnThreadData size: " + savedThreadSsnData.size());
 
+        SaltLogger.displaySsnData(savedThreadSsnData);
+
         List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
 

@@ -29,11 +29,11 @@ public class Main {
         // Phone number registry
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driverManager);
 //        jaPhoneRobot.basicCollect();
-        jaPhoneRobot.multiThreadCollect();
+//        jaPhoneRobot.multiThreadCollect();
 
 
         // Prepare Data
-//        DataPreparation.mergeFilterAndCollect();
-//        RestoreManager.restoreModel();
+        RestoreManager.restoreModel();
+        DataPreparation.mergeFilterAndCollect();
     }
 }
