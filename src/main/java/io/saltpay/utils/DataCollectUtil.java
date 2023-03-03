@@ -59,6 +59,10 @@ public class DataCollectUtil {
         return new SheetData("Procurator list", columnData);
     }
 
+//    public static SheetData collectMergedData(List<SsnData> listOfSsnData, List<ProcuratorPhones> listOfProcuratorPhones) {
+//
+//    }
+
     public static List<Procurator> collectProcuratorsData(List<List<WebElement>> procurators) {
         List<Procurator> listOfProcurator = new ArrayList<>();
 

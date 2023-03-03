@@ -10,6 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
@@ -18,10 +19,12 @@ import static io.saltpay.utils.Constants.JA_PHONE_REGISTRY_LINK;
 public class JaPhoneNumberScrapper {
     private static final String TAG = JaPhoneNumberScrapper.class.getName();
 
+    private final ChromeDriver chromeDriver;
     private final StepController stepController;
 
     public JaPhoneNumberScrapper(DriverManager driverManager) {
-        this.stepController = new StepController(driverManager.createChromeDriver());
+        this.chromeDriver = driverManager.createChromeDriver();
+        this.stepController = new StepController(chromeDriver);
     }
 
     public void enterWebsite() {
@@ -47,6 +50,10 @@ public class JaPhoneNumberScrapper {
         }
 
         return new ProcuratorPhones(fullName, phoneNumbers);
+    }
+
+    public void finish() {
+        chromeDriver.quit();
     }
 
     private PhoneNumbers findAndCollectPhonesByProcurator(String fullName) throws NoSuchElementException, TimeoutException, StaleElementReferenceException {

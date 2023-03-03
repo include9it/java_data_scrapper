@@ -44,6 +44,8 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
                 })
         );
 
+        jaPhoneNumberScrapper.finish();
+
         return listOfProcuratorPhones;
     }
 }

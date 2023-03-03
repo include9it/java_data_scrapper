@@ -39,6 +39,8 @@ public class JaPhoneNumberDataCollector {
                     listOfProcuratorPhones.add(phoneNumbers);
                 })
         );
+
+        jaPhoneNumberScrapper.finish();
     }
 
     public List<ProcuratorPhones> getListOfProcuratorPhones() {
