@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-import static io.saltpay.utils.Constants.CHUNKS;
-
 public class JaPhoneThreadBot {
     public static List<ProcuratorPhones> start(int numberOfThreads, List<SsnData> listOfSsn, DriverManager driverManager) {
         // Create a thread pool with numberOfThreads
