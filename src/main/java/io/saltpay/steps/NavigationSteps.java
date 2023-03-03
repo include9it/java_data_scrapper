@@ -69,7 +69,7 @@ public class NavigationSteps {
 
         try {
             searchResultItem.get(0).click();
-        } catch (StaleElementReferenceException e) {
+        } catch (Exception e) {
             SaltLogger.e(TAG, "No element to click!");
         }
 
