@@ -21,8 +21,8 @@ public class JaPhoneThreadBot {
         List<ProcuratorPhones> procuratorPhonesList = new ArrayList<>();
         List<Future<List<ProcuratorPhones>>> futuresOfProcuratorPhones = new ArrayList<>();
 
-        List<List<SsnData>> listOfSplitSsnData = ChunkUtil.splitToChunks(CHUNKS, listOfSsn);
-        List<SsnDataChunk> listOfSsnDataChunks = ChunkUtil.prepareSsnDataChunks(numberOfThreads, listOfSplitSsnData.get(0));
+//        List<List<SsnData>> listOfSplitSsnData = ChunkUtil.splitToChunks(CHUNKS, listOfSsn); // this line can split chunks into smaller chunks
+        List<SsnDataChunk> listOfSsnDataChunks = ChunkUtil.prepareSsnDataChunks(numberOfThreads, listOfSsn);
 
         // Submit tasks to the executor
         listOfSsnDataChunks.forEach(chunk -> {
