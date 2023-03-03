@@ -38,6 +38,8 @@ public class CreditInfoDataCollector {
 
             listOfSsnData.add(ssnData);
         });
+
+        creditInfoScrapper.finish();
     }
 
     public List<SsnData> getListOfSsnData() {

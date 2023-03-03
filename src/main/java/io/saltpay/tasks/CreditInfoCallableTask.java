@@ -41,6 +41,8 @@ public class CreditInfoCallableTask implements Callable<List<SsnData>> {
             listOfSsnData.add(ssnData);
         });
 
+        creditInfoScrapper.finish();
+
         return listOfSsnData;
     }
 }

@@ -9,6 +9,7 @@ import io.saltpay.utils.SaltLogger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,12 @@ import static io.saltpay.utils.Constants.*;
 public class CreditInfoScrapper {
     private static final String TAG = CreditInfoScrapper.class.getName();
 
+    private final ChromeDriver chromeDriver;
     private final StepController stepController;
 
     public CreditInfoScrapper(DriverManager driverManager) {
-        this.stepController = new StepController(driverManager.createChromeDriver());
+        this.chromeDriver = driverManager.createChromeDriver();
+        this.stepController = new StepController(chromeDriver);
     }
 
     public void enterAndLogin() {
@@ -57,6 +60,10 @@ public class CreditInfoScrapper {
         }
 
         return new SsnData(ssnValue, listOfProcurator);
+    }
+
+    public void finish() {
+        chromeDriver.quit();
     }
 
     private List<Procurator> findAndCollectProcuratorBySsn(String ssnValue) throws NoSuchElementException, TimeoutException {
