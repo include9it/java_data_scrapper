@@ -34,6 +34,6 @@ public class Main {
 
         // Prepare Data
         RestoreManager.restoreModel();
-        DataPreparation.mergeFilterAndCollect();
+//        DataPreparation.mergeFilterAndCollect();
     }
 }

@@ -6,17 +6,18 @@ import io.saltpay.storage.CreditInfoStorage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.CREDIT_INFO_BACKUP_FILE;
-import static io.saltpay.utils.Constants.CREDIT_INFO_WRITE_FILE;
+import static io.saltpay.utils.Constants.*;
 
 public class RestoreManager {
     public static void restoreModel() throws IOException {
         ExcelManager excelManager = new ExcelManager();
-        List<String> ssnList = excelManager.getColumnData(CREDIT_INFO_WRITE_FILE, 0);
-        List<String> nameList = excelManager.getColumnData(CREDIT_INFO_WRITE_FILE, 1);
-        List<String> codeList = excelManager.getColumnData(CREDIT_INFO_WRITE_FILE, 2);
+        List<String> ssnList = excelManager.getColumnData(MERGED_WRITE_FILE, 0);
+        List<String> nameList = excelManager.getColumnData(MERGED_WRITE_FILE, 1);
+        List<String> codeList = excelManager.getColumnData(MERGED_WRITE_FILE, 2);
 
         List<Procurator> procuratorList = new ArrayList<>();
 
@@ -31,6 +32,7 @@ public class RestoreManager {
 
         List<Procurator> procuratorChunk = new ArrayList<>();
 
+        int listSize = ssnList.size();
         int indexCurrent = 0, indexNext = 1;
         String nextSsn = ssnList.get(indexNext);
         for (String ssn : ssnList) {
@@ -42,17 +44,25 @@ public class RestoreManager {
                 procuratorChunk = new ArrayList<>();
             }
 
-            if (ssnList.size() == indexNext) {
+            indexCurrent++;
+            indexNext++;
+
+            if (indexNext == listSize) {
+                procuratorChunk.add(procuratorList.get(indexCurrent));
+
+                ssnDataList.add(new SsnData(nextSsn, procuratorChunk));
+
                 break;
             }
 
-            indexCurrent++;
-            indexNext++;
+            nextSsn = ssnList.get(indexNext);
         }
 
         CreditInfoStorage ciSaveManager = new CreditInfoStorage();
-        ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnDataList);
+//        ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnDataList);
 
-        SaltLogger.displaySsnData(ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE));
+        SaltLogger.basic("CREDIT_INFO_BACKUP_FILE -> ");
+        SaltLogger.displaySsnData(Arrays.asList(ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE).get(ssnDataList.size() - 1)));
+//        SaltLogger.displaySsnData(ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE));
     }
 }
