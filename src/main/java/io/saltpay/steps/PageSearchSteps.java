@@ -23,7 +23,7 @@ public class PageSearchSteps {
         return findSpecificRows("Managing director, procuration, auditors and founders", "Procurator");
     }
 
-    public List<WebElement> findProcuratorPhones() {
+    public List<WebElement> findProcuratorPhones() throws NoSuchElementException, TimeoutException {
         WaitUtil.wait(ExpectedConditions.presenceOfElementLocated(By.className("large-phone-font")), chromeDriver);
 
         return chromeDriver.findElements(By.className("large-phone-font"));
