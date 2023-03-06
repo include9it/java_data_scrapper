@@ -34,6 +34,8 @@ public class DataPreparation {
             SaltLogger.basic("Duplicates - removed");
         }
 
+        jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, savedThreadPhonesData, true);
+
         ///
         SheetData phonesSheet = DataCollectUtil.collectMergedData(savedThreadSsnData, savedThreadPhonesData);
 

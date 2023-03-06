@@ -24,11 +24,13 @@ public class JaPhoneStorage {
         hasSavedData = true;
     }
 
-    public void saveProcuratorPhoneData(String fileName, List<ProcuratorPhones> phonesList) {
-        if (checkHasSavedData(fileName)) {
-            JaPhoneFileManager.appendObjectsToFile(fileName, phonesList);
+    public void saveProcuratorPhoneData(String fileName, List<ProcuratorPhones> phonesList, boolean override) {
+        if (!override) {
+            if (checkHasSavedData(fileName)) {
+                JaPhoneFileManager.appendObjectsToFile(fileName, phonesList);
 
-            return;
+                return;
+            }
         }
 
         JaPhoneFileManager.writeObjectsToFile(fileName, phonesList);
