@@ -8,7 +8,9 @@ import io.saltpay.models.excel.SheetData;
 import io.saltpay.storage.CreditInfoStorage;
 import io.saltpay.storage.JaPhoneStorage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
@@ -48,6 +50,28 @@ public class JaPhoneProcuratorPhoneManager {
         return listOfSsnData;
     }
 
+    public List<SsnData> preparePhonesStartDataV2(CreditInfoStorage ciSaveManager, JaPhoneStorage jaPhoneStorage) throws IOException {
+        List<String> listOfNames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 0);
+        List<String> listOfSurenames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 1);
+
+        List<String> listOfFullNames = new ArrayList<>();
+
+        int index = 0;
+        for (String name : listOfNames) {
+            listOfFullNames.add(name + " " + listOfSurenames.get(index));
+            index++;
+        }
+
+        List<Procurator> soleTraders = new ArrayList<>();
+        listOfFullNames.forEach(name -> soleTraders.add(new Procurator(name, "")));
+
+        List<SsnData> listOfSsnData = new ArrayList<>();
+
+        soleTraders.forEach(trader -> listOfSsnData.add(new SsnData("", Arrays.asList(trader))));
+
+        return listOfSsnData;
+    }
+
     public void prepareExcelWithProcuratorPhoneData(List<ProcuratorPhones> listOfProcuratorPhones) {
         SaltLogger.i(TAG, "Preparing Excel file...");
 
@@ -58,6 +82,19 @@ public class JaPhoneProcuratorPhoneManager {
 
         // Create new doc with target info
         ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_WRITE_FILE, dataSheets);
+        excelManager.writeExcel(excelData);
+    }
+
+    public void prepareExcelWithProcuratorPhoneDataV2(List<ProcuratorPhones> listOfProcuratorPhones) {
+        SaltLogger.i(TAG, "Preparing Excel file...");
+
+        SheetData phonesSheet = DataCollectUtil.collectPhonesSheetData(listOfProcuratorPhones);
+
+        List<SheetData> dataSheets = new ArrayList<>();
+        dataSheets.add(phonesSheet);
+
+        // Create new doc with target info
+        ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_TRADER_WRITE_FILE, dataSheets);
         excelManager.writeExcel(excelData);
     }
 

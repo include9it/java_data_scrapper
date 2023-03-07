@@ -56,7 +56,7 @@ public class DataCollectUtil {
         columnData.add(new ColumnData(headerPhone1, listOfPhone1));
         columnData.add(new ColumnData(headerPhone2, listOfPhone2));
 
-        return new SheetData("Procurator list", columnData);
+        return new SheetData("Phone list", columnData);
     }
 
     public static SheetData collectMergedData(List<SsnData> listOfSsnData, List<ProcuratorPhones> listOfProcuratorPhones) {

@@ -30,10 +30,12 @@ public class Main {
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driverManager);
 //        jaPhoneRobot.basicCollect();
 //        jaPhoneRobot.multiThreadCollect();
+        jaPhoneRobot.multiThreadCollectV2();
+
 
 
         // Prepare Data
 //        RestoreManager.restoreModel();
-        DataPreparation.mergeFilterAndCollect();
+//        DataPreparation.mergeFilterAndCollect();
     }
 }

@@ -12,8 +12,7 @@ import io.saltpay.utils.SaltLogger;
 import java.io.IOException;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.JA_PHONE_BACKUP_FILE;
-import static io.saltpay.utils.Constants.THREADS;
+import static io.saltpay.utils.Constants.*;
 
 public class JaPhoneRobot {
     private final DriverManager driverManager;
@@ -62,5 +61,19 @@ public class JaPhoneRobot {
         List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
         jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedThreadPhonesData);
+    }
+
+    public void multiThreadCollectV2() throws IOException {
+        // Prepare list of input SSN numbers for data collection
+        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartDataV2(ciSaveManager, jaPhoneStorage);
+
+        // Start multi thread collecting info process
+        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driverManager);
+        jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_TRADER_BACKUP_FILE, multiThreadSsnDataList, false);
+
+        // Prepare Excel file
+        List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readSavedPhonesData(JA_PHONE_TRADER_BACKUP_FILE);
+        SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
+        jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneDataV2(savedThreadPhonesData);
     }
 }
