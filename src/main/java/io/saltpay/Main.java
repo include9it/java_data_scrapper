@@ -33,7 +33,6 @@ public class Main {
         jaPhoneRobot.multiThreadCollectV2();
 
 
-
         // Prepare Data
 //        RestoreManager.restoreModel();
 //        DataPreparation.mergeFilterAndCollect();
