@@ -3,7 +3,7 @@ package io.saltpay.scrapper;
 import io.saltpay.models.PhoneNumbers;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.steps.StepController;
-import io.saltpay.support.DriverManager;
+import io.saltpay.support.Driver;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.SaltLogger;
 import org.openqa.selenium.NoSuchElementException;
@@ -22,8 +22,8 @@ public class JaPhoneNumberScrapper {
     private final ChromeDriver chromeDriver;
     private final StepController stepController;
 
-    public JaPhoneNumberScrapper(DriverManager driverManager) {
-        this.chromeDriver = driverManager.createChromeDriver();
+    public JaPhoneNumberScrapper(Driver driver) {
+        this.chromeDriver = driver.setupChromeDriver();
         this.stepController = new StepController(chromeDriver);
     }
 

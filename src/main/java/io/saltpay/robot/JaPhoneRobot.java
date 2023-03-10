@@ -3,7 +3,7 @@ package io.saltpay.robot;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
-import io.saltpay.support.DriverManager;
+import io.saltpay.support.Driver;
 import io.saltpay.storage.CreditInfoStorage;
 import io.saltpay.utils.JaPhoneProcuratorPhoneManager;
 import io.saltpay.storage.JaPhoneStorage;
@@ -15,13 +15,13 @@ import java.util.List;
 import static io.saltpay.utils.Constants.*;
 
 public class JaPhoneRobot {
-    private final DriverManager driverManager;
+    private final Driver driver;
     private final CreditInfoStorage ciSaveManager = new CreditInfoStorage();
     private final JaPhoneStorage jaPhoneStorage = new JaPhoneStorage();
     private final JaPhoneProcuratorPhoneManager jaPhoneProcuratorPhoneManager = new JaPhoneProcuratorPhoneManager();
 
-    public JaPhoneRobot(DriverManager driverManager) {
-        this.driverManager = driverManager;
+    public JaPhoneRobot(Driver driver) {
+        this.driver = driver;
     }
 
     public void basicCollect() throws IOException {
@@ -35,7 +35,7 @@ public class JaPhoneRobot {
         }
 
         // Start data collection process
-        JaPhoneNumberScrapper jaPhoneNumberScrapper = new JaPhoneNumberScrapper(driverManager);
+        JaPhoneNumberScrapper jaPhoneNumberScrapper = new JaPhoneNumberScrapper(driver);
         JaPhoneNumberDataCollector jaPhoneNumberDataCollector = new JaPhoneNumberDataCollector(
                 jaPhoneNumberScrapper,
                 ssnDataList,
@@ -54,7 +54,7 @@ public class JaPhoneRobot {
         List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, jaPhoneStorage);
 
         // Start multi thread collecting info process
-        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driverManager);
+        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
         jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, multiThreadSsnDataList, false);
 
         // Prepare Excel file
@@ -68,7 +68,7 @@ public class JaPhoneRobot {
         List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartDataV2(ciSaveManager, jaPhoneStorage);
 
         // Start multi thread collecting info process
-        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driverManager);
+        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
         jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_TRADER_BACKUP_FILE, multiThreadSsnDataList, false);
 
         // Prepare Excel file

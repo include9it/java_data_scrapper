@@ -3,7 +3,7 @@ package io.saltpay.tasks;
 import io.saltpay.models.chunk.SsnChunk;
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
-import io.saltpay.support.DriverManager;
+import io.saltpay.support.Driver;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ public class CreditInfoCallableTask implements Callable<List<SsnData>> {
 
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoCallableTask(int threadId, DriverManager driverManager, SsnChunk ssnChunk) {
+    public CreditInfoCallableTask(int threadId, Driver driver, SsnChunk ssnChunk) {
         this.threadId = threadId;
-        this.creditInfoScrapper = new CreditInfoScrapper(driverManager);
+        this.creditInfoScrapper = new CreditInfoScrapper(driver);
         this.ssnChunk = ssnChunk;
     }
 

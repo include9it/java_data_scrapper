@@ -3,7 +3,7 @@ package io.saltpay.scrapper;
 import io.saltpay.models.Procurator;
 import io.saltpay.models.SsnData;
 import io.saltpay.steps.StepController;
-import io.saltpay.support.DriverManager;
+import io.saltpay.support.Driver;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.SaltLogger;
 import org.openqa.selenium.NoSuchElementException;
@@ -22,8 +22,8 @@ public class CreditInfoScrapper {
     private final ChromeDriver chromeDriver;
     private final StepController stepController;
 
-    public CreditInfoScrapper(DriverManager driverManager) {
-        this.chromeDriver = driverManager.createChromeDriver();
+    public CreditInfoScrapper(Driver driver) {
+        this.chromeDriver = driver.setupChromeDriver();
         this.stepController = new StepController(chromeDriver);
     }
 

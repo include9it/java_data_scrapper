@@ -3,7 +3,7 @@ package io.saltpay.tasks;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.chunk.SsnDataChunk;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
-import io.saltpay.support.DriverManager;
+import io.saltpay.support.Driver;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
 
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
-    public JaPhoneCallableTask(int threadId, DriverManager driverManager, SsnDataChunk ssnDataChunk) {
+    public JaPhoneCallableTask(int threadId, Driver driver, SsnDataChunk ssnDataChunk) {
         this.threadId = threadId;
-        this.jaPhoneNumberScrapper = new JaPhoneNumberScrapper(driverManager);
+        this.jaPhoneNumberScrapper = new JaPhoneNumberScrapper(driver);
         this.ssnDataChunk = ssnDataChunk;
     }
 

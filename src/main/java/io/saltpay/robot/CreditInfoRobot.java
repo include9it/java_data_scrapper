@@ -2,7 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
-import io.saltpay.support.DriverManager;
+import io.saltpay.support.Driver;
 import io.saltpay.storage.CreditInfoStorage;
 import io.saltpay.utils.CreditInfoSsnManager;
 import io.saltpay.utils.SaltLogger;
@@ -14,12 +14,12 @@ import static io.saltpay.utils.Constants.CREDIT_INFO_BACKUP_FILE;
 import static io.saltpay.utils.Constants.THREADS;
 
 public class CreditInfoRobot {
-    private final DriverManager driverManager;
+    private final Driver driver;
     private final CreditInfoStorage ciSaveManager = new CreditInfoStorage();
     private final CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
 
-    public CreditInfoRobot(DriverManager driverManager) {
-        this.driverManager = driverManager;
+    public CreditInfoRobot(Driver driver) {
+        this.driver = driver;
     }
 
     public void basicCollect() throws IOException {
@@ -27,7 +27,7 @@ public class CreditInfoRobot {
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
         // Start data collection process
-        CreditInfoScrapper creditInfoScrapper = new CreditInfoScrapper(driverManager);
+        CreditInfoScrapper creditInfoScrapper = new CreditInfoScrapper(driver);
         CreditInfoDataCollector creditInfoDataCollector = new CreditInfoDataCollector(
                 creditInfoScrapper,
                 listOfSsn,
@@ -47,7 +47,7 @@ public class CreditInfoRobot {
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(ciSaveManager);
 
         // Start multi thread collecting info process
-        List<SsnData> multiThreadSsnDataList = CreditInfoThreadBot.start(THREADS, listOfSsn, driverManager);
+        List<SsnData> multiThreadSsnDataList = CreditInfoThreadBot.start(THREADS, listOfSsn, driver);
         ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, multiThreadSsnDataList);
 
         // Prepare Excel file
