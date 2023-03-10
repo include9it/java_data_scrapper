@@ -28,9 +28,9 @@ public class Main {
 
         // Phone number registry
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driverManager);
-//        jaPhoneRobot.basicCollect();
+        jaPhoneRobot.basicCollect();
 //        jaPhoneRobot.multiThreadCollect();
-        jaPhoneRobot.multiThreadCollectV2();
+//        jaPhoneRobot.multiThreadCollectV2();
 
 
         // Prepare Data

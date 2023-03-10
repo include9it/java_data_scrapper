@@ -9,8 +9,16 @@ public class StorageController extends Storage {
     private boolean hasSavedData = false;
 
     public <T> void saveData(String absoluteFileName, T data) {
+        saveData(absoluteFileName, Collections.singletonList(data));
+    }
+
+    public <T> void saveData(String absoluteFileName, List<T> data) {
+        SaltLogger.basic("Saving data to file...");
+
         if (hasSavedData) {
-            appendObjectsToFile(absoluteFileName, Collections.singletonList(data));
+            SaltLogger.basic("Appending data to file...");
+
+            appendObjectsToFile(absoluteFileName, data);
 
             return;
         }
@@ -21,11 +29,15 @@ public class StorageController extends Storage {
     }
 
     public <T> T readData(String absoluteFileName) {
+        SaltLogger.basic("Reading data from file...");
+
         if (hasSavedData) {
             return readFromFile(absoluteFileName);
         }
 
-        return null;
+        SaltLogger.basic("Can't read file! File is empty.");
+
+        return readFromFile(absoluteFileName);
     }
 
     private <T> void appendObjectsToFile(String absoluteFileName, List<T> listOfObjects) {

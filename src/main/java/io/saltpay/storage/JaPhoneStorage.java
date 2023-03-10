@@ -5,52 +5,29 @@ import io.saltpay.models.ProcuratorPhones;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.saltpay.utils.Constants.DATA_MODEL_FILE_EXTENSION;
+import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
+
 public class JaPhoneStorage {
 
-    private Boolean hasSavedData = null;
+    private final StorageController storageController = new StorageController();
 
     public void saveProcuratorPhoneData(String fileName, ProcuratorPhones phones) {
         List<ProcuratorPhones> phonesList = new ArrayList<>();
         phonesList.add(phones);
 
-        if (checkHasSavedData(fileName)) {
-            JaPhoneFileManager.appendObjectsToFile(fileName, phonesList);
-
-            return;
-        }
-
-        JaPhoneFileManager.writeObjectsToFile(fileName, phonesList);
-
-        hasSavedData = true;
+        storageController.saveData(getFilePathWithExtension(fileName), phonesList);
     }
 
     public void saveProcuratorPhoneData(String fileName, List<ProcuratorPhones> phonesList, boolean override) {
-        if (!override) {
-            if (checkHasSavedData(fileName)) {
-                JaPhoneFileManager.appendObjectsToFile(fileName, phonesList);
-
-                return;
-            }
-        }
-
-        JaPhoneFileManager.writeObjectsToFile(fileName, phonesList);
-
-        hasSavedData = true;
+        storageController.saveData(getFilePathWithExtension(fileName), phonesList);
     }
 
     public List<ProcuratorPhones> readSavedPhonesData(String fileName) {
-        if (checkHasSavedData(fileName)) {
-            return JaPhoneFileManager.readObjectsFromFile(fileName);
-        }
-
-        return null;
+        return storageController.readData(getFilePathWithExtension(fileName));
     }
 
-    private boolean checkHasSavedData(String fileName) {
-        if (hasSavedData == null) {
-            hasSavedData = JaPhoneFileManager.readObjectsFromFile(fileName) != null;
-        }
-
-        return hasSavedData;
+    private static String getFilePathWithExtension(String fileName) {
+        return RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION;
     }
 }
