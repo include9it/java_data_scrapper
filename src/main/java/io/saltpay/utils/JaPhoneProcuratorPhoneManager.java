@@ -5,8 +5,7 @@ import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.models.excel.ExcelData;
 import io.saltpay.models.excel.SheetData;
-import io.saltpay.storage.CreditInfoStorage;
-import io.saltpay.storage.JaPhoneStorage;
+import io.saltpay.storage.StorageController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,15 +19,15 @@ public class JaPhoneProcuratorPhoneManager {
 
     private final ExcelManager excelManager = new ExcelManager();
 
-    public List<SsnData> preparePhonesStartData(CreditInfoStorage ciSaveManager, JaPhoneStorage procuratorPhoneStorage) {
+    public List<SsnData> preparePhonesStartData(StorageController ssnStorage, StorageController phoneStorage) {
         // Get list of SSN values
-        List<SsnData> listOfSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
+        List<SsnData> listOfSsnData = ssnStorage.readData();
 
         if (listOfSsnData == null) {
             return null;
         }
 
-        List<ProcuratorPhones> procuratorPhonesList = procuratorPhoneStorage.readSavedPhonesData();
+        List<ProcuratorPhones> procuratorPhonesList = phoneStorage.readData();
 
         if (procuratorPhonesList != null) {
             int lastEntryIndex = procuratorPhonesList.size() - 1;
@@ -50,7 +49,7 @@ public class JaPhoneProcuratorPhoneManager {
         return listOfSsnData;
     }
 
-    public List<SsnData> preparePhonesStartDataV2(CreditInfoStorage ciSaveManager, JaPhoneStorage traderPhoneStorage) throws IOException {
+    public List<SsnData> preparePhonesStartDataV2() throws IOException {
         List<String> listOfNames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 0);
         List<String> listOfSurenames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 1);
 

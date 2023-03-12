@@ -3,7 +3,7 @@ package io.saltpay.utils;
 import io.saltpay.models.SsnData;
 import io.saltpay.models.excel.ExcelData;
 import io.saltpay.models.excel.SheetData;
-import io.saltpay.storage.CreditInfoStorage;
+import io.saltpay.storage.StorageController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ public class CreditInfoSsnManager {
 
     private final ExcelManager excelManager = new ExcelManager();
 
-    public List<String> prepareSsnStartData(CreditInfoStorage ciSaveManager) throws IOException {
+    public List<String> prepareSsnStartData(StorageController storage) throws IOException {
         // Get list of SSN values
         List<String> listOfSsn = excelManager.getColumnData(CREDIT_INFO_READ_FILE, 0);
 
-        List<SsnData> savedSsnList = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
+        List<SsnData> savedSsnList = storage.readData();
 
         if (savedSsnList != null) {
             int lastEntryIndex = savedSsnList.size() - 1;

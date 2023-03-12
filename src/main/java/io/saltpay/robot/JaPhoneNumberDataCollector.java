@@ -3,7 +3,7 @@ package io.saltpay.robot;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
-import io.saltpay.storage.JaPhoneStorage;
+import io.saltpay.storage.StorageController;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
@@ -13,17 +13,17 @@ public class JaPhoneNumberDataCollector {
     private static final String TAG = JaPhoneNumberDataCollector.class.getName();
     private final JaPhoneNumberScrapper jaPhoneNumberScrapper;
     private final List<SsnData> ssnDataList;
-    private final JaPhoneStorage jaPhoneStorage;
+    private final StorageController phoneStorage;
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
     public JaPhoneNumberDataCollector(
             JaPhoneNumberScrapper jaPhoneNumberScrapper,
             List<SsnData> ssnDataList,
-            JaPhoneStorage procuratorPhoneStorage
+            StorageController phoneStorage
     ) {
         this.jaPhoneNumberScrapper = jaPhoneNumberScrapper;
         this.ssnDataList = ssnDataList;
-        this.jaPhoneStorage = procuratorPhoneStorage;
+        this.phoneStorage = phoneStorage;
     }
 
     public void start() {
@@ -36,7 +36,7 @@ public class JaPhoneNumberDataCollector {
                 ssnData.getListOfProcurator().forEach(procurator -> {
                     ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.getFullName());
 
-                    jaPhoneStorage.saveProcuratorPhoneData(phoneNumbers);
+                    phoneStorage.saveData(phoneNumbers);
 
                     listOfProcuratorPhones.add(phoneNumbers);
                 })

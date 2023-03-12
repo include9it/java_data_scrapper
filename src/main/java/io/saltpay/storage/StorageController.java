@@ -5,11 +5,14 @@ import io.saltpay.utils.SaltLogger;
 import java.util.Collections;
 import java.util.List;
 
+import static io.saltpay.utils.Constants.DATA_MODEL_FILE_EXTENSION;
+import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
+
 public class StorageController extends Storage {
     private boolean hasSavedData = false;
 
-    StorageController(String absoluteFileName) {
-        super(absoluteFileName);
+    public StorageController(String absoluteFileName) {
+        super(getFilePathWithExtension(absoluteFileName));
 
         checkFileExistence();
     }
@@ -70,5 +73,9 @@ public class StorageController extends Storage {
 
     private void checkFileExistence() {
         hasSavedData = readFromFile() != null;
+    }
+
+    private static String getFilePathWithExtension(String fileName) {
+        return RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION;
     }
 }

@@ -4,8 +4,7 @@ import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.models.excel.ExcelData;
 import io.saltpay.models.excel.SheetData;
-import io.saltpay.storage.CreditInfoStorage;
-import io.saltpay.storage.JaPhoneStorage;
+import io.saltpay.storage.StorageController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +13,15 @@ import static io.saltpay.utils.Constants.*;
 
 public class DataPreparation {
     public static void mergeFilterAndCollect() {
-        CreditInfoStorage ciSaveManager = new CreditInfoStorage();
-        JaPhoneStorage jaPhoneStorage = new JaPhoneStorage(JA_PHONE_BACKUP_FILE);
+        StorageController ssnStorage = new StorageController(CREDIT_INFO_BACKUP_FILE);
+        StorageController jaPhoneStorage = new StorageController(JA_PHONE_BACKUP_FILE);
 
-        List<SsnData> savedThreadSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
+        List<SsnData> savedThreadSsnData = ssnStorage.readData();
         SaltLogger.basic("savedSsnThreadData size: " + savedThreadSsnData.size());
 
         SaltLogger.displaySsnData(savedThreadSsnData);
 
-        List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readSavedPhonesData();
+        List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readData();
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
 
         boolean hasDuplicates = ListUtil.hasDuplicateIdentifiers(savedThreadPhonesData, ProcuratorPhones::getFullName);
@@ -34,7 +33,7 @@ public class DataPreparation {
             SaltLogger.basic("Duplicates - removed");
         }
 
-        jaPhoneStorage.saveProcuratorPhoneData(savedThreadPhonesData, true);
+        jaPhoneStorage.overrideData(savedThreadPhonesData);
 
         ///
         SheetData phonesSheet = DataCollectUtil.collectMergedData(savedThreadSsnData, savedThreadPhonesData);

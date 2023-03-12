@@ -2,12 +2,10 @@ package io.saltpay.utils;
 
 import io.saltpay.models.Procurator;
 import io.saltpay.models.SsnData;
-import io.saltpay.storage.CreditInfoStorage;
+import io.saltpay.storage.StorageController;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
@@ -58,11 +56,11 @@ public class RestoreManager {
             nextSsn = ssnList.get(indexNext);
         }
 
-        CreditInfoStorage ciSaveManager = new CreditInfoStorage();
-//        ciSaveManager.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnDataList);
+        StorageController ssnStorage = new StorageController(CREDIT_INFO_BACKUP_FILE);
+//        ssnStorage.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnDataList);
 
         SaltLogger.basic("CREDIT_INFO_BACKUP_FILE -> ");
-        SaltLogger.displaySsnData(Arrays.asList(ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE).get(ssnDataList.size() - 1)));
-//        SaltLogger.displaySsnData(ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE));
+//        SaltLogger.displaySsnData(Arrays.asList(ssnStorage.readData().get(ssnDataList.size() - 1)));
+//        SaltLogger.displaySsnData(ssnStorage.readSavedSsnData(CREDIT_INFO_BACKUP_FILE));
     }
 }
