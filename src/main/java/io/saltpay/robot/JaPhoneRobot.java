@@ -5,7 +5,7 @@ import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
 import io.saltpay.storage.StorageController;
 import io.saltpay.support.Driver;
-import io.saltpay.utils.JaPhoneProcuratorPhoneManager;
+import io.saltpay.storage.JaPhoneProcuratorPhoneManager;
 import io.saltpay.utils.SaltLogger;
 
 import java.io.IOException;

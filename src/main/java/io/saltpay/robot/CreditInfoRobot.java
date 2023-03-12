@@ -4,7 +4,7 @@ import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
 import io.saltpay.storage.StorageController;
 import io.saltpay.support.Driver;
-import io.saltpay.utils.CreditInfoSsnManager;
+import io.saltpay.storage.CreditInfoSsnManager;
 import io.saltpay.utils.SaltLogger;
 
 import java.io.IOException;

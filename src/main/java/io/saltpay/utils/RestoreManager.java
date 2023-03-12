@@ -2,6 +2,7 @@ package io.saltpay.utils;
 
 import io.saltpay.models.Procurator;
 import io.saltpay.models.SsnData;
+import io.saltpay.storage.ExcelManager;
 import io.saltpay.storage.StorageController;
 
 import java.io.IOException;
