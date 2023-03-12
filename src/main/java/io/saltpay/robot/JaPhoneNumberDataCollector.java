@@ -9,8 +9,6 @@ import io.saltpay.utils.SaltLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.JA_PHONE_BACKUP_FILE;
-
 public class JaPhoneNumberDataCollector {
     private static final String TAG = JaPhoneNumberDataCollector.class.getName();
     private final JaPhoneNumberScrapper jaPhoneNumberScrapper;
@@ -18,10 +16,14 @@ public class JaPhoneNumberDataCollector {
     private final JaPhoneStorage jaPhoneStorage;
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
-    public JaPhoneNumberDataCollector(JaPhoneNumberScrapper jaPhoneNumberScrapper, List<SsnData> ssnDataList, JaPhoneStorage jaPhoneStorage) {
+    public JaPhoneNumberDataCollector(
+            JaPhoneNumberScrapper jaPhoneNumberScrapper,
+            List<SsnData> ssnDataList,
+            JaPhoneStorage procuratorPhoneStorage
+    ) {
         this.jaPhoneNumberScrapper = jaPhoneNumberScrapper;
         this.ssnDataList = ssnDataList;
-        this.jaPhoneStorage = jaPhoneStorage;
+        this.jaPhoneStorage = procuratorPhoneStorage;
     }
 
     public void start() {
@@ -34,7 +36,7 @@ public class JaPhoneNumberDataCollector {
                 ssnData.getListOfProcurator().forEach(procurator -> {
                     ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.getFullName());
 
-                    jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, phoneNumbers);
+                    jaPhoneStorage.saveProcuratorPhoneData(phoneNumbers);
 
                     listOfProcuratorPhones.add(phoneNumbers);
                 })

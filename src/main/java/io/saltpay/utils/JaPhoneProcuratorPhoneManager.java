@@ -20,7 +20,7 @@ public class JaPhoneProcuratorPhoneManager {
 
     private final ExcelManager excelManager = new ExcelManager();
 
-    public List<SsnData> preparePhonesStartData(CreditInfoStorage ciSaveManager, JaPhoneStorage jaPhoneStorage) {
+    public List<SsnData> preparePhonesStartData(CreditInfoStorage ciSaveManager, JaPhoneStorage procuratorPhoneStorage) {
         // Get list of SSN values
         List<SsnData> listOfSsnData = ciSaveManager.readSavedSsnData(CREDIT_INFO_BACKUP_FILE);
 
@@ -28,7 +28,7 @@ public class JaPhoneProcuratorPhoneManager {
             return null;
         }
 
-        List<ProcuratorPhones> procuratorPhonesList = jaPhoneStorage.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
+        List<ProcuratorPhones> procuratorPhonesList = procuratorPhoneStorage.readSavedPhonesData();
 
         if (procuratorPhonesList != null) {
             int lastEntryIndex = procuratorPhonesList.size() - 1;
@@ -50,7 +50,7 @@ public class JaPhoneProcuratorPhoneManager {
         return listOfSsnData;
     }
 
-    public List<SsnData> preparePhonesStartDataV2(CreditInfoStorage ciSaveManager, JaPhoneStorage jaPhoneStorage) throws IOException {
+    public List<SsnData> preparePhonesStartDataV2(CreditInfoStorage ciSaveManager, JaPhoneStorage traderPhoneStorage) throws IOException {
         List<String> listOfNames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 0);
         List<String> listOfSurenames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 1);
 

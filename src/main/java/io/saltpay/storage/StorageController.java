@@ -8,49 +8,59 @@ import java.util.List;
 public class StorageController extends Storage {
     private boolean hasSavedData = false;
 
-    public <T> void saveData(String absoluteFileName, T data) {
-        saveData(absoluteFileName, Collections.singletonList(data));
+    StorageController(String absoluteFileName) {
+        super(absoluteFileName);
+
+        checkFileExistence();
     }
 
-    public <T> void saveData(String absoluteFileName, List<T> data) {
+    public <T> void saveData(T data) {
+        saveData(Collections.singletonList(data));
+    }
+
+    public <T> void saveData(List<T> data) {
         SaltLogger.basic("Saving data to file...");
 
         if (hasSavedData) {
             SaltLogger.basic("Appending data to file...");
 
-            appendObjectsToFile(absoluteFileName, data);
+            appendObjectsToFile(data);
 
             return;
         }
 
-        writeToFile(absoluteFileName, data);
+        writeToFile(data);
 
         hasSavedData = true;
     }
 
-    public <T> T readData(String absoluteFileName) {
+    public <T> T readData() {
         SaltLogger.basic("Reading data from file...");
 
         if (hasSavedData) {
-            return readFromFile(absoluteFileName);
+            return readFromFile();
         }
 
         SaltLogger.basic("Can't read file! File is empty.");
 
-        return readFromFile(absoluteFileName);
+        return readFromFile();
     }
 
-    private <T> void appendObjectsToFile(String absoluteFileName, List<T> listOfObjects) {
-        List<T> objects = readFromFile(absoluteFileName);
+    private <T> void appendObjectsToFile(List<T> listOfObjects) {
+        List<T> objects = readFromFile();
 
         if (objects != null) {
             objects.addAll(listOfObjects);
 
-            writeToFile(absoluteFileName, objects);
+            writeToFile(objects);
 
             return;
         }
 
         SaltLogger.basic("Can't append to file! File is empty.");
+    }
+
+    private void checkFileExistence() {
+        hasSavedData = readFromFile() != null;
     }
 }

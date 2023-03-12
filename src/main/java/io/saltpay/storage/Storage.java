@@ -6,7 +6,13 @@ import java.io.*;
 
 class Storage {
 
-    static <T> void writeToFile(String absoluteFileName, T storageData) {
+    private final String absoluteFileName;
+
+    Storage(String absoluteFileName) {
+        this.absoluteFileName = absoluteFileName;
+    }
+
+    <T> void writeToFile(T storageData) {
         try {
             FileOutputStream fileOut = new FileOutputStream(absoluteFileName);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
@@ -24,7 +30,7 @@ class Storage {
         }
     }
 
-    static <T> T readFromFile(String absoluteFileName) {
+    <T> T readFromFile() {
         Object storageData;
 
         try {

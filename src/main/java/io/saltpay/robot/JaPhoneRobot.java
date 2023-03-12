@@ -17,7 +17,8 @@ import static io.saltpay.utils.Constants.*;
 public class JaPhoneRobot {
     private final Driver driver;
     private final CreditInfoStorage ciSaveManager = new CreditInfoStorage();
-    private final JaPhoneStorage jaPhoneStorage = new JaPhoneStorage();
+    private final JaPhoneStorage procuratorPhoneStorage = new JaPhoneStorage(JA_PHONE_BACKUP_FILE);
+    private final JaPhoneStorage traderPhoneStorage = new JaPhoneStorage(JA_PHONE_TRADER_BACKUP_FILE);
     private final JaPhoneProcuratorPhoneManager jaPhoneProcuratorPhoneManager = new JaPhoneProcuratorPhoneManager();
 
     public JaPhoneRobot(Driver driver) {
@@ -26,7 +27,7 @@ public class JaPhoneRobot {
 
     public void basicCollect() throws IOException {
         // Prepare list of input Procurator names for data collection
-        List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, jaPhoneStorage);
+        List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, procuratorPhoneStorage);
 
         if (ssnDataList == null) {
             SaltLogger.basic("SSN model doesn't exist! -> Exit");
@@ -39,40 +40,40 @@ public class JaPhoneRobot {
         JaPhoneNumberDataCollector jaPhoneNumberDataCollector = new JaPhoneNumberDataCollector(
                 jaPhoneNumberScrapper,
                 ssnDataList,
-                jaPhoneStorage
+                procuratorPhoneStorage
         );
         jaPhoneNumberDataCollector.start();
 
         // Prepare Excel file
-        List<ProcuratorPhones> savedProcuratorPhones = jaPhoneStorage.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
+        List<ProcuratorPhones> savedProcuratorPhones = procuratorPhoneStorage.readSavedPhonesData();
         SaltLogger.basic("savedProcuratorPhones size: " + savedProcuratorPhones.size());
         jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedProcuratorPhones);
     }
 
     public void multiThreadCollect() throws IOException {
         // Prepare list of input SSN numbers for data collection
-        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, jaPhoneStorage);
+        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ciSaveManager, procuratorPhoneStorage);
 
         // Start multi thread collecting info process
         List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
-        jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_BACKUP_FILE, multiThreadSsnDataList, false);
+        procuratorPhoneStorage.saveProcuratorPhoneData(multiThreadSsnDataList, false);
 
         // Prepare Excel file
-        List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readSavedPhonesData(JA_PHONE_BACKUP_FILE);
+        List<ProcuratorPhones> savedThreadPhonesData = procuratorPhoneStorage.readSavedPhonesData();
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
         jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedThreadPhonesData);
     }
 
     public void multiThreadCollectV2() throws IOException {
         // Prepare list of input SSN numbers for data collection
-        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartDataV2(ciSaveManager, jaPhoneStorage);
+        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartDataV2(ciSaveManager, traderPhoneStorage);
 
         // Start multi thread collecting info process
         List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
-        jaPhoneStorage.saveProcuratorPhoneData(JA_PHONE_TRADER_BACKUP_FILE, multiThreadSsnDataList, false);
+        traderPhoneStorage.saveProcuratorPhoneData(multiThreadSsnDataList, false);
 
         // Prepare Excel file
-        List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readSavedPhonesData(JA_PHONE_TRADER_BACKUP_FILE);
+        List<ProcuratorPhones> savedThreadPhonesData = traderPhoneStorage.readSavedPhonesData();
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
         jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneDataV2(savedThreadPhonesData);
     }
