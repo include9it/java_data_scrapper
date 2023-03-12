@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.1'
+    implementation 'org.seleniumhq.selenium:selenium-http-jdk-client:4.8.1'
 
     implementation 'org.apache.poi:poi:5.2.0'
     implementation 'org.apache.poi:poi-ooxml:5.2.0'

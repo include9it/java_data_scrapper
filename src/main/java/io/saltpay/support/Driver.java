@@ -8,6 +8,7 @@ public class Driver {
     public ChromeDriver setupChromeDriver() {
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
         System.setProperty("webdriver.chrome.silentOutput", "true");
+        System.setProperty("webdriver.http.factory", "jdk-http-client");
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless"); // This option allow to browse without opening browser
