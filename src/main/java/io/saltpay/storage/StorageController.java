@@ -14,6 +14,14 @@ public class StorageController extends Storage {
         checkFileExistence();
     }
 
+    public <T> void overrideData(List<T> data) {
+        SaltLogger.basic("Overriding data...");
+
+        hasSavedData = false;
+
+        saveData(data);
+    }
+
     public <T> void saveData(T data) {
         saveData(Collections.singletonList(data));
     }
@@ -43,7 +51,7 @@ public class StorageController extends Storage {
 
         SaltLogger.basic("Can't read file! File is empty.");
 
-        return readFromFile();
+        return null;
     }
 
     private <T> void appendObjectsToFile(List<T> listOfObjects) {
