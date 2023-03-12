@@ -7,8 +7,10 @@ public class Constants {
     public static int THREADS = 10;
 //    public static int CHUNKS = 5;
 
+    // File location & extension
     public static String RESOURCE_FILE_PATH = "src/main/resources/";
-    public static String DATA_MODEL_FILE_EXTENSION = ".dat";
+    public static String PATH_STORAGE = "storage/";
+    public static String STORAGE_FILE_EXTENSION = ".dat";
 
     // CreditInfo Island company registry
     public static String CREDIT_INFO_LINK = "https://fyrirtaeki.creditinfo.is";

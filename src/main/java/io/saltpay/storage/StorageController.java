@@ -5,8 +5,7 @@ import io.saltpay.utils.SaltLogger;
 import java.util.Collections;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.DATA_MODEL_FILE_EXTENSION;
-import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
+import static io.saltpay.utils.Constants.*;
 
 public class StorageController extends Storage {
     private boolean hasSavedData = false;
@@ -76,6 +75,6 @@ public class StorageController extends Storage {
     }
 
     private static String getFilePathWithExtension(String fileName) {
-        return RESOURCE_FILE_PATH + fileName + DATA_MODEL_FILE_EXTENSION;
+        return RESOURCE_FILE_PATH + PATH_STORAGE + fileName + STORAGE_FILE_EXTENSION;
     }
 }
