@@ -75,11 +75,13 @@ public class ExcelManager {
     private XSSFSheet readSheet(String filePath, int sheetNumber) throws IOException {
         XSSFWorkbook workbook = readExcel(filePath);
 
+        // Get the sheet by number from the workbook
+        XSSFSheet sheet = workbook.getSheetAt(sheetNumber);
+
         // Close the workbook
         workbook.close();
 
-        // Get the sheet by number from the workbook
-        return workbook.getSheetAt(sheetNumber);
+        return sheet;
     }
 
     private XSSFWorkbook readExcel(String filePath) throws IOException {
