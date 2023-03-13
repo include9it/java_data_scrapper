@@ -2,7 +2,7 @@ package io.saltpay.utils;
 
 import io.saltpay.models.Procurator;
 import io.saltpay.models.SsnData;
-import io.saltpay.storage.ExcelManager;
+import io.saltpay.storage.ExcelController;
 import io.saltpay.storage.StorageController;
 
 import java.io.IOException;
@@ -13,10 +13,10 @@ import static io.saltpay.utils.Constants.*;
 
 public class RestoreManager {
     public static void restoreModel() throws IOException {
-        ExcelManager excelManager = new ExcelManager();
-        List<String> ssnList = excelManager.getColumnData(MERGED_WRITE_FILE, 0);
-        List<String> nameList = excelManager.getColumnData(MERGED_WRITE_FILE, 1);
-        List<String> codeList = excelManager.getColumnData(MERGED_WRITE_FILE, 2);
+        ExcelController excelController = new ExcelController();
+        List<String> ssnList = excelController.getColumnData(MERGED_WRITE_FILE, 0);
+        List<String> nameList = excelController.getColumnData(MERGED_WRITE_FILE, 1);
+        List<String> codeList = excelController.getColumnData(MERGED_WRITE_FILE, 2);
 
         List<Procurator> procuratorList = new ArrayList<>();
 

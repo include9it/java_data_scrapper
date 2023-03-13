@@ -18,7 +18,7 @@ import static io.saltpay.utils.Constants.*;
 public class JaPhoneProcuratorPhoneManager {
     private static final String TAG = JaPhoneProcuratorPhoneManager.class.getName();
 
-    private final ExcelManager excelManager = new ExcelManager();
+    private final ExcelController excelController = new ExcelController();
 
     public List<SsnData> preparePhonesStartData(StorageController ssnStorage, StorageController phoneStorage) {
         // Get list of SSN values
@@ -51,8 +51,8 @@ public class JaPhoneProcuratorPhoneManager {
     }
 
     public List<SsnData> preparePhonesStartDataV2() throws IOException {
-        List<String> listOfNames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 0);
-        List<String> listOfSurenames = excelManager.getColumnData("Soletrader data - ja.is.xlsx", 1);
+        List<String> listOfNames = excelController.getColumnData("Soletrader data - ja.is.xlsx", 0);
+        List<String> listOfSurenames = excelController.getColumnData("Soletrader data - ja.is.xlsx", 1);
 
         List<String> listOfFullNames = new ArrayList<>();
 
@@ -82,7 +82,7 @@ public class JaPhoneProcuratorPhoneManager {
 
         // Create new doc with target info
         ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_WRITE_FILE, dataSheets);
-        excelManager.writeExcel(excelData);
+        excelController.writeExcel(excelData);
     }
 
     public void prepareExcelWithProcuratorPhoneDataV2(List<ProcuratorPhones> listOfProcuratorPhones) {
@@ -95,7 +95,7 @@ public class JaPhoneProcuratorPhoneManager {
 
         // Create new doc with target info
         ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_TRADER_WRITE_FILE, dataSheets);
-        excelManager.writeExcel(excelData);
+        excelController.writeExcel(excelData);
     }
 
     private SsnData findTargetSsnData(List<SsnData> listOfSsnData, ProcuratorPhones lastPhonesEntry) {

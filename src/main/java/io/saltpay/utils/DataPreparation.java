@@ -4,7 +4,7 @@ import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.models.excel.ExcelData;
 import io.saltpay.models.excel.SheetData;
-import io.saltpay.storage.ExcelManager;
+import io.saltpay.storage.ExcelController;
 import io.saltpay.storage.StorageController;
 
 import java.util.ArrayList;
@@ -43,8 +43,8 @@ public class DataPreparation {
         dataSheets.add(phonesSheet);
 
         // Create new doc with target info
-        ExcelManager excelManager = new ExcelManager();
+        ExcelController excelController = new ExcelController();
         ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + MERGED_WRITE_FILE, dataSheets);
-        excelManager.writeExcel(excelData);
+        excelController.writeExcel(excelData);
     }
 }

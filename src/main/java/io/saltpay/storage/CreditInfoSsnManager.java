@@ -15,11 +15,11 @@ import static io.saltpay.utils.Constants.*;
 public class CreditInfoSsnManager {
     private static final String TAG = CreditInfoSsnManager.class.getName();
 
-    private final ExcelManager excelManager = new ExcelManager();
+    private final ExcelController excelController = new ExcelController();
 
     public List<String> prepareSsnStartData(StorageController storage) throws IOException {
         // Get list of SSN values
-        List<String> listOfSsn = excelManager.getColumnData(CREDIT_INFO_READ_FILE, 0);
+        List<String> listOfSsn = excelController.getColumnData(CREDIT_INFO_READ_FILE, 0);
 
         List<SsnData> savedSsnList = storage.readData();
 
@@ -47,6 +47,6 @@ public class CreditInfoSsnManager {
 
         // Create new doc with target info
         ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + CREDIT_INFO_WRITE_FILE, dataSheets);
-        excelManager.writeExcel(excelData);
+        excelController.writeExcel(excelData);
     }
 }
