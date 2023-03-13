@@ -75,6 +75,9 @@ public class ExcelManager {
     private XSSFSheet readSheet(String filePath, int sheetNumber) throws IOException {
         XSSFWorkbook workbook = readExcel(filePath);
 
+        // Close the workbook
+        workbook.close();
+
         // Get the sheet by number from the workbook
         return workbook.getSheetAt(sheetNumber);
     }
@@ -89,8 +92,7 @@ public class ExcelManager {
         // Create a workbook object from the input stream
         XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-        // Close the workbook and input stream
-        workbook.close();
+        // Close the input stream
         fis.close();
 
         return workbook;
