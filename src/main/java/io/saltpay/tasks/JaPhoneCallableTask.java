@@ -32,12 +32,12 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
         jaPhoneNumberScrapper.enterWebsite();
 
         // Get Procurator phone numbers by Full Name
-        ssnDataChunk.getListOfSsnData().forEach(ssnData ->
-                ssnData.getListOfProcurator().forEach(procurator -> {
+        ssnDataChunk.listOfSsnData().forEach(ssnData ->
+                ssnData.listOfProcurator().forEach(procurator -> {
                     SaltLogger.basic("Thread -> " + threadId);
 
                     ProcuratorPhones procuratorPhones = jaPhoneNumberScrapper.findAndCollectDataByFullName(
-                            procurator.getFullName()
+                            procurator.fullName()
                     );
 
                     listOfProcuratorPhones.add(procuratorPhones);

@@ -25,11 +25,11 @@ public class DataPreparation {
         List<ProcuratorPhones> savedThreadPhonesData = jaPhoneStorage.readData();
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
 
-        boolean hasDuplicates = ListUtil.hasDuplicateIdentifiers(savedThreadPhonesData, ProcuratorPhones::getFullName);
+        boolean hasDuplicates = ListUtil.hasDuplicateIdentifiers(savedThreadPhonesData, ProcuratorPhones::fullName);
         SaltLogger.basic("savedThreadPhonesData has duplicate names -> " + hasDuplicates);
 
         if (hasDuplicates) {
-            savedThreadPhonesData = ListUtil.removeDuplicates(savedThreadPhonesData, ProcuratorPhones::getFullName);
+            savedThreadPhonesData = ListUtil.removeDuplicates(savedThreadPhonesData, ProcuratorPhones::fullName);
 
             SaltLogger.basic("Duplicates - removed");
         }

@@ -2,19 +2,5 @@ package io.saltpay.models;
 
 import java.io.Serializable;
 
-public class Procurator implements Serializable {
-    private final String fullName;
-    private final String personalCode;
-
-    public Procurator(String fullName, String personalCode) {
-        this.fullName = fullName;
-        this.personalCode = personalCode;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-    public String getPersonalCode() {
-        return personalCode;
-    }
+public record Procurator(String fullName, String personalCode) implements Serializable {
 }

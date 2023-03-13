@@ -33,7 +33,7 @@ public class CreditInfoCallableTask implements Callable<List<SsnData>> {
         creditInfoScrapper.changeLocale();
 
         // Get Procurators data by SSN number
-        ssnChunk.getListOfSsn().forEach(ssn -> {
+        ssnChunk.listOfSsn().forEach(ssn -> {
             SaltLogger.basic("Thread -> " + threadId);
 
             SsnData ssnData = creditInfoScrapper.findAndCollectDataBySsn(ssn);

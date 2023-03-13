@@ -20,13 +20,13 @@ public class ExcelStorage {
         // Create a new workbook
         Workbook workbook = new XSSFWorkbook();
 
-        excelData.getSheets().forEach(sheetData -> {
-            Sheet sheet = workbook.createSheet(sheetData.getSheetName());
+        excelData.sheets().forEach(sheetData -> {
+            Sheet sheet = workbook.createSheet(sheetData.sheetName());
 
-            writeRowsAndColumns(sheet, sheetData.getListOfColumns());
+            writeRowsAndColumns(sheet, sheetData.listOfColumns());
         });
 
-        createExcel(excelData.getExcelName(), workbook);
+        createExcel(excelData.excelName(), workbook);
     }
 
     XSSFWorkbook readExcel(String filePath) throws IOException {
@@ -49,16 +49,16 @@ public class ExcelStorage {
         // write headers
         Row headerRow = sheet.createRow(0);
         IntStream.range(0, listOfColumnData.size())
-                .forEach(i -> headerRow.createCell(i).setCellValue(listOfColumnData.get(i).getHeaderName()));
+                .forEach(i -> headerRow.createCell(i).setCellValue(listOfColumnData.get(i).headerName()));
 
         // write data
-        IntStream.range(0, listOfColumnData.get(0).getValues().size())
+        IntStream.range(0, listOfColumnData.get(0).values().size())
                 .forEach(rowIndex ->
                         IntStream.range(0, listOfColumnData.size())
                                 .forEach(colIndex ->
                                         sheet.createRow(rowIndex + 1)
                                                 .createCell(colIndex)
-                                                .setCellValue(listOfColumnData.get(colIndex).getValues().get(rowIndex))
+                                                .setCellValue(listOfColumnData.get(colIndex).values().get(rowIndex))
                                 )
                 );
     }

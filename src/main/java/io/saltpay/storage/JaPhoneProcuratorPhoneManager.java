@@ -10,7 +10,7 @@ import io.saltpay.utils.SaltLogger;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
@@ -67,7 +67,7 @@ public class JaPhoneProcuratorPhoneManager {
 
         List<SsnData> listOfSsnData = new ArrayList<>();
 
-        soleTraders.forEach(trader -> listOfSsnData.add(new SsnData("", Arrays.asList(trader))));
+        soleTraders.forEach(trader -> listOfSsnData.add(new SsnData("", Collections.singletonList(trader))));
 
         return listOfSsnData;
     }
@@ -77,11 +77,8 @@ public class JaPhoneProcuratorPhoneManager {
 
         SheetData phonesSheet = DataCollectUtil.collectPhonesSheetData(listOfProcuratorPhones);
 
-        List<SheetData> dataSheets = new ArrayList<>();
-        dataSheets.add(phonesSheet);
-
         // Create new doc with target info
-        ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_WRITE_FILE, dataSheets);
+        ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_WRITE_FILE, Collections.singletonList(phonesSheet));
         excelController.writeExcel(excelData);
     }
 
@@ -90,19 +87,16 @@ public class JaPhoneProcuratorPhoneManager {
 
         SheetData phonesSheet = DataCollectUtil.collectPhonesSheetData(listOfProcuratorPhones);
 
-        List<SheetData> dataSheets = new ArrayList<>();
-        dataSheets.add(phonesSheet);
-
         // Create new doc with target info
-        ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_TRADER_WRITE_FILE, dataSheets);
+        ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + JA_PHONE_TRADER_WRITE_FILE, Collections.singletonList(phonesSheet));
         excelController.writeExcel(excelData);
     }
 
     private SsnData findTargetSsnData(List<SsnData> listOfSsnData, ProcuratorPhones lastPhonesEntry) {
         // This search will make data duplication!
         for (SsnData ssnData : listOfSsnData) {
-            for (Procurator procurator : ssnData.getListOfProcurator()) {
-                if (procurator.getFullName().equals(lastPhonesEntry.getFullName())) {
+            for (Procurator procurator : ssnData.listOfProcurator()) {
+                if (procurator.fullName().equals(lastPhonesEntry.fullName())) {
                     return ssnData;
                 }
             }

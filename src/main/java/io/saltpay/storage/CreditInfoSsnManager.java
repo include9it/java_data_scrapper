@@ -29,7 +29,7 @@ public class CreditInfoSsnManager {
             SsnData lastSsnEntry = savedSsnList.get(lastEntryIndex);
 
             int sizeOfSsnList = listOfSsn.size();
-            int cutIndex = listOfSsn.indexOf(lastSsnEntry.getSsnValue());
+            int cutIndex = listOfSsn.indexOf(lastSsnEntry.ssnValue());
 
             return listOfSsn.subList(cutIndex, sizeOfSsnList);
         }

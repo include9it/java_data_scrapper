@@ -34,18 +34,18 @@ public final class SaltLogger {
 
     public static void displaySsnData(List<SsnData> ssnDataList) {
         ssnDataList.forEach(ssnData -> {
-            SaltLogger.basic("SSN data: " + ssnData.getSsnValue());
-            ssnData.getListOfProcurator().forEach(procurator ->
-                    SaltLogger.basic("Procurator Name: " + procurator.getFullName() + "|" + procurator.getPersonalCode())
+            SaltLogger.basic("SSN data: " + ssnData.ssnValue());
+            ssnData.listOfProcurator().forEach(procurator ->
+                    SaltLogger.basic("Procurator Name: " + procurator.fullName() + "|" + procurator.personalCode())
             );
         });
     }
 
     public static void displayPhonesData(List<ProcuratorPhones> procuratorPhonesList) {
         procuratorPhonesList.forEach(procuratorPhones -> {
-            SaltLogger.basic("Procurator name: " + procuratorPhones.getFullName());
-            SaltLogger.basic("Phones: " + procuratorPhones.getPhoneNumbers().getPhone1()
-                    + "|" + procuratorPhones.getPhoneNumbers().getPhone2());
+            SaltLogger.basic("Procurator name: " + procuratorPhones.fullName());
+            SaltLogger.basic("Phones: " + procuratorPhones.phoneNumbers().phone1()
+                    + "|" + procuratorPhones.phoneNumbers().phone2());
         });
     }
 }

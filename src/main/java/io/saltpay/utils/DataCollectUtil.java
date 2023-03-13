@@ -23,10 +23,10 @@ public class DataCollectUtil {
         String headerName = "Full Name", headerCode = "Personal code", headerSsn = "Company SSN";
 
         for (SsnData ssnData : listOfSsnData) {
-            ssnData.getListOfProcurator().forEach(data -> {
-                listOfFullName.add(data.getFullName());
-                listOfPersonalCodes.add(StringUtil.removeDash(data.getPersonalCode()));
-                ssnList.add(ssnData.getSsnValue());
+            ssnData.listOfProcurator().forEach(data -> {
+                listOfFullName.add(data.fullName());
+                listOfPersonalCodes.add(StringUtil.removeDash(data.personalCode()));
+                ssnList.add(ssnData.ssnValue());
             });
         }
 
@@ -47,9 +47,9 @@ public class DataCollectUtil {
         String headerName = "Full Name", headerPhone1 = "Phone 1", headerPhone2 = "Phone 2";
 
         for (ProcuratorPhones procuratorPhones : listOfProcuratorPhones) {
-            listOfFullName.add(procuratorPhones.getFullName());
-            listOfPhone1.add(procuratorPhones.getPhoneNumbers().getPhone1());
-            listOfPhone2.add(procuratorPhones.getPhoneNumbers().getPhone2());
+            listOfFullName.add(procuratorPhones.fullName());
+            listOfPhone1.add(procuratorPhones.phoneNumbers().phone1());
+            listOfPhone2.add(procuratorPhones.phoneNumbers().phone2());
         }
 
         columnData.add(new ColumnData(headerName, listOfFullName));
@@ -71,15 +71,15 @@ public class DataCollectUtil {
         String headerName = "Full Name", headerCode = "Personal code", headerSsn = "Company SSN", headerPhone1 = "Phone1", headerPhone2 = "Phone2";
 
         for (SsnData ssnData : listOfSsnData) {
-            for (Procurator currentProcurator : ssnData.getListOfProcurator()) {
-                listOfFullName.add(currentProcurator.getFullName());
-                listOfPersonalCodes.add(StringUtil.removeDash(currentProcurator.getPersonalCode()));
-                ssnList.add(ssnData.getSsnValue());
+            for (Procurator currentProcurator : ssnData.listOfProcurator()) {
+                listOfFullName.add(currentProcurator.fullName());
+                listOfPersonalCodes.add(StringUtil.removeDash(currentProcurator.personalCode()));
+                ssnList.add(ssnData.ssnValue());
 
                 listOfProcuratorPhones.forEach(procuratorPhones -> {
-                    if (currentProcurator.getFullName().equals(procuratorPhones.getFullName())) {
-                        phone1List.add(procuratorPhones.getPhoneNumbers().getPhone1());
-                        phone2List.add(procuratorPhones.getPhoneNumbers().getPhone2());
+                    if (currentProcurator.fullName().equals(procuratorPhones.fullName())) {
+                        phone1List.add(procuratorPhones.phoneNumbers().phone1());
+                        phone2List.add(procuratorPhones.phoneNumbers().phone2());
                     }
                 });
             }

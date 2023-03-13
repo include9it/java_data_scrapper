@@ -33,8 +33,8 @@ public class JaPhoneNumberDataCollector {
 
         // Get phone numbers by Procurator
         ssnDataList.forEach(ssnData ->
-                ssnData.getListOfProcurator().forEach(procurator -> {
-                    ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.getFullName());
+                ssnData.listOfProcurator().forEach(procurator -> {
+                    ProcuratorPhones phoneNumbers = jaPhoneNumberScrapper.findAndCollectDataByFullName(procurator.fullName());
 
                     phoneStorage.saveData(phoneNumbers);
 
