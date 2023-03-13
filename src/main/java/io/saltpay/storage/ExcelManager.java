@@ -14,15 +14,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import static io.saltpay.utils.Constants.RESOURCE_FILE_PATH;
 
 public class ExcelManager {
 
     public List<String> getColumnData(String fileName, int column) throws IOException {
-        XSSFSheet sheet = readExcel(RESOURCE_FILE_PATH + fileName);
+        XSSFSheet sheet = readSheet(RESOURCE_FILE_PATH + fileName, 0);
 
         return readColumnData(sheet, column).stream()
                 .skip(1)
@@ -36,34 +39,61 @@ public class ExcelManager {
         excelData.getSheets().forEach(sheetData -> {
             Sheet sheet = workbook.createSheet(sheetData.getSheetName());
 
-            List<ColumnData> listOfColumnData = sheetData.getListOfColumns();
-
-            writeRowsAndColumns(sheet, listOfColumnData);
+            writeRowsAndColumns(sheet, sheetData.getListOfColumns());
         });
 
         createExcel(excelData.getExcelName(), workbook);
     }
 
     private void writeRowsAndColumns(Sheet sheet, List<ColumnData> listOfColumnData) {
-        int rowNum = 0;
-        int colNum = 0;
-        Row row = sheet.createRow(rowNum++);
-
         // write headers
-        for (ColumnData column : listOfColumnData) {
-            Cell cell = row.createCell(colNum++);
-            cell.setCellValue(column.getHeaderName());
-        }
+        Row headerRow = sheet.createRow(0);
+        IntStream.range(0, listOfColumnData.size())
+                .forEach(i -> headerRow.createCell(i).setCellValue(listOfColumnData.get(i).getHeaderName()));
 
         // write data
-        for (int i = 0; i < listOfColumnData.get(0).getValues().size(); i++) {
-            row = sheet.createRow(rowNum++);
-            colNum = 0;
-            for (ColumnData column : listOfColumnData) {
-                Cell cell = row.createCell(colNum++);
-                cell.setCellValue(column.getValues().get(i));
-            }
-        }
+        IntStream.range(0, listOfColumnData.get(0).getValues().size())
+                .forEach(rowIndex ->
+                        IntStream.range(0, listOfColumnData.size())
+                                .forEach(colIndex ->
+                                        sheet.createRow(rowIndex + 1)
+                                                .createCell(colIndex)
+                                                .setCellValue(listOfColumnData.get(colIndex).getValues().get(rowIndex))
+                                )
+                );
+    }
+
+    private List<String> readColumnData(XSSFSheet sheet, int column) {
+        return StreamSupport.stream(sheet.spliterator(), false)
+                .map(row -> row.getCell(column))
+                .filter(Objects::nonNull)
+                .map(Cell::getStringCellValue)
+                .peek(SaltLogger::basic)
+                .collect(Collectors.toList());
+    }
+
+    private XSSFSheet readSheet(String filePath, int sheetNumber) throws IOException {
+        XSSFWorkbook workbook = readExcel(filePath);
+
+        // Get the sheet by number from the workbook
+        return workbook.getSheetAt(sheetNumber);
+    }
+
+    private XSSFWorkbook readExcel(String filePath) throws IOException {
+        // Specify the path of the .xlsx file
+        File file = new File(filePath);
+
+        // Create an input stream to read the file
+        FileInputStream fis = new FileInputStream(file);
+
+        // Create a workbook object from the input stream
+        XSSFWorkbook workbook = new XSSFWorkbook(fis);
+
+        // Close the workbook and input stream
+        workbook.close();
+        fis.close();
+
+        return workbook;
     }
 
     private void createExcel(String fileName, Workbook workbook) {
@@ -80,45 +110,5 @@ public class ExcelManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private XSSFSheet readExcel(String filePath) throws IOException {
-        // Specify the path of the .xlsx file
-        File file = new File(filePath);
-
-        // Create an input stream to read the file
-        FileInputStream fis = new FileInputStream(file);
-
-        // Create a workbook object from the input stream
-        XSSFWorkbook workbook = new XSSFWorkbook(fis);
-
-        // Get the first sheet from the workbook
-        XSSFSheet sheet = workbook.getSheetAt(0);
-
-        // Close the workbook and input stream
-        workbook.close();
-        fis.close();
-
-        return sheet;
-    }
-
-    private List<String> readColumnData(XSSFSheet sheet, int column) {
-        // Create a list to store the data from the column
-        List<String> columnData = new ArrayList<>();
-
-        // Get the iterator to iterate over all the rows in the sheet
-        sheet.forEach(row -> {
-            Cell cell = row.getCell(column);
-            if (cell != null) {
-                columnData.add(cell.getStringCellValue());
-            }
-        });
-
-        // Print the data from the column
-        for (String value : columnData) {
-            SaltLogger.basic(value);
-        }
-
-        return columnData;
     }
 }
