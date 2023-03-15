@@ -20,6 +20,17 @@ public class JaPhoneProcuratorPhoneManager {
 
     private final ExcelController excelController = new ExcelController();
 
+    public List<SsnData> preparePhonesStartDataV2(StorageController ssnStorage, StorageController phoneStorage) {
+        // Get list of all SSN values
+        List<SsnData> listOfSsnData = ssnStorage.readData();
+
+        if (listOfSsnData == null) {
+            return null;
+        }
+
+        return new DataPreparationManager().prepareStartData(listOfSsnData, phoneStorage);
+    }
+
     public List<SsnData> preparePhonesStartData(StorageController ssnStorage, StorageController phoneStorage) {
         // Get list of all SSN values
         List<SsnData> listOfSsnData = ssnStorage.readData();
