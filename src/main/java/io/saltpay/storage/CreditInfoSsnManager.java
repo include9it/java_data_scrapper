@@ -17,21 +17,17 @@ public class CreditInfoSsnManager {
 
     private final ExcelController excelController = new ExcelController();
 
-    public List<String> prepareSsnStartData(StorageController storage) throws IOException {
-        // Get list of SSN values
+    public List<String> prepareSsnStartData(StorageController ssnStorage) throws IOException {
+        // Get list of all SSN values
         List<String> listOfSsn = excelController.getColumnData(CREDIT_INFO_READ_FILE, 0);
 
-        List<SsnData> savedSsnList = storage.readData();
+        // Get list of saved SsnData
+        List<SsnData> savedSsnList = ssnStorage.readData();
 
         if (savedSsnList != null) {
-            int lastEntryIndex = savedSsnList.size() - 1;
+            SsnData lastSsnEntry = findTargetValue(savedSsnList);
 
-            SsnData lastSsnEntry = savedSsnList.get(lastEntryIndex);
-
-            int sizeOfSsnList = listOfSsn.size();
-            int cutIndex = listOfSsn.indexOf(lastSsnEntry.ssnValue());
-
-            return listOfSsn.subList(cutIndex, sizeOfSsnList);
+            return extractLeftData(listOfSsn, lastSsnEntry);
         }
 
         return listOfSsn;
@@ -48,5 +44,18 @@ public class CreditInfoSsnManager {
         // Create new doc with target info
         ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + CREDIT_INFO_WRITE_FILE, dataSheets);
         excelController.writeExcel(excelData);
+    }
+
+    private SsnData findTargetValue(List<SsnData> savedSsnList) {
+        int lastEntryIndex = savedSsnList.size() - 1;
+
+        return savedSsnList.get(lastEntryIndex);
+    }
+
+    private List<String> extractLeftData(List<String> listOfSsn, SsnData lastSsnEntry) {
+        int sizeOfSsnList = listOfSsn.size();
+        int cutIndex = listOfSsn.indexOf(lastSsnEntry.ssnValue());
+
+        return listOfSsn.subList(cutIndex, sizeOfSsnList);
     }
 }

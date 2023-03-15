@@ -21,30 +21,24 @@ public class JaPhoneProcuratorPhoneManager {
     private final ExcelController excelController = new ExcelController();
 
     public List<SsnData> preparePhonesStartData(StorageController ssnStorage, StorageController phoneStorage) {
-        // Get list of SSN values
+        // Get list of all SSN values
         List<SsnData> listOfSsnData = ssnStorage.readData();
 
         if (listOfSsnData == null) {
             return null;
         }
 
+        // Get list of saved phone numbers
         List<ProcuratorPhones> procuratorPhonesList = phoneStorage.readData();
 
         if (procuratorPhonesList != null) {
-            int lastEntryIndex = procuratorPhonesList.size() - 1;
-
-            ProcuratorPhones lastPhonesEntry = procuratorPhonesList.get(lastEntryIndex);
-
-            SsnData targetSsnData = findTargetSsnData(listOfSsnData, lastPhonesEntry);
+            SsnData targetSsnData = findTargetValue(listOfSsnData, procuratorPhonesList);
 
             if (targetSsnData == null) {
                 return listOfSsnData;
             }
 
-            int sizeOfSsnList = listOfSsnData.size();
-            int cutIndex = listOfSsnData.indexOf(targetSsnData);
-
-            return listOfSsnData.subList(cutIndex, sizeOfSsnList);
+            return extractLeftData(listOfSsnData, targetSsnData);
         }
 
         return listOfSsnData;
@@ -92,7 +86,10 @@ public class JaPhoneProcuratorPhoneManager {
         excelController.writeExcel(excelData);
     }
 
-    private SsnData findTargetSsnData(List<SsnData> listOfSsnData, ProcuratorPhones lastPhonesEntry) {
+    private SsnData findTargetValue(List<SsnData> listOfSsnData, List<ProcuratorPhones> procuratorPhonesList) {
+        int lastEntryIndex = procuratorPhonesList.size() - 1;
+        ProcuratorPhones lastPhonesEntry = procuratorPhonesList.get(lastEntryIndex);
+
         // This search will make data duplication!
         for (SsnData ssnData : listOfSsnData) {
             for (Procurator procurator : ssnData.listOfProcurator()) {
@@ -102,5 +99,12 @@ public class JaPhoneProcuratorPhoneManager {
             }
         }
         return null;
+    }
+
+    private List<SsnData> extractLeftData(List<SsnData> listOfSsnData, SsnData targetSsnData) {
+        int sizeOfSsnList = listOfSsnData.size();
+        int cutIndex = listOfSsnData.indexOf(targetSsnData);
+
+        return listOfSsnData.subList(cutIndex, sizeOfSsnList);
     }
 }
