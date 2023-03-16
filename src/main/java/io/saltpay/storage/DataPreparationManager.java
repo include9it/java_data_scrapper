@@ -6,10 +6,6 @@ import java.util.function.Function;
 
 public class DataPreparationManager {
 
-    public <T> List<T> prepareStartData(List<T> initialList, StorageController storage) {
-        return prepareStartData(initialList, storage, null);
-    }
-
     public <T, O> List<T> prepareStartData(List<T> initialList, StorageController storage, @Nullable Function<O, T> identifierGetter) {
         // Get list of saved data
         List<O> savedList = storage.readData();
@@ -31,8 +27,10 @@ public class DataPreparationManager {
 
     private <T, O> List<T> extractLeftData(List<T> initialList, O lastSavedEntry, Function<O, T> identifierGetter) {
         int sizeOfSsnList = initialList.size();
-        T lastSavedEntryValue = identifierGetter != null ? identifierGetter.apply(lastSavedEntry) : (T) lastSavedEntry;
-        int cutIndex = initialList.indexOf(lastSavedEntryValue);
+
+        int cutIndex = identifierGetter != null ?
+                initialList.indexOf(identifierGetter.apply(lastSavedEntry)) :
+                initialList.indexOf(lastSavedEntry);
 
         return initialList.subList(cutIndex, sizeOfSsnList);
     }

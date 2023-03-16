@@ -28,7 +28,7 @@ public class JaPhoneProcuratorPhoneManager {
             return null;
         }
 
-        return new DataPreparationManager().prepareStartData(listOfSsnData, phoneStorage);
+        return new DataPreparationManager().prepareStartData(listOfSsnData, phoneStorage, SsnData::listOfProcurator, ProcuratorPhones::fullName);
     }
 
     public List<SsnData> preparePhonesStartData(StorageController ssnStorage, StorageController phoneStorage) {

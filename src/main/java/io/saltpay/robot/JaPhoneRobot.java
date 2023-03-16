@@ -27,6 +27,7 @@ public class JaPhoneRobot {
     public void basicCollect() throws IOException {
         // Prepare list of input Procurator names for data collection
         List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ssnStorage, procuratorPhoneStorage);
+        List<SsnData> tempSsnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartDataV2(ssnStorage, procuratorPhoneStorage);
 
         if (ssnDataList == null) {
             SaltLogger.basic("SSN model doesn't exist! -> Exit");
@@ -41,7 +42,7 @@ public class JaPhoneRobot {
                 ssnDataList,
                 procuratorPhoneStorage
         );
-        jaPhoneNumberDataCollector.start();
+//        jaPhoneNumberDataCollector.start();
 
         // Prepare Excel file
         List<ProcuratorPhones> savedProcuratorPhones = procuratorPhoneStorage.readData();
