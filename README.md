@@ -1,3 +1,9 @@
+Installation and running
+---
+<h4>Tools</h4>
+* JDK 17 <br/>
+* Gradle 7.6 <br/>
+
 Troubleshooting:
 ---
 Websocket issue
