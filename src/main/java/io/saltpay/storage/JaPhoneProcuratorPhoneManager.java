@@ -20,17 +20,6 @@ public class JaPhoneProcuratorPhoneManager {
 
     private final ExcelController excelController = new ExcelController();
 
-    public List<SsnData> preparePhonesStartDataV2(StorageController ssnStorage, StorageController phoneStorage) {
-        // Get list of all SSN values
-        List<SsnData> listOfSsnData = ssnStorage.readData();
-
-        if (listOfSsnData == null) {
-            return null;
-        }
-
-        return new DataPreparationManager().prepareStartData(listOfSsnData, phoneStorage, SsnData::listOfProcurator, ProcuratorPhones::fullName);
-    }
-
     public List<SsnData> preparePhonesStartData(StorageController ssnStorage, StorageController phoneStorage) {
         // Get list of all SSN values
         List<SsnData> listOfSsnData = ssnStorage.readData();
@@ -43,7 +32,8 @@ public class JaPhoneProcuratorPhoneManager {
         List<ProcuratorPhones> procuratorPhonesList = phoneStorage.readData();
 
         if (procuratorPhonesList != null) {
-            SsnData targetSsnData = findTargetValue(listOfSsnData, procuratorPhonesList);
+            ProcuratorPhones lastPhoneEntry = findLastValue(procuratorPhonesList);
+            SsnData targetSsnData = findLastValue(listOfSsnData, lastPhoneEntry);
 
             if (targetSsnData == null) {
                 return listOfSsnData;
@@ -55,7 +45,7 @@ public class JaPhoneProcuratorPhoneManager {
         return listOfSsnData;
     }
 
-    public List<SsnData> preparePhonesStartDataV2() throws IOException {
+    public List<SsnData> preparePhonesStartDataSoleTrader() throws IOException {
         List<String> listOfNames = excelController.getColumnData("Soletrader data - ja.is.xlsx", 0);
         List<String> listOfSurenames = excelController.getColumnData("Soletrader data - ja.is.xlsx", 1);
 
@@ -87,7 +77,7 @@ public class JaPhoneProcuratorPhoneManager {
         excelController.writeExcel(excelData);
     }
 
-    public void prepareExcelWithProcuratorPhoneDataV2(List<ProcuratorPhones> listOfProcuratorPhones) {
+    public void prepareExcelWithProcuratorPhoneDataSoleTrader(List<ProcuratorPhones> listOfProcuratorPhones) {
         SaltLogger.i(TAG, "Preparing Excel file...");
 
         SheetData phonesSheet = DataCollectUtil.collectPhonesSheetData(listOfProcuratorPhones);
@@ -97,19 +87,19 @@ public class JaPhoneProcuratorPhoneManager {
         excelController.writeExcel(excelData);
     }
 
-    private SsnData findTargetValue(List<SsnData> listOfSsnData, List<ProcuratorPhones> procuratorPhonesList) {
+    private ProcuratorPhones findLastValue(List<ProcuratorPhones> procuratorPhonesList) {
         int lastEntryIndex = procuratorPhonesList.size() - 1;
-        ProcuratorPhones lastPhonesEntry = procuratorPhonesList.get(lastEntryIndex);
 
+        return procuratorPhonesList.get(lastEntryIndex);
+    }
+
+    private SsnData findLastValue(List<SsnData> listOfSsnData, ProcuratorPhones lastPhoneEntry) {
         // This search will make data duplication!
-        for (SsnData ssnData : listOfSsnData) {
-            for (Procurator procurator : ssnData.listOfProcurator()) {
-                if (procurator.fullName().equals(lastPhonesEntry.fullName())) {
-                    return ssnData;
-                }
-            }
-        }
-        return null;
+        return listOfSsnData.stream().filter(ssnData ->
+                        ssnData.listOfProcurator().stream().anyMatch(procurator ->
+                                procurator.fullName().equals(lastPhoneEntry.fullName())))
+                .findFirst()
+                .orElse(null);
     }
 
     private List<SsnData> extractLeftData(List<SsnData> listOfSsnData, SsnData targetSsnData) {

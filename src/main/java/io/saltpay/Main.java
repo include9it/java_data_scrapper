@@ -11,7 +11,7 @@ public class Main {
 
         // CreditInfo Island company registry
         CreditInfoRobot creditInfoRobot = new CreditInfoRobot(driver);
-//        creditInfoRobot.basicCollect();
+        creditInfoRobot.basicCollect();
 //        creditInfoRobot.multiThreadCollect();
 
         // Phone number registry

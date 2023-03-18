@@ -15,29 +15,14 @@ import static io.saltpay.utils.Constants.*;
 public class CreditInfoSsnManager {
     private static final String TAG = CreditInfoSsnManager.class.getName();
 
+    private final DataPreparationManager dataPreparationManager = new DataPreparationManager();
     private final ExcelController excelController = new ExcelController();
-
-    public List<String> prepareSsnStartDataV2(StorageController ssnStorage) throws IOException {
-        // Get list of all SSN values
-        List<String> listOfSsn = excelController.getColumnData(CREDIT_INFO_READ_FILE, 0);
-
-        return new DataPreparationManager().prepareStartData(listOfSsn, ssnStorage, SsnData::ssnValue);
-    }
 
     public List<String> prepareSsnStartData(StorageController ssnStorage) throws IOException {
         // Get list of all SSN values
         List<String> listOfSsn = excelController.getColumnData(CREDIT_INFO_READ_FILE, 0);
 
-        // Get list of saved SsnData
-        List<SsnData> savedSsnList = ssnStorage.readData();
-
-        if (savedSsnList != null) {
-            SsnData lastSsnEntry = findTargetValue(savedSsnList);
-
-            return extractLeftData(listOfSsn, lastSsnEntry);
-        }
-
-        return listOfSsn;
+        return dataPreparationManager.prepareStartData(listOfSsn, ssnStorage, SsnData::ssnValue);
     }
 
     public void prepareExcelWithSsnData(List<SsnData> listOfSsnData) {
@@ -51,18 +36,5 @@ public class CreditInfoSsnManager {
         // Create new doc with target info
         ExcelData excelData = new ExcelData(RESOURCE_FILE_PATH + CREDIT_INFO_WRITE_FILE, dataSheets);
         excelController.writeExcel(excelData);
-    }
-
-    private SsnData findTargetValue(List<SsnData> savedSsnList) {
-        int lastEntryIndex = savedSsnList.size() - 1;
-
-        return savedSsnList.get(lastEntryIndex);
-    }
-
-    private List<String> extractLeftData(List<String> listOfSsn, SsnData lastSsnEntry) {
-        int sizeOfSsnList = listOfSsn.size();
-        int cutIndex = listOfSsn.indexOf(lastSsnEntry.ssnValue());
-
-        return listOfSsn.subList(cutIndex, sizeOfSsnList);
     }
 }

@@ -27,7 +27,6 @@ public class JaPhoneRobot {
     public void basicCollect() throws IOException {
         // Prepare list of input Procurator names for data collection
         List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ssnStorage, procuratorPhoneStorage);
-        List<SsnData> tempSsnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartDataV2(ssnStorage, procuratorPhoneStorage);
 
         if (ssnDataList == null) {
             SaltLogger.basic("SSN model doesn't exist! -> Exit");
@@ -66,7 +65,7 @@ public class JaPhoneRobot {
 
     public void multiThreadCollectV2() throws IOException {
         // Prepare list of input SSN numbers for data collection
-        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartDataV2();
+        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartDataSoleTrader();
 
         // Start multi thread collecting info process
         List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
@@ -75,6 +74,6 @@ public class JaPhoneRobot {
         // Prepare Excel file
         List<ProcuratorPhones> savedThreadPhonesData = traderPhoneStorage.readData();
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
-        jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneDataV2(savedThreadPhonesData);
+        jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneDataSoleTrader(savedThreadPhonesData);
     }
 }
