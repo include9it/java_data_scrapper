@@ -1,6 +1,6 @@
 package io.saltpay.robot;
 
-import io.saltpay.models.chunk.SsnChunk;
+import io.saltpay.models.Chunk;
 import io.saltpay.models.SsnData;
 import io.saltpay.support.Driver;
 import io.saltpay.tasks.CreditInfoCallableTask;
@@ -18,7 +18,7 @@ public class CreditInfoThreadBot {
         List<SsnData> listOfSsnData = new ArrayList<>();
         List<Future<List<SsnData>>> futuresOfSsnListData = new ArrayList<>();
 
-        List<SsnChunk> listOfChunks = ChunkUtil.prepareChunks(numberOfThreads, listOfSsn);
+        List<Chunk<String>> listOfChunks = ChunkUtil.prepareChunks(numberOfThreads, listOfSsn);
 
         // Submit tasks to the executor
         listOfChunks.forEach(chunk -> {

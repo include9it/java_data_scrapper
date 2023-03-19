@@ -2,7 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
-import io.saltpay.models.chunk.SsnDataChunk;
+import io.saltpay.models.Chunk;
 import io.saltpay.support.Driver;
 import io.saltpay.tasks.JaPhoneCallableTask;
 import io.saltpay.utils.ChunkUtil;
@@ -20,7 +20,7 @@ public class JaPhoneThreadBot {
         List<Future<List<ProcuratorPhones>>> futuresOfProcuratorPhones = new ArrayList<>();
 
 //        List<List<SsnData>> listOfSplitSsnData = ChunkUtil.splitToChunks(CHUNKS, listOfSsn); // this line can split chunks into smaller chunks
-        List<SsnDataChunk> listOfSsnDataChunks = ChunkUtil.prepareSsnDataChunks(numberOfThreads, listOfSsn);
+        List<Chunk<SsnData>> listOfSsnDataChunks = ChunkUtil.prepareChunks(numberOfThreads, listOfSsn);
 
         // Submit tasks to the executor
         listOfSsnDataChunks.forEach(chunk -> {

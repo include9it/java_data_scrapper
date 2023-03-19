@@ -1,6 +1,6 @@
 package io.saltpay.tasks;
 
-import io.saltpay.models.chunk.SsnChunk;
+import io.saltpay.models.Chunk;
 import io.saltpay.models.SsnData;
 import io.saltpay.scripts.CreditInfoScrapperScript;
 import io.saltpay.scripts.CreditInfoStartScript;
@@ -18,11 +18,11 @@ public class CreditInfoCallableTask implements Callable<List<SsnData>> {
     private final CreditInfoStartScript creditInfoStartScript;
     private final CreditInfoScrapperScript creditInfoScrapperScript;
 
-    private final SsnChunk ssnChunk;
+    private final Chunk<String> ssnChunk;
 
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoCallableTask(int threadId, Driver driver, SsnChunk ssnChunk) {
+    public CreditInfoCallableTask(int threadId, Driver driver, Chunk<String> ssnChunk) {
         this.threadId = threadId;
 
         this.creditInfoStartScript = new CreditInfoStartScript(driver);
@@ -39,7 +39,7 @@ public class CreditInfoCallableTask implements Callable<List<SsnData>> {
         creditInfoStartScript.changeLocale();
 
         // Get Procurators data by SSN number
-        ssnChunk.listOfSsn().forEach(ssn -> {
+        ssnChunk.dataList().forEach(ssn -> {
             SaltLogger.basic("Thread -> " + threadId);
 
             SsnData ssnData = creditInfoScrapperScript.findAndCollectDataBySsn(ssn);

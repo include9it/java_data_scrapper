@@ -1,26 +1,17 @@
 package io.saltpay.utils;
 
 import io.saltpay.models.SsnData;
-import io.saltpay.models.chunk.SsnChunk;
-import io.saltpay.models.chunk.SsnDataChunk;
+import io.saltpay.models.Chunk;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChunkUtil {
 
-    public static List<SsnChunk> prepareChunks(int numberOfChunks, List<String> listOfSsn) {
-        List<SsnChunk> listOfChunks = new ArrayList<>();
+    public static <T> List<Chunk<T>> prepareChunks(int numberOfChunks, List<T> listOfData) {
+        List<Chunk<T>> listOfChunks = new ArrayList<>();
 
-        ListUtil.splitList(listOfSsn, numberOfChunks).forEach(chunk -> listOfChunks.add(new SsnChunk(chunk)));
-
-        return listOfChunks;
-    }
-
-    public static List<SsnDataChunk> prepareSsnDataChunks(int numberOfChunks, List<SsnData> listOfSsnData) {
-        List<SsnDataChunk> listOfChunks = new ArrayList<>();
-
-        ListUtil.splitList(listOfSsnData, numberOfChunks).forEach(chunk -> listOfChunks.add(new SsnDataChunk(chunk)));
+        ListUtil.splitList(listOfData, numberOfChunks).forEach(chunk -> listOfChunks.add(new Chunk<>(chunk)));
 
         return listOfChunks;
     }
