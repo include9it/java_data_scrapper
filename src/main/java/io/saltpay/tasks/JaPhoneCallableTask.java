@@ -2,7 +2,7 @@ package io.saltpay.tasks;
 
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.chunk.SsnDataChunk;
-import io.saltpay.scrapper.JaPhoneNumberScrapperScript;
+import io.saltpay.scrapper.JaPhoneScrapperScript;
 import io.saltpay.support.Driver;
 import io.saltpay.utils.SaltLogger;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
 public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
 
     private final int threadId;
-    private final JaPhoneNumberScrapperScript jaPhoneNumberScrapperScript;
+    private final JaPhoneScrapperScript jaPhoneScrapperScript;
 
     private final SsnDataChunk ssnDataChunk;
 
@@ -21,7 +21,7 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
 
     public JaPhoneCallableTask(int threadId, Driver driver, SsnDataChunk ssnDataChunk) {
         this.threadId = threadId;
-        this.jaPhoneNumberScrapperScript = new JaPhoneNumberScrapperScript(driver);
+        this.jaPhoneScrapperScript = new JaPhoneScrapperScript(driver);
         this.ssnDataChunk = ssnDataChunk;
     }
 
@@ -29,14 +29,14 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
     public List<ProcuratorPhones> call() throws Exception {
         SaltLogger.basic("Thread -> " + threadId);
 
-        jaPhoneNumberScrapperScript.enterWebsite();
+        jaPhoneScrapperScript.enterWebsite();
 
         // Get Procurator phone numbers by Full Name
         ssnDataChunk.listOfSsnData().forEach(ssnData ->
                 ssnData.listOfProcurator().forEach(procurator -> {
                     SaltLogger.basic("Thread -> " + threadId);
 
-                    ProcuratorPhones procuratorPhones = jaPhoneNumberScrapperScript.findAndCollectDataByFullName(
+                    ProcuratorPhones procuratorPhones = jaPhoneScrapperScript.findAndCollectDataByFullName(
                             procurator.fullName()
                     );
 
@@ -44,7 +44,7 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
                 })
         );
 
-        jaPhoneNumberScrapperScript.finish();
+        jaPhoneScrapperScript.finish();
 
         return listOfProcuratorPhones;
     }

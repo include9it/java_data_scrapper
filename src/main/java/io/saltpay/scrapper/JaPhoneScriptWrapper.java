@@ -8,19 +8,19 @@ import io.saltpay.utils.SaltLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JaPhoneNumberScriptWrapper {
-    private static final String TAG = JaPhoneNumberScriptWrapper.class.getName();
-    private final JaPhoneNumberScrapperScript jaPhoneNumberScrapperScript;
+public class JaPhoneScriptWrapper {
+    private static final String TAG = JaPhoneScriptWrapper.class.getName();
+    private final JaPhoneScrapperScript jaPhoneScrapperScript;
     private final List<SsnData> ssnDataList;
     private final FileStorageController phoneStorage;
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
-    public JaPhoneNumberScriptWrapper(
-            JaPhoneNumberScrapperScript jaPhoneNumberScrapperScript,
+    public JaPhoneScriptWrapper(
+            JaPhoneScrapperScript jaPhoneScrapperScript,
             List<SsnData> ssnDataList,
             FileStorageController phoneStorage
     ) {
-        this.jaPhoneNumberScrapperScript = jaPhoneNumberScrapperScript;
+        this.jaPhoneScrapperScript = jaPhoneScrapperScript;
         this.ssnDataList = ssnDataList;
         this.phoneStorage = phoneStorage;
     }
@@ -28,12 +28,12 @@ public class JaPhoneNumberScriptWrapper {
     public void start() {
         SaltLogger.i(TAG, "Ja Phone Bot started!");
 
-        jaPhoneNumberScrapperScript.enterWebsite();
+        jaPhoneScrapperScript.enterWebsite();
 
         // Get phone numbers by Procurator
         ssnDataList.forEach(ssnData ->
                 ssnData.listOfProcurator().forEach(procurator -> {
-                    ProcuratorPhones phoneNumbers = jaPhoneNumberScrapperScript.findAndCollectDataByFullName(procurator.fullName());
+                    ProcuratorPhones phoneNumbers = jaPhoneScrapperScript.findAndCollectDataByFullName(procurator.fullName());
 
                     phoneStorage.saveData(phoneNumbers);
 
@@ -41,7 +41,7 @@ public class JaPhoneNumberScriptWrapper {
                 })
         );
 
-        jaPhoneNumberScrapperScript.finish();
+        jaPhoneScrapperScript.finish();
     }
 
     public List<ProcuratorPhones> getListOfProcuratorPhones() {

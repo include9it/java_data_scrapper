@@ -16,13 +16,13 @@ import java.util.List;
 
 import static io.saltpay.utils.Constants.JA_PHONE_REGISTRY_LINK;
 
-public class JaPhoneNumberScrapperScript {
-    private static final String TAG = JaPhoneNumberScrapperScript.class.getName();
+public class JaPhoneScrapperScript {
+    private static final String TAG = JaPhoneScrapperScript.class.getName();
 
     private final ChromeDriver chromeDriver;
     private final StepController stepController;
 
-    public JaPhoneNumberScrapperScript(Driver driver) {
+    public JaPhoneScrapperScript(Driver driver) {
         this.chromeDriver = driver.setupChromeDriver();
         this.stepController = new StepController(chromeDriver);
     }
