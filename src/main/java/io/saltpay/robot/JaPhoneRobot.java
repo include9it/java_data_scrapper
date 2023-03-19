@@ -2,7 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
-import io.saltpay.scrapper.JaPhoneNumberScrapper;
+import io.saltpay.scrapper.JaPhoneNumberScrapperScript;
 import io.saltpay.scrapper.JaPhoneNumberScriptWrapper;
 import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
@@ -36,9 +36,9 @@ public class JaPhoneRobot {
         }
 
         // Start data collection process
-        JaPhoneNumberScrapper jaPhoneNumberScrapper = new JaPhoneNumberScrapper(driver);
+        JaPhoneNumberScrapperScript jaPhoneNumberScrapperScript = new JaPhoneNumberScrapperScript(driver);
         JaPhoneNumberScriptWrapper jaPhoneNumberScriptWrapper = new JaPhoneNumberScriptWrapper(
-                jaPhoneNumberScrapper,
+                jaPhoneNumberScrapperScript,
                 ssnDataList,
                 procuratorPhoneStorage
         );

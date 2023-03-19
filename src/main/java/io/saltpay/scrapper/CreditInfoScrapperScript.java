@@ -16,13 +16,13 @@ import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
 
-public class CreditInfoScrapper {
-    private static final String TAG = CreditInfoScrapper.class.getName();
+public class CreditInfoScrapperScript {
+    private static final String TAG = CreditInfoScrapperScript.class.getName();
 
     private final ChromeDriver chromeDriver;
     private final StepController stepController;
 
-    public CreditInfoScrapper(Driver driver) {
+    public CreditInfoScrapperScript(Driver driver) {
         this.chromeDriver = driver.setupChromeDriver();
         this.stepController = new StepController(chromeDriver);
     }

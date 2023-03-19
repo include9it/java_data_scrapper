@@ -10,13 +10,13 @@ import java.util.List;
 public class CreditInfoScriptWrapper {
     private static final String TAG = CreditInfoScriptWrapper.class.getName();
 
-    private final CreditInfoScrapper creditInfoScrapper;
+    private final CreditInfoScrapperScript creditInfoScrapperScript;
     private final List<String> listOfSsn;
     private final FileStorageController storage;
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoScriptWrapper(CreditInfoScrapper creditInfoScrapper, List<String> listOfSsn, FileStorageController storage) {
-        this.creditInfoScrapper = creditInfoScrapper;
+    public CreditInfoScriptWrapper(CreditInfoScrapperScript creditInfoScrapperScript, List<String> listOfSsn, FileStorageController storage) {
+        this.creditInfoScrapperScript = creditInfoScrapperScript;
         this.listOfSsn = listOfSsn;
         this.storage = storage;
     }
@@ -24,19 +24,19 @@ public class CreditInfoScriptWrapper {
     public void start() {
         SaltLogger.i(TAG, "CreditInfo Bot started!");
 
-        creditInfoScrapper.enterAndLogin();
-        creditInfoScrapper.changeLocale();
+        creditInfoScrapperScript.enterAndLogin();
+        creditInfoScrapperScript.changeLocale();
 
         // Get Procurators data by SSN number
         listOfSsn.forEach(ssn -> {
-            SsnData ssnData = creditInfoScrapper.findAndCollectDataBySsn(ssn);
+            SsnData ssnData = creditInfoScrapperScript.findAndCollectDataBySsn(ssn);
 
             storage.saveData(ssnData);
 
             listOfSsnData.add(ssnData);
         });
 
-        creditInfoScrapper.finish();
+        creditInfoScrapperScript.finish();
     }
 
     public List<SsnData> getListOfSsnData() {
