@@ -40,7 +40,7 @@ public class CreditInfoRobot extends ScrapperRobot {
         // Prepare Excel file
         List<SsnData> savedSsnData = fileStorageController.readData();
         SaltLogger.basic("savedSsnData size: " + savedSsnData.size());
-//        creditInfoSsnManager.prepareExcelWithSsnData(savedSsnData);
+        creditInfoSsnManager.prepareExcelWithSsnData(savedSsnData);
     }
 
     @Override
@@ -49,7 +49,12 @@ public class CreditInfoRobot extends ScrapperRobot {
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(fileStorageController);
 
         // Start multi thread collecting info process
-        List<SsnData> multiThreadSsnDataList = CreditInfoThreadBot.start(THREADS, listOfSsn, driver);
+        List<SsnData> multiThreadSsnDataList = ThreadBot.start(
+                THREADS,
+                listOfSsn,
+                new CreditInfoStartScript(driver),
+                new CreditInfoScrapperScript(driver)
+        );
         fileStorageController.saveData(multiThreadSsnDataList);
 
         // Prepare Excel file

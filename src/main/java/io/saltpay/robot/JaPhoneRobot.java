@@ -48,7 +48,7 @@ public class JaPhoneRobot extends ScrapperRobot {
                 fileStorageController,
                 listOfProcurator
         );
-//        jaPhoneScriptController.start(Procurator::fullName);
+        jaPhoneScriptController.start(Procurator::fullName);
 
         // Prepare Excel file
         List<ProcuratorPhones> savedProcuratorPhones = fileStorageController.readData();
@@ -62,7 +62,12 @@ public class JaPhoneRobot extends ScrapperRobot {
         List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ssnStorage, fileStorageController);
 
         // Start multi thread collecting info process
-        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
+        List<ProcuratorPhones> multiThreadSsnDataList = ThreadBot.start(
+                THREADS,
+                listOfSsnData,
+                new JaPhoneStartScript(driver),
+                new JaPhoneScrapperScript(driver)
+        );
         fileStorageController.saveData(multiThreadSsnDataList);
 
         // Prepare Excel file
@@ -76,7 +81,12 @@ public class JaPhoneRobot extends ScrapperRobot {
         List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartDataSoleTrader();
 
         // Start multi thread collecting info process
-        List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
+        List<ProcuratorPhones> multiThreadSsnDataList = ThreadBot.start(
+                THREADS,
+                listOfSsnData,
+                new JaPhoneStartScript(driver),
+                new JaPhoneScrapperScript(driver)
+        );
         traderPhoneStorage.saveData(multiThreadSsnDataList);
 
         // Prepare Excel file
