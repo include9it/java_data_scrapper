@@ -1,4 +1,6 @@
-package io.saltpay.storage;
+package io.saltpay.data;
+
+import io.saltpay.storage.FileStorageController;
 
 import java.util.List;
 import java.util.function.Function;
