@@ -2,6 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
+import io.saltpay.scrapper.CreditInfoScript;
 import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 import io.saltpay.data.CreditInfoSsnManager;

@@ -1,7 +1,6 @@
-package io.saltpay.robot;
+package io.saltpay.scrapper;
 
 import io.saltpay.models.SsnData;
-import io.saltpay.scrapper.CreditInfoScrapper;
 import io.saltpay.storage.FileStorageController;
 import io.saltpay.utils.SaltLogger;
 
