@@ -12,13 +12,13 @@ public class Main {
         // CreditInfo Island company registry
         CreditInfoRobot creditInfoRobot = new CreditInfoRobot(driver);
         creditInfoRobot.basicCollect();
-//        creditInfoRobot.multiThreadCollect();
+//        creditInfoRobot.turboCollect();
 
         // Phone number registry
         JaPhoneRobot jaPhoneRobot = new JaPhoneRobot(driver);
         jaPhoneRobot.basicCollect();
-//        jaPhoneRobot.multiThreadCollect();
-//        jaPhoneRobot.multiThreadCollectV2();
+//        jaPhoneRobot.turboCollect();
+//        jaPhoneRobot.turboCollectV2();
 
 
         // Prepare Data
