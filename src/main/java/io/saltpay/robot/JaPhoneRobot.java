@@ -36,7 +36,7 @@ public class JaPhoneRobot {
 
         // Start data collection process
         JaPhoneNumberScrapper jaPhoneNumberScrapper = new JaPhoneNumberScrapper(driver);
-        JaPhoneNumberDataCollector jaPhoneNumberDataCollector = new JaPhoneNumberDataCollector(
+        JaPhoneNumberScript jaPhoneNumberScript = new JaPhoneNumberScript(
                 jaPhoneNumberScrapper,
                 ssnDataList,
                 procuratorPhoneStorage

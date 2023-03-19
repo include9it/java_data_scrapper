@@ -9,14 +9,14 @@ import io.saltpay.utils.SaltLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JaPhoneNumberDataCollector {
-    private static final String TAG = JaPhoneNumberDataCollector.class.getName();
+public class JaPhoneNumberScript {
+    private static final String TAG = JaPhoneNumberScript.class.getName();
     private final JaPhoneNumberScrapper jaPhoneNumberScrapper;
     private final List<SsnData> ssnDataList;
     private final FileStorageController phoneStorage;
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
-    public JaPhoneNumberDataCollector(
+    public JaPhoneNumberScript(
             JaPhoneNumberScrapper jaPhoneNumberScrapper,
             List<SsnData> ssnDataList,
             FileStorageController phoneStorage

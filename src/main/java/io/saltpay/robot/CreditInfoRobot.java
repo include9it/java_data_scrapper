@@ -28,7 +28,7 @@ public class CreditInfoRobot {
 
         // Start data collection process
         CreditInfoScrapper creditInfoScrapper = new CreditInfoScrapper(driver);
-        CreditInfoDataCollector creditInfoDataCollector = new CreditInfoDataCollector(
+        CreditInfoScript creditInfoScript = new CreditInfoScript(
                 creditInfoScrapper,
                 listOfSsn,
                 storage
