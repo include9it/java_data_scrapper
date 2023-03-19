@@ -3,7 +3,9 @@ package io.saltpay.robot;
 import io.saltpay.models.Procurator;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
-import io.saltpay.scripts.JaPhoneScriptController;
+import io.saltpay.scripts.JaPhoneScrapperScript;
+import io.saltpay.scripts.JaPhoneStartScript;
+import io.saltpay.scripts.ScrapperScriptController;
 import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 import io.saltpay.data.JaPhoneProcuratorPhoneManager;
@@ -40,12 +42,13 @@ public class JaPhoneRobot extends ScrapperRobot {
         ssnDataList.forEach(ssnData -> listOfProcurator.addAll(ssnData.listOfProcurator()));
 
         // Start data collection process
-        JaPhoneScriptController jaPhoneScriptController = new JaPhoneScriptController(
-                driver,
-                listOfProcurator,
-                fileStorageController
+        ScrapperScriptController<Procurator, ProcuratorPhones> jaPhoneScriptController = new ScrapperScriptController<>(
+                new JaPhoneStartScript(driver),
+                new JaPhoneScrapperScript(driver),
+                fileStorageController,
+                listOfProcurator
         );
-//        jaPhoneNumberDataCollector.start();
+//        jaPhoneScriptController.start(Procurator::fullName);
 
         // Prepare Excel file
         List<ProcuratorPhones> savedProcuratorPhones = fileStorageController.readData();
