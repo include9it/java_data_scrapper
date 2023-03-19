@@ -23,19 +23,19 @@ public class CreditInfoRobot extends ScrapperRobot {
     @Override
     public void basicCollect() throws IOException {
         // Prepare list of input SSN numbers for data collection
-        List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData((FileStorageController) fileStorage);
+        List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(fileStorageController);
 
         // Start data collection process
         CreditInfoScriptController creditInfoScriptController = new CreditInfoScriptController(
                 driver,
                 listOfSsn,
-                (FileStorageController) fileStorage
+                fileStorageController
         );
         // 15 requests per 1 min // For 4492 records will be approximately 4 hours, 59 minutes
 //        creditInfoScriptWrapper.start();
 
         // Prepare Excel file
-        List<SsnData> savedSsnData = ((FileStorageController) fileStorage).readData();
+        List<SsnData> savedSsnData = fileStorageController.readData();
         SaltLogger.basic("savedSsnData size: " + savedSsnData.size());
 //        creditInfoSsnManager.prepareExcelWithSsnData(savedSsnData);
     }
@@ -43,14 +43,14 @@ public class CreditInfoRobot extends ScrapperRobot {
     @Override
     public void turboCollect() throws IOException {
         // Prepare list of input SSN numbers for data collection
-        List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData((FileStorageController) fileStorage);
+        List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(fileStorageController);
 
         // Start multi thread collecting info process
         List<SsnData> multiThreadSsnDataList = CreditInfoThreadBot.start(THREADS, listOfSsn, driver);
-        ((FileStorageController) fileStorage).saveData(multiThreadSsnDataList);
+        fileStorageController.saveData(multiThreadSsnDataList);
 
         // Prepare Excel file
-        List<SsnData> savedThreadSsnData = ((FileStorageController) fileStorage).readData();
+        List<SsnData> savedThreadSsnData = fileStorageController.readData();
         SaltLogger.basic("savedSsnThreadData size: " + savedThreadSsnData.size());
         creditInfoSsnManager.prepareExcelWithSsnData(savedThreadSsnData);
     }

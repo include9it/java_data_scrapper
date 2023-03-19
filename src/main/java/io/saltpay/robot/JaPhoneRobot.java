@@ -25,7 +25,7 @@ public class JaPhoneRobot extends ScrapperRobot {
     @Override
     public void basicCollect() throws IOException {
         // Prepare list of input Procurator names for data collection
-        List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ssnStorage, (FileStorageController) fileStorage);
+        List<SsnData> ssnDataList = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ssnStorage, fileStorageController);
 
         if (ssnDataList == null) {
             SaltLogger.basic("SSN model doesn't exist! -> Exit");
@@ -37,12 +37,12 @@ public class JaPhoneRobot extends ScrapperRobot {
         JaPhoneScriptController jaPhoneScriptController = new JaPhoneScriptController(
                 driver,
                 ssnDataList,
-                (FileStorageController) fileStorage
+                fileStorageController
         );
 //        jaPhoneNumberDataCollector.start();
 
         // Prepare Excel file
-        List<ProcuratorPhones> savedProcuratorPhones = ((FileStorageController) fileStorage).readData();
+        List<ProcuratorPhones> savedProcuratorPhones = fileStorageController.readData();
         SaltLogger.basic("savedProcuratorPhones size: " + savedProcuratorPhones.size());
         jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedProcuratorPhones);
     }
@@ -50,14 +50,14 @@ public class JaPhoneRobot extends ScrapperRobot {
     @Override
     public void turboCollect() throws IOException {
         // Prepare list of input SSN numbers for data collection
-        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ssnStorage, (FileStorageController) fileStorage);
+        List<SsnData> listOfSsnData = jaPhoneProcuratorPhoneManager.preparePhonesStartData(ssnStorage, fileStorageController);
 
         // Start multi thread collecting info process
         List<ProcuratorPhones> multiThreadSsnDataList = JaPhoneThreadBot.start(THREADS, listOfSsnData, driver);
-        ((FileStorageController) fileStorage).saveData(multiThreadSsnDataList);
+        fileStorageController.saveData(multiThreadSsnDataList);
 
         // Prepare Excel file
-        List<ProcuratorPhones> savedThreadPhonesData = ((FileStorageController) fileStorage).readData();
+        List<ProcuratorPhones> savedThreadPhonesData = fileStorageController.readData();
         SaltLogger.basic("savedThreadPhonesData size: " + savedThreadPhonesData.size());
         jaPhoneProcuratorPhoneManager.prepareExcelWithProcuratorPhoneData(savedThreadPhonesData);
     }

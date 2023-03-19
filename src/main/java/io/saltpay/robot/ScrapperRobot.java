@@ -1,6 +1,6 @@
 package io.saltpay.robot;
 
-import io.saltpay.storage.FileStorage;
+import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 
 import java.io.IOException;
@@ -9,11 +9,11 @@ abstract class ScrapperRobot {
 
     protected final Driver driver;
 
-    protected final FileStorage fileStorage;
+    protected final FileStorageController fileStorageController;
 
-    public ScrapperRobot(Driver driver, FileStorage fileStorage) {
+    public ScrapperRobot(Driver driver, FileStorageController fileStorageController) {
         this.driver = driver;
-        this.fileStorage = fileStorage;
+        this.fileStorageController = fileStorageController;
     }
 
     abstract void basicCollect() throws IOException;
