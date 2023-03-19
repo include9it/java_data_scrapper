@@ -1,8 +1,8 @@
 package io.saltpay.robot;
 
 import io.saltpay.models.SsnData;
-import io.saltpay.scrapper.CreditInfoScrapperScript;
-import io.saltpay.scrapper.CreditInfoScriptWrapper;
+import io.saltpay.scripts.CreditInfoScrapperScript;
+import io.saltpay.scripts.CreditInfoScriptWrapper;
 import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 import io.saltpay.data.CreditInfoSsnManager;
@@ -28,14 +28,13 @@ public class CreditInfoRobot {
         List<String> listOfSsn = creditInfoSsnManager.prepareSsnStartData(storage);
 
         // Start data collection process
-        CreditInfoScrapperScript creditInfoScrapperScript = new CreditInfoScrapperScript(driver);
         CreditInfoScriptWrapper creditInfoScriptWrapper = new CreditInfoScriptWrapper(
-                creditInfoScrapperScript,
+                driver,
                 listOfSsn,
                 storage
         );
         // 15 requests per 1 min // For 4492 records will be approximately 4 hours, 59 minutes
-//        creditInfoDataCollector.start();
+//        creditInfoScriptWrapper.start();
 
         // Prepare Excel file
         List<SsnData> savedSsnData = storage.readData();

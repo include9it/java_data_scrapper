@@ -1,8 +1,7 @@
-package io.saltpay.scrapper;
+package io.saltpay.scripts;
 
 import io.saltpay.models.PhoneNumbers;
 import io.saltpay.models.ProcuratorPhones;
-import io.saltpay.steps.StepController;
 import io.saltpay.support.Driver;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.SaltLogger;
@@ -10,25 +9,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
-import static io.saltpay.utils.Constants.JA_PHONE_REGISTRY_LINK;
-
-public class JaPhoneScrapperScript {
+public class JaPhoneScrapperScript extends Script {
     private static final String TAG = JaPhoneScrapperScript.class.getName();
 
-    private final ChromeDriver chromeDriver;
-    private final StepController stepController;
-
     public JaPhoneScrapperScript(Driver driver) {
-        this.chromeDriver = driver.setupChromeDriver();
-        this.stepController = new StepController(chromeDriver);
-    }
-
-    public void enterWebsite() {
-        stepController.getLoginSteps().startPage(JA_PHONE_REGISTRY_LINK);
+        super(driver);
     }
 
     public ProcuratorPhones findAndCollectDataByFullName(String fullName) {
@@ -50,10 +38,6 @@ public class JaPhoneScrapperScript {
         }
 
         return new ProcuratorPhones(fullName, phoneNumbers);
-    }
-
-    public void finish() {
-        chromeDriver.quit();
     }
 
     private PhoneNumbers findAndCollectPhonesByProcurator(String fullName) throws NoSuchElementException, TimeoutException, StaleElementReferenceException {

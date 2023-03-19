@@ -1,45 +1,22 @@
-package io.saltpay.scrapper;
+package io.saltpay.scripts;
 
 import io.saltpay.models.Procurator;
 import io.saltpay.models.SsnData;
-import io.saltpay.steps.StepController;
 import io.saltpay.support.Driver;
 import io.saltpay.utils.DataCollectUtil;
 import io.saltpay.utils.SaltLogger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.saltpay.utils.Constants.*;
-
-public class CreditInfoScrapperScript {
+public class CreditInfoScrapperScript extends Script {
     private static final String TAG = CreditInfoScrapperScript.class.getName();
 
-    private final ChromeDriver chromeDriver;
-    private final StepController stepController;
-
     public CreditInfoScrapperScript(Driver driver) {
-        this.chromeDriver = driver.setupChromeDriver();
-        this.stepController = new StepController(chromeDriver);
-    }
-
-    public void enterAndLogin() {
-        stepController.getLoginSteps().startPage(CREDIT_INFO_LINK);
-        stepController.getLoginSteps().enterCredentials(
-                "usernameInput",
-                "Password",
-                "Salt.Elisabet",
-                "Elisabet_69"
-        );
-        stepController.getLoginSteps().login("audkenni-button");
-    }
-
-    public void changeLocale() {
-        stepController.getActionSteps().changeLanguage();
+        super(driver);
     }
 
     public SsnData findAndCollectDataBySsn(String ssnValue) {
@@ -60,10 +37,6 @@ public class CreditInfoScrapperScript {
         }
 
         return new SsnData(ssnValue, listOfProcurator);
-    }
-
-    public void finish() {
-        chromeDriver.quit();
     }
 
     private List<Procurator> findAndCollectProcuratorBySsn(String ssnValue) throws NoSuchElementException, TimeoutException {

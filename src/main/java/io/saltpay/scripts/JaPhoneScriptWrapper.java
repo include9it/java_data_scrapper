@@ -1,8 +1,9 @@
-package io.saltpay.scrapper;
+package io.saltpay.scripts;
 
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.storage.FileStorageController;
+import io.saltpay.support.Driver;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
@@ -10,17 +11,21 @@ import java.util.List;
 
 public class JaPhoneScriptWrapper {
     private static final String TAG = JaPhoneScriptWrapper.class.getName();
+
+    private final JaPhoneStartScript jaPhoneStartScript;
     private final JaPhoneScrapperScript jaPhoneScrapperScript;
     private final List<SsnData> ssnDataList;
     private final FileStorageController phoneStorage;
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
     public JaPhoneScriptWrapper(
-            JaPhoneScrapperScript jaPhoneScrapperScript,
+            Driver driver,
             List<SsnData> ssnDataList,
             FileStorageController phoneStorage
     ) {
-        this.jaPhoneScrapperScript = jaPhoneScrapperScript;
+        this.jaPhoneStartScript = new JaPhoneStartScript(driver);
+        this.jaPhoneScrapperScript = new JaPhoneScrapperScript(driver);
+
         this.ssnDataList = ssnDataList;
         this.phoneStorage = phoneStorage;
     }
@@ -28,7 +33,7 @@ public class JaPhoneScriptWrapper {
     public void start() {
         SaltLogger.i(TAG, "Ja Phone Bot started!");
 
-        jaPhoneScrapperScript.enterWebsite();
+        jaPhoneStartScript.enterWebsite();
 
         // Get phone numbers by Procurator
         ssnDataList.forEach(ssnData ->

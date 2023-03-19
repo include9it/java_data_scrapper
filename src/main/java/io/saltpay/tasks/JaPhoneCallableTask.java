@@ -2,7 +2,8 @@ package io.saltpay.tasks;
 
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.chunk.SsnDataChunk;
-import io.saltpay.scrapper.JaPhoneScrapperScript;
+import io.saltpay.scripts.JaPhoneScrapperScript;
+import io.saltpay.scripts.JaPhoneStartScript;
 import io.saltpay.support.Driver;
 import io.saltpay.utils.SaltLogger;
 
@@ -13,6 +14,8 @@ import java.util.concurrent.Callable;
 public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
 
     private final int threadId;
+
+    private final JaPhoneStartScript jaPhoneStartScript;
     private final JaPhoneScrapperScript jaPhoneScrapperScript;
 
     private final SsnDataChunk ssnDataChunk;
@@ -21,7 +24,10 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
 
     public JaPhoneCallableTask(int threadId, Driver driver, SsnDataChunk ssnDataChunk) {
         this.threadId = threadId;
+
+        this.jaPhoneStartScript = new JaPhoneStartScript(driver);
         this.jaPhoneScrapperScript = new JaPhoneScrapperScript(driver);
+
         this.ssnDataChunk = ssnDataChunk;
     }
 
@@ -29,7 +35,7 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
     public List<ProcuratorPhones> call() throws Exception {
         SaltLogger.basic("Thread -> " + threadId);
 
-        jaPhoneScrapperScript.enterWebsite();
+        jaPhoneStartScript.enterWebsite();
 
         // Get Procurator phone numbers by Full Name
         ssnDataChunk.listOfSsnData().forEach(ssnData ->
