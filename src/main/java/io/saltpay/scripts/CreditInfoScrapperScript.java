@@ -12,14 +12,15 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditInfoScrapperScript extends Script {
+public class CreditInfoScrapperScript extends Script implements ScrapperScript<SsnData> {
     private static final String TAG = CreditInfoScrapperScript.class.getName();
 
     public CreditInfoScrapperScript(Driver driver) {
         super(driver);
     }
 
-    public SsnData findAndCollectDataBySsn(String ssnValue) {
+    @Override
+    public SsnData findAndCollectDataByValue(String ssnValue) {
         List<Procurator> listOfProcurator;
 
         try {

@@ -5,7 +5,6 @@ import io.saltpay.utils.SaltLogger;
 import java.io.*;
 
 class FileStorage {
-
     private final String absoluteFileName;
 
     FileStorage(String absoluteFileName) {

@@ -12,14 +12,15 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class JaPhoneScrapperScript extends Script {
+public class JaPhoneScrapperScript extends Script implements ScrapperScript<ProcuratorPhones> {
     private static final String TAG = JaPhoneScrapperScript.class.getName();
 
     public JaPhoneScrapperScript(Driver driver) {
         super(driver);
     }
 
-    public ProcuratorPhones findAndCollectDataByFullName(String fullName) {
+    @Override
+    public ProcuratorPhones findAndCollectDataByValue(String fullName) {
         SaltLogger.i(TAG, "Collecting phone number data for " + fullName);
 
         PhoneNumbers phoneNumbers;

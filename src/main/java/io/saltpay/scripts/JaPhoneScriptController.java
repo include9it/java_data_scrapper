@@ -33,12 +33,12 @@ public class JaPhoneScriptController {
     public void start() {
         SaltLogger.i(TAG, "Ja Phone Bot started!");
 
-        jaPhoneStartScript.enterWebsite();
+        jaPhoneStartScript.start();
 
         // Get phone numbers by Procurator
         ssnDataList.forEach(ssnData ->
                 ssnData.listOfProcurator().forEach(procurator -> {
-                    ProcuratorPhones phoneNumbers = jaPhoneScrapperScript.findAndCollectDataByFullName(procurator.fullName());
+                    ProcuratorPhones phoneNumbers = jaPhoneScrapperScript.findAndCollectDataByValue(procurator.fullName());
 
                     phoneStorage.saveData(phoneNumbers);
 

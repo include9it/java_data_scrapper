@@ -4,14 +4,20 @@ import io.saltpay.support.Driver;
 
 import static io.saltpay.utils.Constants.CREDIT_INFO_LINK;
 
-public class CreditInfoStartScript extends Script {
+public class CreditInfoStartScript extends StartScript {
     private static final String TAG = CreditInfoStartScript.class.getName();
 
     public CreditInfoStartScript(Driver driver) {
         super(driver);
     }
 
-    public void enterAndLogin() {
+    @Override
+    void start() {
+        enterAndLogin();
+        changeLocale();
+    }
+
+    private void enterAndLogin() {
         stepController.getLoginSteps().startPage(CREDIT_INFO_LINK);
         stepController.getLoginSteps().enterCredentials(
                 "usernameInput",
@@ -22,7 +28,7 @@ public class CreditInfoStartScript extends Script {
         stepController.getLoginSteps().login("audkenni-button");
     }
 
-    public void changeLocale() {
+    private void changeLocale() {
         stepController.getActionSteps().changeLanguage();
     }
 }
