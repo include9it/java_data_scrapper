@@ -18,7 +18,7 @@ public class CreditInfoSsnManager {
     private final DataPreparationManager dataPreparationManager = new DataPreparationManager();
     private final ExcelController excelController = new ExcelController();
 
-    public List<String> prepareSsnStartData(StorageController ssnStorage) throws IOException {
+    public List<String> prepareSsnStartData(FileStorageController ssnStorage) throws IOException {
         // Get list of all SSN values
         List<String> listOfSsn = excelController.getColumnData(CREDIT_INFO_READ_FILE, 0);
 

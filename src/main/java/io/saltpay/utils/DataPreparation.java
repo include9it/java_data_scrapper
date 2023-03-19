@@ -5,7 +5,7 @@ import io.saltpay.models.SsnData;
 import io.saltpay.models.excel.ExcelData;
 import io.saltpay.models.excel.SheetData;
 import io.saltpay.storage.ExcelController;
-import io.saltpay.storage.StorageController;
+import io.saltpay.storage.FileStorageController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import static io.saltpay.utils.Constants.*;
 
 public class DataPreparation {
     public static void mergeFilterAndCollect() {
-        StorageController ssnStorage = new StorageController(CREDIT_INFO_BACKUP_FILE);
-        StorageController jaPhoneStorage = new StorageController(JA_PHONE_BACKUP_FILE);
+        FileStorageController ssnStorage = new FileStorageController(CREDIT_INFO_BACKUP_FILE);
+        FileStorageController jaPhoneStorage = new FileStorageController(JA_PHONE_BACKUP_FILE);
 
         List<SsnData> savedThreadSsnData = ssnStorage.readData();
         SaltLogger.basic("savedSsnThreadData size: " + savedThreadSsnData.size());

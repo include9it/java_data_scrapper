@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 public class DataPreparationManager {
 
-    public <T, O> List<T> prepareStartData(List<T> initialList, StorageController storage, Function<O, T> identifierGetter) {
+    public <T, O> List<T> prepareStartData(List<T> initialList, FileStorageController storage, Function<O, T> identifierGetter) {
         // Get list of saved data
         List<O> savedList = storage.readData();
 

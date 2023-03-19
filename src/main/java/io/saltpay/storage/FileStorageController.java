@@ -7,10 +7,10 @@ import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
 
-public class StorageController extends Storage {
+public class FileStorageController extends FileStorage {
     private boolean hasSavedData = false;
 
-    public StorageController(String absoluteFileName) {
+    public FileStorageController(String absoluteFileName) {
         super(getFilePathWithExtension(absoluteFileName));
 
         checkFileExistence();

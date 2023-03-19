@@ -4,11 +4,11 @@ import io.saltpay.utils.SaltLogger;
 
 import java.io.*;
 
-class Storage {
+class FileStorage {
 
     private final String absoluteFileName;
 
-    Storage(String absoluteFileName) {
+    FileStorage(String absoluteFileName) {
         this.absoluteFileName = absoluteFileName;
     }
 

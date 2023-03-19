@@ -2,7 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
-import io.saltpay.storage.StorageController;
+import io.saltpay.storage.FileStorageController;
 import io.saltpay.utils.SaltLogger;
 
 import java.util.ArrayList;
@@ -13,10 +13,10 @@ public class CreditInfoDataCollector {
 
     private final CreditInfoScrapper creditInfoScrapper;
     private final List<String> listOfSsn;
-    private final StorageController storage;
+    private final FileStorageController storage;
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoDataCollector(CreditInfoScrapper creditInfoScrapper, List<String> listOfSsn, StorageController storage) {
+    public CreditInfoDataCollector(CreditInfoScrapper creditInfoScrapper, List<String> listOfSsn, FileStorageController storage) {
         this.creditInfoScrapper = creditInfoScrapper;
         this.listOfSsn = listOfSsn;
         this.storage = storage;

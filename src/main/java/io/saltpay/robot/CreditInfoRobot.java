@@ -2,7 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
-import io.saltpay.storage.StorageController;
+import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 import io.saltpay.storage.CreditInfoSsnManager;
 import io.saltpay.utils.SaltLogger;
@@ -15,7 +15,7 @@ import static io.saltpay.utils.Constants.THREADS;
 
 public class CreditInfoRobot {
     private final Driver driver;
-    private final StorageController storage = new StorageController(CREDIT_INFO_BACKUP_FILE);
+    private final FileStorageController storage = new FileStorageController(CREDIT_INFO_BACKUP_FILE);
     private final CreditInfoSsnManager creditInfoSsnManager = new CreditInfoSsnManager();
 
     public CreditInfoRobot(Driver driver) {

@@ -3,7 +3,7 @@ package io.saltpay.utils;
 import io.saltpay.models.Procurator;
 import io.saltpay.models.SsnData;
 import io.saltpay.storage.ExcelController;
-import io.saltpay.storage.StorageController;
+import io.saltpay.storage.FileStorageController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class RestoreManager {
             nextSsn = ssnList.get(indexNext);
         }
 
-        StorageController ssnStorage = new StorageController(CREDIT_INFO_BACKUP_FILE);
+        FileStorageController ssnStorage = new FileStorageController(CREDIT_INFO_BACKUP_FILE);
 //        ssnStorage.saveSsnData(CREDIT_INFO_BACKUP_FILE, ssnDataList);
 
         SaltLogger.basic("CREDIT_INFO_BACKUP_FILE -> ");

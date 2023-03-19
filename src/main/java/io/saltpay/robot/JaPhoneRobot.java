@@ -3,7 +3,7 @@ package io.saltpay.robot;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.JaPhoneNumberScrapper;
-import io.saltpay.storage.StorageController;
+import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 import io.saltpay.storage.JaPhoneProcuratorPhoneManager;
 import io.saltpay.utils.SaltLogger;
@@ -15,9 +15,9 @@ import static io.saltpay.utils.Constants.*;
 
 public class JaPhoneRobot {
     private final Driver driver;
-    private final StorageController ssnStorage = new StorageController(CREDIT_INFO_BACKUP_FILE);
-    private final StorageController procuratorPhoneStorage = new StorageController(JA_PHONE_BACKUP_FILE);
-    private final StorageController traderPhoneStorage = new StorageController(JA_PHONE_TRADER_BACKUP_FILE);
+    private final FileStorageController ssnStorage = new FileStorageController(CREDIT_INFO_BACKUP_FILE);
+    private final FileStorageController procuratorPhoneStorage = new FileStorageController(JA_PHONE_BACKUP_FILE);
+    private final FileStorageController traderPhoneStorage = new FileStorageController(JA_PHONE_TRADER_BACKUP_FILE);
     private final JaPhoneProcuratorPhoneManager jaPhoneProcuratorPhoneManager = new JaPhoneProcuratorPhoneManager();
 
     public JaPhoneRobot(Driver driver) {
