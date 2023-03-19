@@ -37,7 +37,7 @@ public class ScrapperScriptController<T, O> {
             listOfScrappedData.add(scrapedData);
         });
 
-        startScript.finish();
+//        startScript.finish(); TODO
     }
 
     public List<O> getListOfScrappedData() {

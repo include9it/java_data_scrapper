@@ -35,14 +35,13 @@ public class CreditInfoCallableTask implements Callable<List<SsnData>> {
     public List<SsnData> call() throws Exception {
         SaltLogger.basic("Thread -> " + threadId);
 
-        creditInfoStartScript.enterAndLogin();
-        creditInfoStartScript.changeLocale();
+        creditInfoStartScript.start();
 
         // Get Procurators data by SSN number
         ssnChunk.dataList().forEach(ssn -> {
             SaltLogger.basic("Thread -> " + threadId);
 
-            SsnData ssnData = creditInfoScrapperScript.findAndCollectDataBySsn(ssn);
+            SsnData ssnData = creditInfoScrapperScript.findAndCollectDataByValue(ssn);
 
             listOfSsnData.add(ssnData);
         });

@@ -36,16 +36,14 @@ public class JaPhoneCallableTask implements Callable<List<ProcuratorPhones>> {
     public List<ProcuratorPhones> call() throws Exception {
         SaltLogger.basic("Thread -> " + threadId);
 
-        jaPhoneStartScript.enterWebsite();
+        jaPhoneStartScript.start();
 
         // Get Procurator phone numbers by Full Name
         ssnDataChunk.dataList().forEach(ssnData ->
                 ssnData.listOfProcurator().forEach(procurator -> {
                     SaltLogger.basic("Thread -> " + threadId);
 
-                    ProcuratorPhones procuratorPhones = jaPhoneScrapperScript.findAndCollectDataByFullName(
-                            procurator.fullName()
-                    );
+                    ProcuratorPhones procuratorPhones = jaPhoneScrapperScript.findAndCollectDataByValue(procurator.fullName());
 
                     listOfProcuratorPhones.add(procuratorPhones);
                 })

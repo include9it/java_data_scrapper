@@ -4,7 +4,7 @@ import io.saltpay.support.Driver;
 
 import static io.saltpay.utils.Constants.CREDIT_INFO_LINK;
 
-public class CreditInfoStartScript extends StartScript {
+public class CreditInfoStartScript extends Script implements StartScript {
     private static final String TAG = CreditInfoStartScript.class.getName();
 
     public CreditInfoStartScript(Driver driver) {
@@ -12,7 +12,7 @@ public class CreditInfoStartScript extends StartScript {
     }
 
     @Override
-    void start() {
+    public void start() {
         enterAndLogin();
         changeLocale();
     }

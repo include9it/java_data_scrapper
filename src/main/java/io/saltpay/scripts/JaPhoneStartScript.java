@@ -4,7 +4,7 @@ import io.saltpay.support.Driver;
 
 import static io.saltpay.utils.Constants.JA_PHONE_REGISTRY_LINK;
 
-public class JaPhoneStartScript extends StartScript {
+public class JaPhoneStartScript extends Script implements StartScript {
     private static final String TAG = JaPhoneStartScript.class.getName();
 
     public JaPhoneStartScript(Driver driver) {
@@ -12,7 +12,7 @@ public class JaPhoneStartScript extends StartScript {
     }
 
     @Override
-    void start() {
+    public void start() {
         enterWebsite();
     }
 
