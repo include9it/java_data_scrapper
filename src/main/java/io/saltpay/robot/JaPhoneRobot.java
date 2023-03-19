@@ -1,5 +1,6 @@
 package io.saltpay.robot;
 
+import io.saltpay.models.Procurator;
 import io.saltpay.models.ProcuratorPhones;
 import io.saltpay.models.SsnData;
 import io.saltpay.scripts.JaPhoneScriptController;
@@ -9,6 +10,7 @@ import io.saltpay.data.JaPhoneProcuratorPhoneManager;
 import io.saltpay.utils.SaltLogger;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.saltpay.utils.Constants.*;
@@ -33,10 +35,14 @@ public class JaPhoneRobot extends ScrapperRobot {
             return;
         }
 
+        List<Procurator> listOfProcurator = new ArrayList<>();
+
+        ssnDataList.forEach(ssnData -> listOfProcurator.addAll(ssnData.listOfProcurator()));
+
         // Start data collection process
         JaPhoneScriptController jaPhoneScriptController = new JaPhoneScriptController(
                 driver,
-                ssnDataList,
+                listOfProcurator,
                 fileStorageController
         );
 //        jaPhoneNumberDataCollector.start();

@@ -1,7 +1,7 @@
 package io.saltpay.scripts;
 
+import io.saltpay.models.Procurator;
 import io.saltpay.models.ProcuratorPhones;
-import io.saltpay.models.SsnData;
 import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 import io.saltpay.utils.SaltLogger;
@@ -12,44 +12,28 @@ import java.util.List;
 public class JaPhoneScriptController {
     private static final String TAG = JaPhoneScriptController.class.getName();
 
-    private final JaPhoneStartScript jaPhoneStartScript;
-    private final JaPhoneScrapperScript jaPhoneScrapperScript;
-    private final List<SsnData> ssnDataList;
-    private final FileStorageController phoneStorage;
-    private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
+    private final ScrapperScriptController<Procurator, ProcuratorPhones> scrapperScriptController;
 
     public JaPhoneScriptController(
             Driver driver,
-            List<SsnData> ssnDataList,
+            List<Procurator> procuratorList,
             FileStorageController phoneStorage
     ) {
-        this.jaPhoneStartScript = new JaPhoneStartScript(driver);
-        this.jaPhoneScrapperScript = new JaPhoneScrapperScript(driver);
-
-        this.ssnDataList = ssnDataList;
-        this.phoneStorage = phoneStorage;
+        this.scrapperScriptController = new ScrapperScriptController<>(
+                new JaPhoneStartScript(driver),
+                new JaPhoneScrapperScript(driver),
+                phoneStorage,
+                procuratorList
+        );
     }
 
     public void start() {
         SaltLogger.i(TAG, "Ja Phone Bot started!");
 
-        jaPhoneStartScript.start();
-
-        // Get phone numbers by Procurator
-        ssnDataList.forEach(ssnData ->
-                ssnData.listOfProcurator().forEach(procurator -> {
-                    ProcuratorPhones phoneNumbers = jaPhoneScrapperScript.findAndCollectDataByValue(procurator.fullName());
-
-                    phoneStorage.saveData(phoneNumbers);
-
-                    listOfProcuratorPhones.add(phoneNumbers);
-                })
-        );
-
-        jaPhoneScrapperScript.finish();
+        scrapperScriptController.start(Procurator::fullName);
     }
 
     public List<ProcuratorPhones> getListOfProcuratorPhones() {
-        return listOfProcuratorPhones;
+        return scrapperScriptController.getListOfScrappedData();
     }
 }
