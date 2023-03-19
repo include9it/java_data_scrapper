@@ -9,8 +9,8 @@ import io.saltpay.utils.SaltLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JaPhoneScriptWrapper {
-    private static final String TAG = JaPhoneScriptWrapper.class.getName();
+public class JaPhoneScriptController {
+    private static final String TAG = JaPhoneScriptController.class.getName();
 
     private final JaPhoneStartScript jaPhoneStartScript;
     private final JaPhoneScrapperScript jaPhoneScrapperScript;
@@ -18,7 +18,7 @@ public class JaPhoneScriptWrapper {
     private final FileStorageController phoneStorage;
     private final List<ProcuratorPhones> listOfProcuratorPhones = new ArrayList<>();
 
-    public JaPhoneScriptWrapper(
+    public JaPhoneScriptController(
             Driver driver,
             List<SsnData> ssnDataList,
             FileStorageController phoneStorage

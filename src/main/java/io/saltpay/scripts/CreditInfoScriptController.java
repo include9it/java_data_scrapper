@@ -8,8 +8,8 @@ import io.saltpay.utils.SaltLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditInfoScriptWrapper {
-    private static final String TAG = CreditInfoScriptWrapper.class.getName();
+public class CreditInfoScriptController {
+    private static final String TAG = CreditInfoScriptController.class.getName();
 
     private final CreditInfoStartScript creditInfoStartScript;
     private final CreditInfoScrapperScript creditInfoScrapperScript;
@@ -17,7 +17,7 @@ public class CreditInfoScriptWrapper {
     private final FileStorageController storage;
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoScriptWrapper(Driver driver, List<String> listOfSsn, FileStorageController storage) {
+    public CreditInfoScriptController(Driver driver, List<String> listOfSsn, FileStorageController storage) {
         this.creditInfoStartScript = new CreditInfoStartScript(driver);
         this.creditInfoScrapperScript = new CreditInfoScrapperScript(driver);
 
