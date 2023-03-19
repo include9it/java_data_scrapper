@@ -7,15 +7,15 @@ import io.saltpay.utils.SaltLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditInfoScript {
-    private static final String TAG = CreditInfoScript.class.getName();
+public class CreditInfoScriptWrapper {
+    private static final String TAG = CreditInfoScriptWrapper.class.getName();
 
     private final CreditInfoScrapper creditInfoScrapper;
     private final List<String> listOfSsn;
     private final FileStorageController storage;
     private final List<SsnData> listOfSsnData = new ArrayList<>();
 
-    public CreditInfoScript(CreditInfoScrapper creditInfoScrapper, List<String> listOfSsn, FileStorageController storage) {
+    public CreditInfoScriptWrapper(CreditInfoScrapper creditInfoScrapper, List<String> listOfSsn, FileStorageController storage) {
         this.creditInfoScrapper = creditInfoScrapper;
         this.listOfSsn = listOfSsn;
         this.storage = storage;

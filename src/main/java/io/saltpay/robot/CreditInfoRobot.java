@@ -2,7 +2,7 @@ package io.saltpay.robot;
 
 import io.saltpay.models.SsnData;
 import io.saltpay.scrapper.CreditInfoScrapper;
-import io.saltpay.scrapper.CreditInfoScript;
+import io.saltpay.scrapper.CreditInfoScriptWrapper;
 import io.saltpay.storage.FileStorageController;
 import io.saltpay.support.Driver;
 import io.saltpay.data.CreditInfoSsnManager;
@@ -29,7 +29,7 @@ public class CreditInfoRobot {
 
         // Start data collection process
         CreditInfoScrapper creditInfoScrapper = new CreditInfoScrapper(driver);
-        CreditInfoScript creditInfoScript = new CreditInfoScript(
+        CreditInfoScriptWrapper creditInfoScriptWrapper = new CreditInfoScriptWrapper(
                 creditInfoScrapper,
                 listOfSsn,
                 storage
